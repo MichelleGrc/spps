@@ -153,10 +153,10 @@
 
     class UbahPass extends Koneksi
     {
-        public function ubahPass($username, $pass_lama, $pass_baru, $cpass_baru)
+        public function ubahPass($id, $pass_lama, $pass_baru, $cpass_baru)
         {
             //mengecek apakah username ada pada database
-            $query = "SELECT * FROM pengguna WHERE username = '$username'";
+            $query = "SELECT * FROM pengguna WHERE idPengguna = '$id'";
             $hasil = mysqli_query($this->koneksi, $query);
 
             // menghitung jumlah data yang ditemukan
@@ -165,14 +165,14 @@
                 // dan ubah password berhasil dijalankan
                 
                 //mencari apakah pass lama yang dimasukkan ada pada database
-                $queryPass = "SELECT * FROM pengguna WHERE password = '$pass_lama'";
+                $queryPass = "SELECT * FROM pengguna WHERE password = MD5('$pass_lama')";
                 $passCocok = mysqli_query($this->koneksi, $queryPass);
 
                 if (mysqli_num_rows($passCocok) > 0){
                     // jika hasil yang ditemukan lebih besar dari 0, artinya pass cocok
                     
                     if ($pass_baru == $cpass_baru) {
-                        $query = "UPDATE pengguna set password = '$pass_baru' WHERE username='$username'";
+                        $query = "UPDATE pengguna set password = MD5('$pass_baru') WHERE idPengguna='$id'";
                         mysqli_query($this->koneksi, $query);
                         return 1; //artinya registrasi berhasil
                     } else {

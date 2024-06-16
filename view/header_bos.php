@@ -50,7 +50,7 @@ $login = new Login(); //membuat object untuk class Login()
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a class="nav-link active" aria-current="page" href="halaman_utama.php">Home</a>
-                    <a class="nav-link" href="data_barang.php">Pengguna</a>
+                    <a class="nav-link" href="data_pengguna.php">Pengguna</a>
                     <a class="nav-link" href="data_supplier.php">Supplier</a>
                     <a class="nav-link" href="data_barang.php">Barang</a>
                     <a class="nav-link" href="data_barang.php">Pembelian</a>
