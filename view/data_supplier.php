@@ -1,6 +1,6 @@
 <?php
 include_once '../class/supplier.php';  //menyertakan file supplier.php
-$barang = new Supplier();              //membuat objek dari class Supplier()
+$supplier = new Supplier();              //membuat objek dari class Supplier()
 
 $select = new Select();
 if(isset($_SESSION["id"]))
@@ -14,9 +14,9 @@ if(isset($_SESSION["id"]))
 
 if(isset($_GET['hapus_supplier']))
 {
-    //mendekode id_barang yang ingin dihapus untuk pemrosesan 
+    //mendekode idSupplier yang ingin dihapus untuk pemrosesan 
     //setelah id tersebut dikode saat menekan tombol hapus
-    //tujuan dekode agar id_barang yang tampil di link hanya berbentuk kode saja
+    //tujuan dekode agar idSupplier yang tampil di link hanya berbentuk kode saja
     $id = base64_decode($_GET['hapus_supplier']);
     $hapusSupplier = $supplier->hapusSupplier($id);
 }
@@ -61,7 +61,7 @@ if(isset($_GET['hapus_supplier']))
                                     <h2 class="text-center">DATA SUPPLIER</h2>
                                 </div>
                                 <div class="col-3">
-                                    <a class="btn btn-primary float-end" href='../form/form_tambah_barang.php'>Tambah Supplier</a>                                   
+                                    <a class="btn btn-primary float-end" href='../form/form_tambah_supplier.php'>Tambah Supplier</a>                                   
                                 </div>
                             </div>
                         </div>
@@ -80,7 +80,7 @@ if(isset($_GET['hapus_supplier']))
                                 <tbody class="text-center">
                                     <?php
                                     //menampilkan semua data dengan while
-                                        $tampil = $barang->tampilSupplier();
+                                        $tampil = $supplier->tampilSupplier();
                                         $no=1;
                                         if($tampil)
                                         {
@@ -93,7 +93,7 @@ if(isset($_GET['hapus_supplier']))
                                                     <td><?php echo $row['alamat']; ?></td>
                                                     <td><?php echo $row['noTelp']; ?></td>
                                                     <td>
-                                                        <a class="btn btn-warning" href="../form/form_edit_supplier.php?id_supplier=<?php echo base64_encode($row['idSupplier'])?>">Edit</a>
+                                                        <a class="btn btn-warning" href="../form/form_edit_supplier.php?idSupplier=<?php echo base64_encode($row['idSupplier'])?>">Edit</a>
                                                         <a class="btn btn-danger" href="?hapus_supplier=<?=base64_encode($row['idSupplier'])?>" 
                                                         onclick="return confirm('Anda Yakin Ingin Menghapus Data Ini?')">Hapus</a>
                                                     </td>

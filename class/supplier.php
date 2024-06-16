@@ -13,13 +13,13 @@ class Supplier
     public function tambahSupplier($data)
     {
         //mengambil data dari form
-        $id_supplier = $data['idSupplier'];
-        $nama_supplier = $data['namaSupplier'];
+        $idSupplier = $data['idSupplier'];
+        $namaSupplier = $data['namaSupplier'];
         $alamat = $data['alamat'];
-        $no_telp = $data['noTelp'];
+        $noTelp = $data['noTelp'];
 
-        $query = "INSERT INTO supplier SET idSupplier='$id_supplier', namaSupplier='$nama_supplier',
-        alamat='$alamat', noTelp='$no_telp'";
+        $query = "INSERT INTO supplier SET idSupplier='$idSupplier', namaSupplier='$namaSupplier',
+        alamat='$alamat', noTelp='$noTelp'";
 
         $hasil = $this->db->insert($query);
 
@@ -51,13 +51,13 @@ class Supplier
     public function editSupplier($data, $id)
     {
         //mengambil data dari form
-        $id_supplier = $data['idSupplier'];
-        $nama_supplier = $data['namaSupplier'];
+        $idSupplier = $data['idSupplier'];
+        $namaSupplier = $data['namaSupplier'];
         $alamat = $data['alamat'];
-        $no_telp = $data['noTelp'];
+        $noTelp = $data['noTelp'];
 
-        $query = "UPDATE supplier SET idSupplier='$id_supplier', namaSupplier='$nama_supplier',
-        alamat='$alamat', noTelp='$no_telp'";
+        $query = "UPDATE supplier SET idSupplier='$idSupplier', namaSupplier='$namaSupplier',
+        alamat='$alamat', noTelp='$noTelp' WHERE idSupplier='$id'";
 
         $hasil = $this->db->edit($query);
 
