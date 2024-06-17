@@ -105,8 +105,8 @@ if(isset($_GET['hapus_barang']))
                                                     <td><?php echo 'Rp ' . number_format($row['hargaJual'],2,',','.'); ?></td>
                                                     <td><?php echo $row['idSupplier']; ?></td>
                                                     <td>
-                                                        <a class="btn btn-warning" href="../form/form_edit_barang.php?id_barang=<?php echo base64_encode($row['id_barang'])?>">Edit</a>
-                                                        <a class="btn btn-danger" href="?hapus_barang=<?=base64_encode($row['id_barang'])?>" 
+                                                        <a class="btn btn-warning" href="../form/form_edit_barang.php?idBarang=<?php echo base64_encode($row['idBarang'])?>">Edit</a>
+                                                        <a class="btn btn-danger" href="?hapus_barang=<?=base64_encode($row['idBarang'])?>" 
                                                         onclick="return confirm('Anda Yakin Ingin Menghapus Data Ini?')">Hapus</a>
                                                     </td>
                                                 </tr>

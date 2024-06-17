@@ -1,6 +1,7 @@
 <?php
 include_once '../class/barang.php';  //menyertakan file barang.php
 $barang = new Barang();              //membuat objek dari class Barang()
+$db = new Koneksi();
 
 $select = new Select();
 if(isset($_SESSION["id"]))
@@ -12,12 +13,12 @@ if(isset($_SESSION["id"]))
     header("Location: ../index.php");
 }
 
-if(isset($_GET['id_barang']))
+if(isset($_GET['idBarang']))
 {
-    //mendekode id_barang yang ingin dihapus untuk pemrosesan 
+    //mendekode idBarang yang ingin dihapus untuk pemrosesan 
     //setelah id tersebut dikode saat menekan tombol hapus
-    //tujuan dekode agar id_barang yang tampil di link hanya berbentuk kode saja
-    $id = base64_decode($_GET['id_barang']);
+    //tujuan dekode agar idBarang yang tampil di link hanya berbentuk kode saja
+    $id = base64_decode($_GET['idBarang']);
 }
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
@@ -31,7 +32,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Barang Ayamkoe</title>
+    <title>Edit Barang</title>
 
     <!-- untuk menyambungkan file css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" 
@@ -79,33 +80,69 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                     ?>
                                         <form action="" method="post" name="form_edit_barang" enctype="multipart/form-data">
                                             <div class="mb-3">
-                                                <label for="input_harga_beli" class="form-label">ID Barang</label>
-                                                <input type="text" class="form-control" name="id_barang" value="<?=$row['id_barang']?>" required>
+                                                <label for="input_id_barang" class="form-label">ID</label>
+                                                <input type="text" class="form-control" name="idBarang" value="<?=$row['idBarang']?>" required readonly>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="input_nama_barang" class="form-label">Nama Barang</label>
-                                                <input type="text" class="form-control" name="nama_barang" value="<?=$row['nama_barang']?>" required>
+                                                <label for="input_nama_barang" class="form-label">Nama</label>
+                                                <input type="text" class="form-control" name="namaBarang" value="<?=$row['namaBarang']?>" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="input_harga_beli" class="form-label">Harga Beli</label>
-                                                <input type="number" class="form-control" name="harga_beli" value="<?=$row['harga_beli']?>" required>
+                                                <label for="input_foto_barang" class="form-label">Foto</label>
+                                                <input type="text" class="form-control" name="fotoBarang" value="<?=$row['fotoBarang']?>" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="input_harga_jual" class="form-label">Harga Jual</label>
-                                                <input type="number" class="form-control" name="harga_jual" value="<?=$row['harga_jual']?>" required>
+                                                <label for="input_jenis_barang" class="form-label">Jenis</label>
+                                                <select type="text" class="form-control" name="jenisBarang" value="<?=$row['jenisBarang']?>" required>
+                                                    <option value="">Pilih Jenis</option>
+                                                    <option value="Ori">Ori</option>
+                                                    <option value="Non Ori">Non Ori</option>
+                                                </select>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="input_satuan_barang" class="form-label">Satuan Barang</label>
-                                                <select type="text" class="form-control" name="satuan_barang" value="<?=$row['satuan_barang']?>" required>
+                                                <label for="input_merk" class="form-label">Merk</label>
+                                                <input type="text" class="form-control" name="merk" value="<?=$row['merk']?>" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="input_satuan" class="form-label">Satuan</label>
+                                                <select type="text" class="form-control" name="satuan" value="<?=$row['satuan']?>" required>
                                                     <option value="">Pilih Satuan</option>
                                                     <option value="PCS">PCS</option>
-                                                    <option value="KG">KG</option>
-                                                    <option value="Ekor">Ekor</option>
                                                 </select>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="input_stok" class="form-label">Stok</label>
                                                 <input type="number" class="form-control" name="stok" value="<?=$row['stok']?>" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="input_harga_beli" class="form-label">Harga Beli</label>
+                                                <input type="number" class="form-control" name="hargaBeli" value="<?=$row['hargaBeli']?>" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="input_harga_jual" class="form-label">Harga Jual</label>
+                                                <input type="number" class="form-control" name="hargaJual" value="<?=$row['hargaJual']?>" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="input_id_supplier" class="form-label">Supplier</label>
+                                                <select class="form-control" name="idSupplier" required>
+                                                    <option value="">Pilih ID Supplier</option>
+                                                    <?php
+                                                    //karena data idSupplier di form transaksi ini diambil dari tb supplier
+                                                    //maka query dari supplier di-select dahulu sebagai berikut
+                                                        $query = "SELECT * FROM supplier";
+                                                        $hasil = $db->fetchID($query);
+
+                                                        while($row = mysqli_fetch_array($hasil))
+                                                        { 
+                                                            //data idSupplier ditampilkan dengan while dalam option select
+                                                            $idSupplier = $row['idSupplier'];  //untuk menampilkan idSupplier dalam option
+                                                            $namaSupplier = $row['namaSupplier'];     //untuk menampilkan namaSupplier dalam option
+                                                            ?>
+                                                            <option value="<?=$idSupplier?>"> <?= $namaSupplier ?> (ID: <?=$idSupplier?>) </option>;
+                                                        <?php
+                                                        }
+                                                    ?>
+                                                </select>
                                             </div>
                                             <div class="row">
                                                 <div class="col">

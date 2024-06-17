@@ -58,7 +58,7 @@ $login = new Login(); //membuat object untuk class Login()
                         <?php } elseif ($hasil == 10) { ?>
                             <div class="alert alert-warning" role="alert">
                                 <strong>
-                                    <h6 class="text-center">Password Salah</h6>s
+                                    <h6 class="text-center">Password Salah</h6>
                                 </strong>
                             </div>
                         <?php } elseif ($hasil == 100) { ?>
@@ -95,10 +95,6 @@ $login = new Login(); //membuat object untuk class Login()
                                     <input class="btn btn-danger form-control" type="reset" value="Reset">
                                 </div>
                             </div> <!-- form-group// -->
-                            <br>
-                            <div class="form-group text-center">
-                                <a href="form/form_registrasi.php"> Belum Memiliki Akun? </a>
-                            </div> <!-- form-group//-->
                         </form>
                     </div>
                 </div>
