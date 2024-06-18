@@ -2,6 +2,18 @@
 include_once '../class/supplier.php';  //menyertakan file supplier.php
 $supplier = new Supplier();              //membuat objek dari class Supplier()
 
+//membuat kode custom
+//menghubungkan ke tabel database
+$db = new Koneksi();
+//mengambil nilai tertinggi pada tabel penjualan
+$sql = mysqli_query($db->konek(), 'select max(idSupplier) as maxID from supplier');
+$data = mysqli_fetch_array($sql);
+$kode = $data['maxID'];
+$urut = (int) substr($kode,2,5);
+$urut++; //setiap nilai tertinggi $kode ditambah 1
+$ket = 'SP';
+$kodeauto = $ket . sprintf('%05s', $urut); //menyisipkan 3 karakter 0
+
 $select = new Select();
 if(isset($_SESSION["id"])) 
 {
@@ -65,7 +77,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                             <form action="" method="post" name="form_tambah_supplier" enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <label for="input_id_supplier" class="form-label">ID</label>
-                                    <input type="text" class="form-control" name="idSupplier" required>
+                                    <input type="text" class="form-control" name="idSupplier" value="<?php echo $kodeauto ?>" readonly>
                                 </div>
                                 <div class="mb-3">
                                     <label for="input_nama_supplier" class="form-label">Nama</label>

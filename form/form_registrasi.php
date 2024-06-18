@@ -1,10 +1,17 @@
 <?php
 require '../koneksi.php';  //menyertakan koneksi.php
 
-// if(isset($_SESSION["id"]))
-// {
-//     header("Location: ../view/halaman_utama.php");
-// }
+//membuat kode custom
+//menghubungkan ke tabel database
+$db = new Koneksi();
+//mengambil nilai tertinggi pada tabel penjualan
+$sql = mysqli_query($db->konek(), 'select max(idPengguna) as maxID from pengguna');
+$data = mysqli_fetch_array($sql);
+$kode = $data['maxID'];
+$urut = (int) substr($kode,2,5);
+$urut++; //setiap nilai tertinggi $kode ditambah 1
+$ket = 'PG';
+$kodeauto = $ket . sprintf('%05s', $urut); //menyisipkan 3 karakter 0
 
 $register = new Register();
 ?>
