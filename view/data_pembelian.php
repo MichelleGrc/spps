@@ -72,9 +72,8 @@ if(isset($_GET['hapus_pembelian']))
                                         <th>No</th>
                                         <th>ID</th>
                                         <th>Tanggal Pembelian</th>
-                                        <th>Foto</th>
+                                        <th>Barang</th>
                                         <th>Kuantitas</th>
-                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="text-center">
@@ -90,12 +89,8 @@ if(isset($_GET['hapus_pembelian']))
                                                     <td><?php echo $no++; ?></td>
                                                     <td><?php echo $row['idPembelian']; ?></td>
                                                     <td><?php echo $row['tanggalPembelian']; ?></td>
-                                                    <td><?php echo $row['fotoPembelian']; ?></td>
+                                                    <td><?php echo $row['namaBarang']; ?></td>
                                                     <td><?php echo $row['kuantitas']; ?></td>
-                                                    <td>
-                                                        <a class="btn btn-danger" href="?hapus_pembelian=<?=base64_encode($row['idPembelian'])?>" 
-                                                        onclick="return confirm('Anda Yakin Ingin Menghapus Data Ini?')">Hapus</a>
-                                                    </td>
                                                 </tr>
                                             <?php
                                             }

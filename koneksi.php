@@ -18,6 +18,12 @@
             return $this->koneksi;
         }
 
+        public function konek()
+        {
+            $konek = mysqli_connect('localhost','root','','spps-plm');
+            return $konek;
+        }
+
         //function insert
         public function insert($query)
         {   

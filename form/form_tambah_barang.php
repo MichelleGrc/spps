@@ -1,7 +1,18 @@
 <?php
 include_once '../class/barang.php';  //menyertakan file barang.php
 $barang = new Barang();              //membuat objek dari class Barang()
+
+//membuat kode custom
+//menghubungkan ke tabel database
 $db = new Koneksi();
+//mengambil nilai tertinggi pada tabel pembelian
+$sql = mysqli_query($db->konek(), 'select max(idBarang) as maxID from barang');
+$data = mysqli_fetch_array($sql);
+$kode = $data['maxID'];
+$urut = (int) substr($kode,2,5);
+$urut++; //setiap nilai tertinggi $kode ditambah 1
+$ket = 'BR';
+$kodeauto = $ket . sprintf('%05s', $urut); //menyisipkan 3 karakter 0
 
 $select = new Select();
 if(isset($_SESSION["id"])) 
@@ -66,7 +77,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                             <form action="" method="post" name="form_tambah_barang" enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <label for="input_id_barang" class="form-label">ID</label>
-                                    <input type="text" class="form-control" name="idBarang" required>
+                                    <input type="text" class="form-control" name="idBarang" value="<?php echo $kodeauto ?>" readonly>
                                 </div>
                                 <div class="mb-3">
                                     <label for="input_nama_barang" class="form-label">Nama</label>

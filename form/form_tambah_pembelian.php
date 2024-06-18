@@ -1,7 +1,18 @@
 <?php
 include_once '../class/pembelian.php';  //menyertakan file pembelian.php
 $pembelian = new Pembelian();              //membuat objek dari class Pembelian()
+
+//membuat kode custom
+//menghubungkan ke tabel database
 $db = new Koneksi();
+//mengambil nilai tertinggi pada tabel pembelian
+$sql = mysqli_query($db->konek(), 'select max(idPembelian) as maxID from pembelian');
+$data = mysqli_fetch_array($sql);
+$kode = $data['maxID'];
+$urut = (int) substr($kode,2,5);
+$urut++; //setiap nilai tertinggi $kode ditambah 1
+$ket = 'PB';
+$kodeauto = $ket . sprintf('%05s', $urut); //menyisipkan 3 karakter 0
 
 $select = new Select();
 if(isset($_SESSION["id"])) 
@@ -68,23 +79,32 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                 <label for="input_id_pembelian" class="form-label">ID</label>
                                     <input type="text" class="form-control" name="idPembelian" value="<?php echo $kodeauto ?>" readonly>
                                 </div>
-                                <?php
-                                $sql = mysqli_query($koneksi, "select max(id) as maxID from pembelian");
-                                $data = mysqli_fetch_array($sql);
-                                
-                                $kode = $data['maxID'];
-                                
-                                $kode++;
-                                $ket = "BK";
-                                $kodeauto = $ket . sprintf("%03s", $kode);
-                                ?>
                                 <div class="mb-3">
                                     <label for="input_tanggal_pembelian" class="form-label">Tanggal Pembelian</label>
-                                    <input type="date" class="form-control" name="tanggalPembelian" required>
+                                    <input type="text" class="form-control" name="tanggalPembelian" value="<?php echo date('d-m-Y') ?>" readonly>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="input_foto_pembelian" class="form-label">Foto</label>
-                                    <input type="text" class="form-control" name="fotoPembelian" required>
+                                    <label for="input_id_barang" class="form-label">ID Barang</label>
+                                    <select class="form-control" name="idBarang" required>
+                                        <option value="">Pilih Barang</option>
+                                        <?php
+                                        //karena data idBarang di form transaksi ini diambil dari tb supplier
+                                        //maka query dari barang di-select dahulu sebagai berikut
+                                            $query = "SELECT * FROM barang";
+                                            $hasil = $db->fetchID($query);
+
+                                            while($row = mysqli_fetch_array($hasil))
+                                            { 
+                                                //data idSupplier ditampilkan dengan while dalam option select
+                                                $idBarang = $row['idBarang'];  //untuk menampilkan idBarang dalam option
+                                                $stok = $row['stok'];  //untuk menampilkan stok dalam option
+                                                $namaBarang = $row['namaBarang'];     //untuk menampilkan namaBarang dalam option    
+                                                ?>
+                                                <option value="<?=$idBarang?>"> <?= $namaBarang ?> (Stok: <?=$stok?>) </option>;
+                                            <?php
+                                            }
+                                        ?>
+                                    </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="input_kuantitas" class="form-label">Kuantitas</label>

@@ -42,7 +42,7 @@ class Barang
 
     public function tampilBarang()
     {
-        $query = "SELECT * FROM barang ORDER BY idBarang";
+        $query = "SELECT * FROM barang INNER JOIN supplier ON barang.idSupplier = supplier.idSupplier ORDER BY barang.idBarang";
         $hasil = $this->db->show($query);
         return $hasil;
     }

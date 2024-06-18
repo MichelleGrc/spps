@@ -2,6 +2,7 @@
 include_once '../class/barang.php';  //menyertakan file barang.php
 $barang = new Barang();              //membuat objek dari class Barang()
 
+
 $select = new Select();
 if(isset($_SESSION["id"]))
 {
@@ -79,7 +80,7 @@ if(isset($_GET['hapus_barang']))
                                         <th>Stok</th>
                                         <th>Harga Beli</th>
                                         <th>Harga Jual</th>
-                                        <th>ID Supplier</th>
+                                        <th>Supplier</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -103,7 +104,7 @@ if(isset($_GET['hapus_barang']))
                                                     <td><?php echo $row['stok']; ?></td>
                                                     <td><?php echo 'Rp ' . number_format($row['hargaBeli'],2,',','.'); ?></td>
                                                     <td><?php echo 'Rp ' . number_format($row['hargaJual'],2,',','.'); ?></td>
-                                                    <td><?php echo $row['idSupplier']; ?></td>
+                                                    <td><?php echo $row['namaSupplier']; ?></td>
                                                     <td>
                                                         <a class="btn btn-warning" href="../form/form_edit_barang.php?idBarang=<?php echo base64_encode($row['idBarang'])?>">Edit</a>
                                                         <a class="btn btn-danger" href="?hapus_barang=<?=base64_encode($row['idBarang'])?>" 
