@@ -1,9 +1,9 @@
 <?php
 include_once '../koneksi.php';
 
-class Pembelian
+class Penjualan
 {
-    private $db; //atribut untuk object dari kelas koneksi()
+    private $db;        //atribut untuk object dari kelas koneksi()
     private $stok;      //atribut untuk object dari kelas cekStok()
 
     public function __construct()
@@ -11,82 +11,73 @@ class Pembelian
         $this->db = new Koneksi();  //object kelas Koneksi
     }
 
-    public function tambahPembelian($data)
+    public function tambahPenjualan($data)
     {
         //mengambil data dari form
-        $idPembelian = $data['idPembelian'];
+        $idPenjualan = $data['idPenjualan'];
         $idBarang = $data['idBarang'];
-        $tanggalPembelian = $data['tanggalPembelian'];
+        $tanggalPenjualan = $data['tanggalPenjualan'];
         $kuantitas = $data['kuantitas'];
+        $idPengguna = $data['idPengguna'];
 
         //cek jumlah stok
-        $query = "SELECT * FROM pembelian INNER JOIN detail_pembelian 
-        ON detail_pembelian.idPembelian = pembelian.idPembelian 
+        $query = "SELECT * FROM penjualan INNER JOIN detail_penjualan 
+        ON detail_penjualan.idPenjualan = penjualan.idPenjualan 
         INNER JOIN barang
-        ON barang.idBarang = detail_pembelian.idBarang
-        ORDER BY pembelian.idPembelian";
+        ON barang.idBarang = detail_penjualan.idBarang
+        ORDER BY penjualan.idPenjualan";
         $this->stok = new cek();
         $stoksekarang = $this->stok->cekStok($query);
 
-        $sisaStok = $stoksekarang + $kuantitas;  //sisa stok adalah stok pada db ditambah jumlah pembelian
-        $query3 = "UPDATE barang SET stok='$sisaStok' WHERE idBarang='$idBarang'";
-        $sisaStok = $this->stok->sisaStok($query3);
-        
-        // $query = "INSERT INTO pembelian, detail_pembelian SET pembelian.idPembelian='$idPembelian',
-        // detail_pembelian.idPembelian='$idPembelian',
-        // tanggalPembelian='$tanggalPembelian', kuantitas='$kuantitas',
-        // idBarang = '$idBarang'";
+        //jika stok lebih besar dari jumlah, maka pembelian memungkinkan
+        if($stoksekarang > $kuantitas){
+            $sisaStok = $stoksekarang - $kuantitas;  //sisa stok adalah stok pada db dikurang jumlah penjualan
+            $query3 = "UPDATE barang SET stok='$sisaStok' WHERE idBarang='$idBarang'";
+            $sisaStok = $this->stok->sisaStok($query3);
 
-        $query = "INSERT INTO pembelian
-        SET idPembelian='$idPembelian', tanggalPembelian='$tanggalPembelian', kuantitas='$kuantitas'";
-        $query2 = "INSERT INTO detail_pembelian
-        SET idPembelian='$idPembelian', idBarang='$idBarang';";
+            $query = "INSERT INTO penjualan
+            SET idPenjualan='$idPenjualan', idPengguna ='$idPengguna', tanggalPenjualan='$tanggalPenjualan', kuantitas='$kuantitas'";
+            $query2 = "INSERT INTO detail_penjualan
+            SET idPenjualan='$idPenjualan', idBarang='$idBarang';";
 
-        $hasil = $this->db->insert($query);
-        $hasil = $this->db->insert($query2);
+            $hasil = $this->db->insert($query);
+            $hasil = $this->db->insert($query2);
 
-        if($hasil)
-        {
-            $pesan = "Data Berhasil Ditambahkan";
-            return $pesan;
+            if($hasil)
+            {
+                $pesan = "Data Berhasil Ditambahkan";
+                return $pesan;
+            }else{
+                $pesan = "Data Gagal Ditambahkan";
+                return $pesan;
+            }
         }else{
-            $pesan = "Data Gagal Ditambahkan";
+            //jika stok lebih kecil dari jumlah, maka pembelian tidak memungkinkan
+            $pesan = "Stok Tidak Cukup";
             return $pesan;
         }
     }
 
-    public function tampilPembelian()
+    public function tampilPenjualan()
     {
-        $query = "SELECT * FROM pembelian INNER JOIN detail_pembelian 
-        ON detail_pembelian.idPembelian = pembelian.idPembelian 
+        $query = "SELECT * FROM penjualan INNER JOIN detail_penjualan 
+        ON detail_penjualan.idPenjualan = penjualan.idPenjualan 
         INNER JOIN barang
-        ON barang.idBarang = detail_pembelian.idBarang
-        ORDER BY pembelian.idPembelian";
-        //$query = "SELECT * FROM pembelian ORDER BY idPembelian";
+        ON barang.idBarang = detail_penjualan.idBarang
+        INNER JOIN pengguna
+        ON penjualan.idPengguna = pengguna.idPengguna
+        ORDER BY penjualan.idPenjualan";
+        //$query = "SELECT * FROM penjualan ORDER BY idPenjualan";
         $hasil = $this->db->show($query);
         return $hasil;
     }
 
-    public function getIDPembelian($id)
+    public function getIDPenjualan($id)
     {
-        //mengambil id_pembelian pada row tertentu
-        $query = "SELECT * FROM pembelian WHERE idPembelian = '$id'";
+        //mengambil idPenjualan pada row tertentu
+        $query = "SELECT * FROM penjualan WHERE idPenjualan = '$id'";
         $hasil = $this->db->show($query);
         return $hasil;
-    }
-
-    public function hapusPembelian($id)
-    {
-        $query = "DELETE FROM pembelian WHERE idPembelian='$id'";
-        $hasil = $this->db->hapus($query);
-        if($hasil)
-        {
-            $pesan = "Data Berhasil Dihapus";
-            return $pesan;
-        }else{
-            $pesan = "Data Gagal Dihapus";
-            return $pesan;
-        }
     }
 }
 ?>

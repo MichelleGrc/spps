@@ -37,6 +37,7 @@ $login = new Login(); //membuat object untuk class Login()
                         if ($hasil == 11) {
                             $_SESSION["login"] = true;
                             $_SESSION["id"] = $login->idUser();
+                            $_SESSION["username"] = $_POST["username"];
                             header("Location: view/halaman_utama.php");
                             exit();
                         } elseif ($hasil == 12) {

@@ -74,19 +74,5 @@ class Pembelian
         $hasil = $this->db->show($query);
         return $hasil;
     }
-
-    public function hapusPembelian($id)
-    {
-        $query = "DELETE FROM pembelian WHERE idPembelian='$id'";
-        $hasil = $this->db->hapus($query);
-        if($hasil)
-        {
-            $pesan = "Data Berhasil Dihapus";
-            return $pesan;
-        }else{
-            $pesan = "Data Gagal Dihapus";
-            return $pesan;
-        }
-    }
 }
 ?>

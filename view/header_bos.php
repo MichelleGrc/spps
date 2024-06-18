@@ -54,7 +54,7 @@ $login = new Login(); //membuat object untuk class Login()
                     <a class="nav-link" href="data_supplier.php">Supplier</a>
                     <a class="nav-link" href="data_barang.php">Barang</a>
                     <a class="nav-link" href="data_pembelian.php">Pembelian</a>
-                    <a class="nav-link" href="data_barang.php">Penjualan</a>
+                    <a class="nav-link" href="data_penjualan.php">Penjualan</a>
                     <a class="nav-link" href="data_barang.php">Lap. Stok Masuk</a>
                     <a class="nav-link" href="data_barang.php">Lap. Stok Keluar</a>
                     <a class="nav-link" href="data_barang.php">Lap. Penjualan</a>

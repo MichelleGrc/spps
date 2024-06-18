@@ -1,6 +1,6 @@
 <?php
-include_once '../class/pembelian.php';  //menyertakan file pembelian.php
-$pembelian = new Pembelian();              //membuat objek dari class Pembelian()
+include_once '../class/penjualan.php';      //menyertakan file penjualan.php
+$penjualan = new Penjualan();              //membuat objek dari class Penjualan()
 
 $select = new Select();
 if(isset($_SESSION["id"]))
@@ -19,7 +19,7 @@ if(isset($_SESSION["id"]))
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pembelian</title>
+    <title>Penjualan</title>
 
     <!-- untuk menyambungkan file css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" 
@@ -38,10 +38,10 @@ if(isset($_SESSION["id"]))
                                     <a class="btn btn-dark float-start" href='../view/halaman_utama.php'>Halaman Utama</a>
                                 </div>
                                 <div class="col-6">
-                                    <h2 class="text-center">DATA PEMBELIAN</h2>
+                                    <h2 class="text-center">DATA PENJUALAN</h2>
                                 </div>
                                 <div class="col-3">
-                                    <a class="btn btn-primary float-end" href='../form/form_tambah_pembelian.php'>Tambah Pembelian</a>                                   
+                                    <a class="btn btn-primary float-end" href='../form/form_tambah_penjualan.php'>Tambah Penjualan</a>                                   
                                 </div>
                             </div>
                         </div>
@@ -51,7 +51,8 @@ if(isset($_SESSION["id"]))
                                     <tr class="text-center">
                                         <th>No</th>
                                         <th>ID</th>
-                                        <th>Tanggal Pembelian</th>
+                                        <th>Pengguna</th>
+                                        <th>Tanggal Penjualan</th>
                                         <th>Barang</th>
                                         <th>Kuantitas</th>
                                     </tr>
@@ -59,7 +60,7 @@ if(isset($_SESSION["id"]))
                                 <tbody class="text-center">
                                     <?php
                                     //menampilkan semua data dengan while
-                                        $tampil = $pembelian->tampilPembelian();
+                                        $tampil = $penjualan->tampilPenjualan();
                                         $no=1;
                                         if($tampil)
                                         {
@@ -67,8 +68,9 @@ if(isset($_SESSION["id"]))
                                             ?>
                                                 <tr>
                                                     <td><?php echo $no++; ?></td>
-                                                    <td><?php echo $row['idPembelian']; ?></td>
-                                                    <td><?php echo $row['tanggalPembelian']; ?></td>
+                                                    <td><?php echo $row['idPenjualan']; ?></td>
+                                                    <td><?php echo $row['namaPengguna']; ?></td>
+                                                    <td><?php echo $row['tanggalPenjualan']; ?></td>
                                                     <td><?php echo $row['namaBarang']; ?></td>
                                                     <td><?php echo $row['kuantitas']; ?></td>
                                                 </tr>
