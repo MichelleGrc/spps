@@ -52,8 +52,11 @@ if(isset($_SESSION["id"]))
                                         <th>No</th>
                                         <th>ID</th>
                                         <th>Tanggal Pembelian</th>
+                                        <th>Pengguna</th>
                                         <th>Barang</th>
+                                        <th>Supplier</th>
                                         <th>Kuantitas</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="text-center">
@@ -69,8 +72,13 @@ if(isset($_SESSION["id"]))
                                                     <td><?php echo $no++; ?></td>
                                                     <td><?php echo $row['idPembelian']; ?></td>
                                                     <td><?php echo $row['tanggalPembelian']; ?></td>
+                                                    <td><?php echo $row['namaPengguna']; ?></td>
                                                     <td><?php echo $row['namaBarang']; ?></td>
+                                                    <td><?php echo $row['namaSupplier']; ?></td>
                                                     <td><?php echo $row['kuantitas']; ?></td>
+                                                    <td>
+                                                        <a class="btn btn-warning" href="detail_pembelian.php?idPembelian=<?php echo base64_encode($row['idPembelian'])?>">Detail</a>
+                                                    </td>
                                                 </tr>
                                             <?php
                                             }

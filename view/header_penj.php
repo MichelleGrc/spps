@@ -35,7 +35,7 @@ $login = new Login(); //membuat object untuk class Login()
     <div class="bg-dark text-center text-light p-4">
         <div class="container">
             <h2>Halo, <?php echo $user["namaPengguna"]; ?>!</h2>
-            <p>Selamat Datang di Sistem Pengelolaan Penjualan dan Stok PD Libra Motor</p>
+            <h5>Selamat Datang di Sistem Pengelolaan Penjualan dan Stok PD Libra Motor</h5>
         </div>
     </div>
     <!-- End Header -->
@@ -49,7 +49,7 @@ $login = new Login(); //membuat object untuk class Login()
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="halaman_utama.php">Home</a>
+                    <a class="nav-link active" aria-current="page" href="halaman_utama_penj.php">Home</a>
                     <a class="nav-link" href="data_barang.php">Barang</a>
                     <a class="nav-link" href="data_pembelian.php">Pembelian</a>
                     <a class="nav-link" href="data_penjualan.php">Penjualan</a>

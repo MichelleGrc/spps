@@ -15,7 +15,6 @@ class Barang
         //mengambil data dari form
         $idBarang = $data['idBarang'];
         $namaBarang = $data['namaBarang'];
-        $fotoBarang = $data['fotoBarang'];
         $jenisBarang = $data['jenisBarang'];
         $merk = $data['merk'];
         $satuan = $data['satuan'];
@@ -25,7 +24,7 @@ class Barang
         $idSupplier = $data['idSupplier'];
 
         $query = "INSERT INTO barang SET idBarang='$idBarang', namaBarang='$namaBarang', 
-        fotoBarang='$fotoBarang', jenisBarang='$jenisBarang', merk='$merk', satuan='$satuan', 
+        jenisBarang='$jenisBarang', merk='$merk', satuan='$satuan', 
         stok='$stok', hargaBeli='$hargaBeli', hargaJual='$hargaJual', idSupplier='$idSupplier'";
 
         $hasil = $this->db->insert($query);
@@ -60,7 +59,6 @@ class Barang
         //mengambil data dari form
         $idBarang = $data['idBarang'];
         $namaBarang = $data['namaBarang'];
-        $fotoBarang = $data['fotoBarang'];
         $jenisBarang = $data['jenisBarang'];
         $merk = $data['merk'];
         $satuan = $data['satuan'];
@@ -70,7 +68,7 @@ class Barang
         $idSupplier = $data['idSupplier'];
 
         $query = "UPDATE barang SET idBarang='$idBarang', namaBarang='$namaBarang', 
-        fotoBarang='$fotoBarang', jenisBarang='$jenisBarang', merk='$merk', satuan='$satuan', 
+        jenisBarang='$jenisBarang', merk='$merk', satuan='$satuan', 
         stok='$stok', hargaBeli='$hargaBeli', hargaJual='$hargaJual', idSupplier='$idSupplier' 
         WHERE idBarang='$id'";
 

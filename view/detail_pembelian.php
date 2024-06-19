@@ -1,6 +1,7 @@
 <?php
-include_once '../class/supplier.php';  //menyertakan file supplier.php
-$supplier = new Supplier();              //membuat objek dari class Supplier()
+include_once '../class/pembelian.php';  //menyertakan file pembelian.php
+$pembelian = new Pembelian();              //membuat objek dari class Pembelian()
+$db = new Koneksi();
 
 $select = new Select();
 if(isset($_SESSION["id"]))
@@ -12,14 +13,16 @@ if(isset($_SESSION["id"]))
     header("Location: ../index.php");
 }
 
-if(isset($_GET['hapus_supplier']))
+if(isset($_GET['idPembelian']))
 {
-    //mendekode idSupplier yang ingin dihapus untuk pemrosesan 
+    //mendekode idBarang yang ingin dihapus untuk pemrosesan 
     //setelah id tersebut dikode saat menekan tombol hapus
-    //tujuan dekode agar idSupplier yang tampil di link hanya berbentuk kode saja
-    $id = base64_decode($_GET['hapus_supplier']);
-    $hapusSupplier = $supplier->hapusSupplier($id);
+    //tujuan dekode agar idBarang yang tampil di link hanya berbentuk kode saja
+    $id = base64_decode($_GET['idPembelian']);
 }
+
+$getID = $pembelian->getIDPembelian($id);
+$row = mysqli_fetch_assoc($getID)
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +31,7 @@ if(isset($_GET['hapus_supplier']))
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Supplier</title>
+    <title>Detail Pembelian</title>
 
     <!-- untuk menyambungkan file css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" 
@@ -38,30 +41,18 @@ if(isset($_GET['hapus_supplier']))
     <br><br>
     <div class="container">
         <div class="row d-flex justify-content-center">
-            <div class="row">
-                <div class="col">
-                    <div class="card">
-                        <?php
-                        //muncul alert dengan pesan berhasil atau tidaknya proses hapus
-                        if(isset($hapusSupplier))
-                        { ?>
-                            <div class="alert alert-warning" role="alert">
-                                <strong>
-                                    <h6 class="text-center"><?=$hapusSupplier?></h2>
-                                </strong>
-                            </div>
-                        <?php }
-                        ?>
+            <div class="col-md-8">
+                <div class="card">
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-3">
-                                    <a class="btn btn-dark float-start" href='../view/halaman_utama.php'>Halaman Utama</a>
+                                    <a class="btn btn-dark float-start" href='halaman_utama.php'>Halaman Utama</a>
                                 </div>
                                 <div class="col-6">
-                                    <h2 class="text-center">DATA SUPPLIER</h2>
+                                    <h2 class="text-center"><?=$row['idPembelian']?></h2>
                                 </div>
                                 <div class="col-3">
-                                    <a class="btn btn-primary float-end" href='../form/form_tambah_supplier.php'>Tambah Supplier</a>                                   
+                                    <a class="btn btn-primary float-end" href='data_pembelian.php'>Kembali</a>                                   
                                 </div>
                             </div>
                         </div>
@@ -70,17 +61,15 @@ if(isset($_GET['hapus_supplier']))
                                 <thead>
                                     <tr class="text-center">
                                         <th>No</th>
-                                        <th>ID</th>
-                                        <th>Nama</th>
-                                        <th>Alamat</th>
-                                        <th>No. Telp</th>
-                                        <th>Aksi</th>
+                                        <th>ID Barang</th>
+                                        <th>Nama Barang</th>
+                                        <th>Kuantitas</th>
                                     </tr>
                                 </thead>
                                 <tbody class="text-center">
                                     <?php
                                     //menampilkan semua data dengan while
-                                        $tampil = $supplier->tampilSupplier();
+                                        $tampil = $pembelian->tampilPembelian();
                                         $no=1;
                                         if($tampil)
                                         {
@@ -88,15 +77,9 @@ if(isset($_GET['hapus_supplier']))
                                             ?>
                                                 <tr>
                                                     <td><?php echo $no++; ?></td>
-                                                    <td><?php echo $row['idSupplier']; ?></td>
-                                                    <td><?php echo $row['namaSupplier']; ?></td>
-                                                    <td><?php echo $row['alamat']; ?></td>
-                                                    <td><?php echo $row['noTelp']; ?></td>
-                                                    <td>
-                                                        <a class="btn btn-warning" href="../form/form_edit_supplier.php?idSupplier=<?php echo base64_encode($row['idSupplier'])?>">Edit</a>
-                                                        <a class="btn btn-danger" href="?hapus_supplier=<?=base64_encode($row['idSupplier'])?>" 
-                                                        onclick="return confirm('Anda Yakin Ingin Menghapus Data Ini?')">Hapus</a>
-                                                    </td>
+                                                    <td><?php echo $row['idBarang']; ?></td>
+                                                    <td><?php echo $row['namaBarang']; ?></td>
+                                                    <td><?php echo $row['kuantitas']; ?></td>
                                                 </tr>
                                             <?php
                                             }

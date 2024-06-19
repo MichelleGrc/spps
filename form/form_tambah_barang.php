@@ -84,10 +84,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                     <input type="text" class="form-control" name="namaBarang" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="input_foto_barang" class="form-label">Foto</label>
-                                    <input type="text" class="form-control" name="fotoBarang" required>
-                                </div>
-                                <div class="mb-3">
                                     <label for="input_jenis_barang" class="form-label">Jenis</label>
                                     <select type="text" class="form-control" name="jenisBarang" required>
                                         <option value="">Pilih Jenis</option>

@@ -61,6 +61,10 @@ class Pembelian
         ON detail_pembelian.idPembelian = pembelian.idPembelian 
         INNER JOIN barang
         ON barang.idBarang = detail_pembelian.idBarang
+        INNER JOIN supplier
+        ON barang.idSupplier = supplier.idSupplier
+        INNER JOIN pengguna
+        ON pengguna.idPengguna = pembelian.idPengguna
         ORDER BY pembelian.idPembelian";
         //$query = "SELECT * FROM pembelian ORDER BY idPembelian";
         $hasil = $this->db->show($query);

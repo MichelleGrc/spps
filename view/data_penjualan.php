@@ -55,6 +55,7 @@ if(isset($_SESSION["id"]))
                                         <th>Tanggal Penjualan</th>
                                         <th>Barang</th>
                                         <th>Kuantitas</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="text-center">
@@ -73,6 +74,9 @@ if(isset($_SESSION["id"]))
                                                     <td><?php echo $row['tanggalPenjualan']; ?></td>
                                                     <td><?php echo $row['namaBarang']; ?></td>
                                                     <td><?php echo $row['kuantitas']; ?></td>
+                                                    <td>
+                                                        <a class="btn btn-warning" href="../detail_penjualan.php?idPenjualan=<?php echo base64_encode($row['idPenjualan'])?>">Detail</a>
+                                                    </td>
                                                 </tr>
                                             <?php
                                             }

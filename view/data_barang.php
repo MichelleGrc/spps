@@ -73,7 +73,6 @@ if(isset($_GET['hapus_barang']))
                                         <th>No</th>
                                         <th>ID</th>
                                         <th>Nama</th>
-                                        <th>Foto</th>
                                         <th>Jenis</th>
                                         <th>Merk</th>
                                         <th>Satuan</th>
@@ -97,7 +96,6 @@ if(isset($_GET['hapus_barang']))
                                                     <td><?php echo $no++; ?></td>
                                                     <td><?php echo $row['idBarang']; ?></td>
                                                     <td><?php echo $row['namaBarang']; ?></td>
-                                                    <td><?php echo $row['fotoBarang']; ?></td>
                                                     <td><?php echo $row['jenisBarang']; ?></td>
                                                     <td><?php echo $row['merk']; ?></td>
                                                     <td><?php echo $row['satuan']; ?></td>

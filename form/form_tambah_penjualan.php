@@ -19,6 +19,9 @@ if(isset($_SESSION["id"]))
 {
     //jika user berhasil login, proses dilanjutkan
     $user = $select->selectUserById($_SESSION["id"]);
+}else{
+    //jika user belum login, pengguna langsung diarahkan lagi ke form login di index.php
+    header("Location: ../index.php");
 }
 
 if($_SERVER['REQUEST_METHOD']=='POST'){

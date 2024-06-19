@@ -19,57 +19,94 @@ $login = new Login(); //membuat object untuk class Login()
 ?>
 
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman Utama</title>
-
-    <!-- untuk menyambungkan file css -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" 
-    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-</head>
-<body>
-    <!-- Header -->
-    <div class="bg-dark text-center text-light p-4">
-        <div class="container">
-            <h2>Halo, <?php echo $user["namaPengguna"]; ?>!</h2>
-            <p>Selamat Datang di Sistem Pengelolaan Penjualan dan Stok PD Libra Motor</p>
-        </div>
-    </div>
-    <!-- End Header -->
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand">PD Libra Motor</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="halaman_utama.php">Home</a>
-                    <a class="nav-link" href="data_pengguna.php">Pengguna</a>
-                    <a class="nav-link" href="data_supplier.php">Supplier</a>
-                    <a class="nav-link" href="data_barang.php">Barang</a>
-                    <a class="nav-link" href="data_pembelian.php">Pembelian</a>
-                    <a class="nav-link" href="data_penjualan.php">Penjualan</a>
-                    <a class="nav-link" href="data_barang.php">Lap. Stok Masuk</a>
-                    <a class="nav-link" href="data_barang.php">Lap. Stok Keluar</a>
-                    <a class="nav-link" href="data_barang.php">Lap. Penjualan</a>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Halaman Utama</title>
+        <link href="css/styles.css" rel="stylesheet" />
+        <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <a class="navbar-brand" href="index.html">PD Libra Motor</a>
+            <!-- <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button> -->
+            <!-- Navbar Search-->
+            <!-- <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+                    </div>
                 </div>
-                <div class="collapse navbar-collapse justify-content-end"">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="../form/form_ubah_pass.php">Ubah Password</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../logout.php" 
-                            onclick="return confirm('Anda Yakin Ingin Logout?')">Logout</a>
-                        </li>
-                    </ul>
-                </div>
+            </form> -->
+            <!-- Navbar-->
+            <!-- <ul class="navbar-nav ml-auto ml-md-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="#">Settings</a>
+                        <a class="dropdown-item" href="#">Activity Log</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="login.html">Logout</a>
+                    </div>
+                </li>
+            </ul> -->
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <div class="sb-sidenav-menu-heading">Menu</div>
+                            <a class="nav-link" href="halaman_utama.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Halaman Utama
+                            </a>
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMaster" aria-expanded="false" aria-controls="collapseMaster">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                Data Master
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseMaster" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="data_pengguna.php">Data Pengguna</a>
+                                    <a class="nav-link" href="data_supplier.php">Data Supplier</a>
+                                    <a class="nav-link" href="data_barang.php">Data Barang</a>
+                                </nav>
+                            </div>
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTransaksi" aria-expanded="false" aria-controls="collapseTransaksi">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                Data Transaksi
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseTransaksi" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="data_pembelian.php">Data Pembelian</a>
+                                    <a class="nav-link" href="data_penjualan.php">Data Penjualan</a>
+                                </nav>
+                            </div>
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLaporan" aria-expanded="false" aria-controls="collapseLaporan">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                Laporan
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLaporan" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="#">Barang Masuk</a>
+                                    <a class="nav-link" href="#">Barang Keluar</a>
+                                    <a class="nav-link" href="#">Penjualan</a>
+                                </nav>
+                            </div>
+                            <a class="nav-link" href="../logout.php" onclick="return confirm('Anda Yakin Ingin Logout?')">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </nav>
             </div>
-        </div>
-    </nav>

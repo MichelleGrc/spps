@@ -80,6 +80,10 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                     <input type="text" class="form-control" name="idPembelian" value="<?php echo $kodeauto ?>" readonly>
                                 </div>
                                 <div class="mb-3">
+                                    <label for="input_id_pengguna" class="form-label">Pengguna</label>
+                                    <input type="text" class="form-control" name="idPengguna" value="<?php echo $user["idPengguna"]; ?>" readonly>
+                                </div>
+                                <div class="mb-3">
                                     <label for="input_tanggal_pembelian" class="form-label">Tanggal Pembelian</label>
                                     <input type="text" class="form-control" name="tanggalPembelian" value="<?php echo date('d-m-Y') ?>" readonly>
                                 </div>
