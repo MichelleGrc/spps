@@ -19,6 +19,7 @@ if(isset($_GET['idSupplier']))
     //setelah id tersebut dikode saat menekan tombol hapus
     //tujuan dekode agar idSupplier yang tampil di link hanya berbentuk kode saja
     $id = base64_decode($_GET['idSupplier']);
+    $bagian = $user['bagian'];
 }
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
@@ -60,7 +61,17 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-3">
+                                <?php
+                                if($bagian == 'Bos'){ ?>
                                     <a class="btn btn-dark float-start" href='../view/halaman_utama.php'>Halaman Utama</a>
+                                <?php }else if($bagian == 'Penjualan'){ ?>
+                                    <a class="btn btn-dark float-start" href='../view/halaman_utama_penj.php'>Halaman Utama</a>
+                                <?php }else if($bagian == 'Gudang'){ ?>
+                                    <a class="btn btn-dark float-start" href='../view/halaman_utama_gudang.php'>Halaman Utama</a>
+                                <?php }else{
+                                    echo 'Bagian Tidak Dikenali!';
+                                }
+                                ?>
                                 </div>
                                 <div class="col-6">
                                     <h2 class="text-center">EDIT SUPPLIER</h2>

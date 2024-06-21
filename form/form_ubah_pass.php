@@ -20,6 +20,7 @@ if(isset($_GET['idPengguna']))
     //setelah id tersebut dikode saat menekan tombol hapus
     //tujuan dekode agar idPengguna yang tampil di link hanya berbentuk kode saja
     $id = base64_decode($_GET['idPengguna']);
+    $bagian = $user['bagian'];
 }
 
 $ubahPass = new UbahPass(); //object untuk class UbahPass() dari koneksi.php
@@ -127,7 +128,17 @@ $ubahPass = new UbahPass(); //object untuk class UbahPass() dari koneksi.php
                                 </div> <!-- form-group// -->
                                 <br>
                                 <div class="form-group text-center">
+                                <?php
+                                if($bagian == 'Bos'){ ?>
                                     <a href="../view/halaman_utama.php"> Kembali ke Halaman Utama </a>
+                                <?php }else if($bagian == 'Penjualan'){ ?>
+                                    <a href="../view/halaman_utama_penj.php"> Kembali ke Halaman Utama </a>
+                                <?php }else if($bagian == 'Gudang'){ ?>
+                                    <a href="../view/halaman_utama_gudang.php"> Kembali ke Halaman Utama </a>
+                                <?php }else{
+                                    echo 'Bagian Tidak Dikenali!';
+                                }
+                                ?>
                                 </div>
                                 <div class="form-group text-center">
                                     <a href='../view/data_pengguna.php'> Kembali ke Data Pengguna </a>

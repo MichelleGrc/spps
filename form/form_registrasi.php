@@ -1,6 +1,17 @@
 <?php
 require '../koneksi.php';  //menyertakan koneksi.php
 
+$select = new Select();
+if(isset($_SESSION["id"]))
+{
+    //jika user berhasil login, proses dilanjutkan
+    $user = $select->selectUserById($_SESSION["id"]);
+    $bagian = $user['bagian'];
+}else{
+    //jika user belum login, pengguna langsung diarahkan lagi ke form login di index.php
+    header("Location: ../index.php");
+}
+
 //membuat kode custom
 //menghubungkan ke tabel database
 $db = new Koneksi();
@@ -106,8 +117,18 @@ $register = new Register();
                             </div> <!-- form-group// -->
                             <br>
                             <div class="form-group text-center">
+                                <?php
+                                if($bagian == 'Bos'){ ?>
                                     <a href="../view/halaman_utama.php"> Kembali ke Halaman Utama </a>
-                                </div>
+                                <?php }else if($bagian == 'Penjualan'){ ?>
+                                    <a href="../view/halaman_utama_penj.php"> Kembali ke Halaman Utama </a>
+                                <?php }else if($bagian == 'Gudang'){ ?>
+                                    <a href="../view/halaman_utama_gudang.php"> Kembali ke Halaman Utama </a>
+                                <?php }else{
+                                    echo 'Bagian Tidak Dikenali!';
+                                }
+                                ?>
+                            </div>
                             <div class="form-group text-center">
                                 <a href='../view/data_pengguna.php'> Kembali ke Data Pengguna </a>
                             </div> 
