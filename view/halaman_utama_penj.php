@@ -3,6 +3,8 @@ include('header_penj.php');
 ?>
 
     <!-- Card -->
+    <div id="layoutSidenav_content">
+        <main>
     <div class="container p-5">
         <div class="d-flex justify-content-around text-center">
             <div class="card text-bg-primary mb-3" style="width: 18rem;">
@@ -52,6 +54,8 @@ include('header_penj.php');
             </div>   
         </div>
     </div> 
+    </div>
+    </main>
     <!-- End Card -->
 
 <?php
