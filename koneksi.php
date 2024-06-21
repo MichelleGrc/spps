@@ -24,6 +24,7 @@
             return $konek;
         }
 
+
         //function insert
         public function insert($query)
         {   
@@ -80,6 +81,7 @@
             $hasil = mysqli_query($this->koneksi, $query);
             return $hasil;
         }
+
     }
 
     class Register extends Koneksi

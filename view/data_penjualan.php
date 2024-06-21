@@ -31,6 +31,16 @@ if($bagian == 'Bos'){
         <main>
             <br><br>
             <div class="container">
+            <!-- Search -->
+            <form action="" method="post" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <input class="form-control" type="text" name="keyword" placeholder="Search..." autocomplete="off" autofocus/>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit" name="cari"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+            <br><br>
                 <!-- <div class="row d-flex justify-content-center"> -->
                     <div class="row">
                         <div class="col">
@@ -60,12 +70,52 @@ if($bagian == 'Bos'){
                                         </thead>
                                         <tbody class="text-center">
                                             <?php
-                                            //menampilkan semua data dengan while
-                                                $tampil = $penjualan->tampilPenjualan();
+                                            $konek = mysqli_connect('localhost','root','','spps-plm');
+                                            $dataHalaman = 10;
+                                            $banyakData = mysqli_num_rows(mysqli_query($konek, "SELECT * FROM penjualan INNER JOIN detail_penjualan 
+                                            ON detail_penjualan.idPenjualan = penjualan.idPenjualan 
+                                            INNER JOIN barang
+                                            ON barang.idBarang = detail_penjualan.idBarang
+                                            INNER JOIN pengguna
+                                            ON penjualan.idPengguna = pengguna.idPengguna
+                                            ORDER BY penjualan.idPenjualan"));
+                                            $banyakHalaman = ceil($banyakData / $dataHalaman);
+                                            if(isset($_GET['halaman'])){
+                                                $halaman = $_GET['halaman'];
+                                            }else{
+                                                $halaman = 1;
+                                            }
+                                            $dataAwal = ($halaman * $dataHalaman)-$dataHalaman;
+
                                                 $no=1;
-                                                if($tampil)
-                                                {
-                                                    while($row = mysqli_fetch_assoc($tampil)){
+
+                                                // Search
+                                                if(isset($_POST['cari'])){
+                                                    $keyword=$_POST['keyword'];
+                                                    $ambil = mysqli_query($konek, "SELECT * FROM penjualan INNER JOIN detail_penjualan 
+                                                    ON detail_penjualan.idPenjualan = penjualan.idPenjualan 
+                                                    INNER JOIN barang
+                                                    ON barang.idBarang = detail_penjualan.idBarang
+                                                    INNER JOIN pengguna
+                                                    ON penjualan.idPengguna = pengguna.idPengguna
+                                                    WHERE 
+                                                    idPenjualan LIKE '%$keyword%' OR
+                                                    namaPengguna LIKE '%$keyword%' OR
+                                                    tanggalPenjualan LIKE '%$keyword%' OR
+                                                    namaBarang LIKE '%$keyword%'
+                                                    ORDER BY penjualan.idPenjualan 
+                                                    LIMIT $dataAwal, $dataHalaman"); 
+                                                }else{
+                                                    $ambil = mysqli_query($konek, "SELECT * FROM penjualan INNER JOIN detail_penjualan 
+                                                    ON detail_penjualan.idPenjualan = penjualan.idPenjualan 
+                                                    INNER JOIN barang
+                                                    ON barang.idBarang = detail_penjualan.idBarang
+                                                    INNER JOIN pengguna
+                                                    ON penjualan.idPengguna = pengguna.idPengguna
+                                                    ORDER BY penjualan.idPenjualan 
+                                                    LIMIT $dataAwal, $dataHalaman"); 
+                                                }
+                                                    while($row = mysqli_fetch_assoc($ambil)){
                                                     ?>
                                                         <tr>
                                                             <td><?php echo $no++; ?></td>
@@ -80,10 +130,31 @@ if($bagian == 'Bos'){
                                                         </tr>
                                                     <?php
                                                     }
-                                                }
                                                 ?>
                                         </tbody>
                                     </table>
+                                    <nav>
+                                        <ul class="pagination">
+                                            <!-- Tombol Sebelumnya -->
+                                            <?php if($halaman <= 1){?>
+                                                <li class="page-item disabled"><a href="?halaman=<?php echo $halaman-1;?>" class="page-link"><</a></li>
+                                            <?php }else{?>
+                                                <li class="page-item"><a href="?halaman=<?php echo $halaman-1;?>" class="page-link"><</a></li>
+                                            <?php }?>
+                                            
+                                            <?php for ($i = 1; $i <= $banyakHalaman; $i++){
+                                            ?>
+                                            <li class="page-item"><a href ="?halaman=<?php echo $i; ?>" class="page-link"><?php echo $i; ?></a></li>
+                                            <?php } ?>
+
+                                            <!-- Tombol Selanjutnya -->
+                                            <?php if($halaman >= $banyakHalaman){?>
+                                                <li class="page-item disabled"><a href="?halaman=<?php echo $halaman+1;?>" class="page-link">></a></li>
+                                            <?php }else{?>
+                                                <li class="page-item"><a href="?halaman=<?php echo $halaman+1;?>" class="page-link">></a></li>
+                                            <?php }?>
+                                        </ul>
+                                    </nav>
                                 </div>
                         </div>
                     </div>
