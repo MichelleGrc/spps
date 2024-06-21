@@ -36,9 +36,9 @@ class Penjualan
             $sisaStok = $this->stok->sisaStok($query3);
 
             $query = "INSERT INTO penjualan
-            SET idPenjualan='$idPenjualan', idPengguna ='$idPengguna', tanggalPenjualan='$tanggalPenjualan', kuantitas='$kuantitas'";
+            SET idPenjualan='$idPenjualan', idPengguna ='$idPengguna', tanggalPenjualan='$tanggalPenjualan'";
             $query2 = "INSERT INTO detail_penjualan
-            SET idPenjualan='$idPenjualan', idBarang='$idBarang';";
+            SET idPenjualan='$idPenjualan', idBarang='$idBarang', kuantitas='$kuantitas';";
 
             $hasil = $this->db->insert($query);
             $hasil = $this->db->insert($query2);

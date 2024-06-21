@@ -18,6 +18,7 @@ class Pembelian
         $idBarang = $data['idBarang'];
         $tanggalPembelian = $data['tanggalPembelian'];
         $kuantitas = $data['kuantitas'];
+        $idPengguna = $data['idPengguna'];
 
         //cek jumlah stok
         $query = "SELECT * FROM pembelian INNER JOIN detail_pembelian 
@@ -38,9 +39,9 @@ class Pembelian
         // idBarang = '$idBarang'";
 
         $query = "INSERT INTO pembelian
-        SET idPembelian='$idPembelian', tanggalPembelian='$tanggalPembelian', kuantitas='$kuantitas'";
+        SET idPembelian='$idPembelian', idPengguna ='$idPengguna', tanggalPembelian='$tanggalPembelian'";
         $query2 = "INSERT INTO detail_pembelian
-        SET idPembelian='$idPembelian', idBarang='$idBarang';";
+        SET idPembelian='$idPembelian', idBarang='$idBarang', kuantitas='$kuantitas';";
 
         $hasil = $this->db->insert($query);
         $hasil = $this->db->insert($query2);
