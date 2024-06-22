@@ -40,7 +40,7 @@ if($bagian == 'Bos'){
         <main>
             <br><br>
             <div class="container">
-                <!-- Search -->
+            <!-- Search -->
             <form action="" method="post" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
                 <div class="input-group">
                     <input class="form-control" type="text" name="keyword" placeholder="Search..." autocomplete="off" autofocus/>
@@ -50,6 +50,22 @@ if($bagian == 'Bos'){
                 </div>
             </form>
             <br><br>
+            <!-- Alert barang habis -->
+            <?php
+            $konek = mysqli_connect('localhost','root','','spps_plm');
+            $ambildatastok = mysqli_query($konek, "SELECT * FROM barang WHERE stok < 1");
+
+            while($fetch=mysqli_fetch_array($ambildatastok)){
+            $barang = $fetch['namaBarang'];
+            ?>
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Perhatian!</strong> Stok <?=$barang;?> Telah Habis.
+            </div>
+            <?php
+            }
+            ?>
+
                 <!-- <div class="row d-flex justify-content-center"> -->
                     <div class="row">
                         <div class="col">
@@ -110,13 +126,8 @@ if($bagian == 'Bos'){
                                                 $halaman = 1;
                                             }
                                             $dataAwal = ($halaman * $dataHalaman)-$dataHalaman;
-
-                                            //menampilkan semua data dengan while
-                                                // $tampil = $barang->tampilBarang();
                                                 $no=1;
-                                                // if($tampil)
-                                                // {
-
+    
                                                 // Search
                                                 if(isset($_POST['cari'])){
                                                     $keyword=$_POST['keyword'];
@@ -150,8 +161,7 @@ if($bagian == 'Bos'){
                                                             </td>
                                                         </tr>
                                                     <?php
-                                                    }
-                                                //}
+                                                    } 
                                                 ?>
                                         </tbody>
                                     </table>
