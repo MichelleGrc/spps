@@ -72,7 +72,7 @@ if($bagian == 'Bos'){
                                         </thead>
                                         <tbody class="text-center">
                                             <?php
-                                            $konek = mysqli_connect('localhost','root','','spps-plm');
+                                            $konek = mysqli_connect('localhost','root','','spps_plm');
                                             $dataHalaman = 10;
                                             $banyakData = mysqli_num_rows(mysqli_query($konek, "SELECT * FROM penjualan INNER JOIN detail_penjualan 
                                             ON detail_penjualan.idPenjualan = penjualan.idPenjualan 
