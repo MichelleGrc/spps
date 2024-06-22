@@ -21,22 +21,13 @@ class Pembelian
         $idPengguna = $data['idPengguna'];
 
         //cek jumlah stok
-        $query = "SELECT * FROM pembelian INNER JOIN detail_pembelian 
-        ON detail_pembelian.idPembelian = pembelian.idPembelian 
-        INNER JOIN barang
-        ON barang.idBarang = detail_pembelian.idBarang
-        ORDER BY pembelian.idPembelian";
+        $query = "SELECT * FROM barang WHERE idBarang = '$idBarang'";
         $this->stok = new cek();
         $stoksekarang = $this->stok->cekStok($query);
 
         $sisaStok = $stoksekarang + $kuantitas;  //sisa stok adalah stok pada db ditambah jumlah pembelian
         $query3 = "UPDATE barang SET stok='$sisaStok' WHERE idBarang='$idBarang'";
         $sisaStok = $this->stok->sisaStok($query3);
-        
-        // $query = "INSERT INTO pembelian, detail_pembelian SET pembelian.idPembelian='$idPembelian',
-        // detail_pembelian.idPembelian='$idPembelian',
-        // tanggalPembelian='$tanggalPembelian', kuantitas='$kuantitas',
-        // idBarang = '$idBarang'";
 
         $query = "INSERT INTO pembelian
         SET idPembelian='$idPembelian', idPengguna ='$idPengguna', tanggalPembelian='$tanggalPembelian'";

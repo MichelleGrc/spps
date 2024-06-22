@@ -97,7 +97,7 @@ $login = new Login(); //membuat object untuk class Login()
                             </a>
                             <div class="collapse" id="collapseLaporan" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">Barang Masuk</a>
+                                    <a class="nav-link" href="view_lapmasuk.php">Barang Masuk</a>
                                     <a class="nav-link" href="#">Barang Keluar</a>
                                     <a class="nav-link" href="#">Penjualan</a>
                                 </nav>

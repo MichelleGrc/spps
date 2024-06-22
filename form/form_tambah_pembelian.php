@@ -98,33 +98,36 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                     <label for="input_tanggal_pembelian" class="form-label">Tanggal Pembelian</label>
                                     <input type="text" class="form-control" name="tanggalPembelian" value="<?php echo date('d-m-Y') ?>" readonly>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="input_id_barang" class="form-label">ID Barang</label>
-                                    <select class="form-control" name="idBarang" required>
-                                        <option value="">Pilih Barang</option>
-                                        <?php
-                                        //karena data idBarang di form transaksi ini diambil dari tb supplier
-                                        //maka query dari barang di-select dahulu sebagai berikut
-                                            $query = "SELECT * FROM barang";
-                                            $hasil = $db->fetchID($query);
-
-                                            while($row = mysqli_fetch_array($hasil))
-                                            { 
-                                                //data idSupplier ditampilkan dengan while dalam option select
-                                                $idBarang = $row['idBarang'];  //untuk menampilkan idBarang dalam option
-                                                $stok = $row['stok'];  //untuk menampilkan stok dalam option
-                                                $namaBarang = $row['namaBarang'];     //untuk menampilkan namaBarang dalam option    
-                                                ?>
-                                                <option value="<?=$idBarang?>"> <?= $namaBarang ?> (Stok: <?=$stok?>) </option>;
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="input_id_barang" class="form-label">ID Barang</label>
+                                        <select class="form-control" name="idBarang" required>
+                                            <option value="">Pilih Barang</option>
                                             <?php
-                                            }
-                                        ?>
-                                    </select>
+                                            //karena data idBarang di form transaksi ini diambil dari tb supplier
+                                            //maka query dari barang di-select dahulu sebagai berikut
+                                                $query = "SELECT * FROM barang";
+                                                $hasil = $db->fetchID($query);
+
+                                                while($row = mysqli_fetch_array($hasil))
+                                                { 
+                                                    //data idSupplier ditampilkan dengan while dalam option select
+                                                    $idBarang = $row['idBarang'];  //untuk menampilkan idBarang dalam option
+                                                    $stok = $row['stok'];  //untuk menampilkan stok dalam option
+                                                    $namaBarang = $row['namaBarang'];     //untuk menampilkan namaBarang dalam option    
+                                                    ?>
+                                                    <option value="<?=$idBarang?>"> <?= $namaBarang ?> (Stok: <?=$stok?>) </option>;
+                                                <?php
+                                                }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label for="input_kuantitas" class="form-label">Kuantitas</label>
+                                        <input type="text" class="form-control" name="kuantitas" required>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="input_kuantitas" class="form-label">Kuantitas</label>
-                                    <input type="text" class="form-control" name="kuantitas" required>
-                                </div>
+                                <br>
                                 <div class="row">
                                     <div class="col">
                                         <input type="submit" value="Submit" class="btn btn-success form-control">

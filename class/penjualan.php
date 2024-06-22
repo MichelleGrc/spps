@@ -21,11 +21,7 @@ class Penjualan
         $idPengguna = $data['idPengguna'];
 
         //cek jumlah stok
-        $query = "SELECT * FROM penjualan INNER JOIN detail_penjualan 
-        ON detail_penjualan.idPenjualan = penjualan.idPenjualan 
-        INNER JOIN barang
-        ON barang.idBarang = detail_penjualan.idBarang
-        ORDER BY penjualan.idPenjualan";
+        $query = "SELECT * FROM barang WHERE idBarang = '$idBarang'";
         $this->stok = new cek();
         $stoksekarang = $this->stok->cekStok($query);
 

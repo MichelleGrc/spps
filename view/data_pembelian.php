@@ -66,6 +66,8 @@ if($bagian == 'Bos'){
                                                 <th>Barang</th>
                                                 <th>Supplier</th>
                                                 <th>Kuantitas</th>
+                                                <th>Harga Beli</th>
+                                                <th>Total</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -132,6 +134,8 @@ if($bagian == 'Bos'){
                                                             <td><?php echo $row['namaBarang']; ?></td>
                                                             <td><?php echo $row['namaSupplier']; ?></td>
                                                             <td><?php echo $row['kuantitas']; ?></td>
+                                                            <td><?php echo $row['hargaBeli']; ?></td>
+                                                            <td><?php echo ($row['hargaBeli'])*($row['kuantitas']); ?></td>
                                                             <td>
                                                                 <a class="btn btn-warning" href="detail_pembelian.php?idPembelian=<?php echo base64_encode($row['idPembelian'])?>">Detail</a>
                                                             </td>
