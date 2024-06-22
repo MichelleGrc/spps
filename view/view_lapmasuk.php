@@ -38,7 +38,7 @@ if($bagian == 'Bos'){
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-3">
-                                            <a class="btn btn-primary float-end" href='../view/cetak_laporan_masuk.php'>Cetak</a>                                   
+                                            <a class="btn btn-primary float-end" href='../view/export.php'>Export</a>                                   
                                         </div>
                                         <div class="col-6">
                                             <h2 class="text-center">LAPORAN BARANG MASUK</h2>
