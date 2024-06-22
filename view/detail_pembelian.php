@@ -1,7 +1,6 @@
 <?php
 include_once '../class/pembelian.php';  //menyertakan file pembelian.php
 $pembelian = new Pembelian();              //membuat objek dari class Pembelian()
-$db = new Koneksi();
 
 $select = new Select();
 if(isset($_SESSION["id"]))

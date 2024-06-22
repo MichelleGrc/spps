@@ -1,6 +1,7 @@
 <?php
 include_once '../class/pengguna.php';  //menyertakan file pengguna.php
 $pengguna = new Pengguna();              //membuat objek dari class Pengguna()
+$db = new Koneksi(); //menghubungkan ke tabel database
 
 $select = new Select();
 if(isset($_SESSION["id"]))
@@ -90,9 +91,8 @@ if($bagian == 'Bos'){
                                         </thead>
                                         <tbody class="text-center">
                                             <?php
-                                            $konek = mysqli_connect('localhost','root','','spps_plm');
                                             $dataHalaman = 10;
-                                            $banyakData = mysqli_num_rows(mysqli_query($konek, "SELECT * FROM pengguna ORDER BY idPengguna"));
+                                            $banyakData = mysqli_num_rows(mysqli_query($db->konek(), "SELECT * FROM pengguna ORDER BY idPengguna"));
                                             $banyakHalaman = ceil($banyakData / $dataHalaman);
                                             if(isset($_GET['halaman'])){
                                                 $halaman = $_GET['halaman'];
@@ -106,13 +106,13 @@ if($bagian == 'Bos'){
                                                 // Search
                                                 if(isset($_POST['cari'])){
                                                     $keyword=$_POST['keyword'];
-                                                    $ambil = mysqli_query($konek, "SELECT * FROM pengguna WHERE 
+                                                    $ambil = mysqli_query($db->konek(), "SELECT * FROM pengguna WHERE 
                                                     idPengguna LIKE '%$keyword%' OR
                                                     namaPengguna LIKE '%$keyword%' OR
                                                     bagian LIKE '%$keyword%' 
                                                     ORDER BY idPengguna LIMIT $dataAwal, $dataHalaman"); 
                                                 }else{
-                                                    $ambil = mysqli_query($konek, "SELECT * FROM pengguna ORDER BY idPengguna LIMIT $dataAwal, $dataHalaman"); 
+                                                    $ambil = mysqli_query($db->konek(), "SELECT * FROM pengguna ORDER BY idPengguna LIMIT $dataAwal, $dataHalaman"); 
                                                 }
                                                     while($row = mysqli_fetch_assoc($ambil)){
                                                     ?>

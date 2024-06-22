@@ -1,6 +1,7 @@
 <?php
 include_once '../class/barang.php';  //menyertakan file barang.php
 $barang = new Barang();              //membuat objek dari class Barang()
+$db = new Koneksi(); //menghubungkan ke tabel database
 
 $select = new Select();
 if(isset($_SESSION["id"]))
@@ -52,8 +53,7 @@ if($bagian == 'Bos'){
             <br><br>
             <!-- Alert barang habis -->
             <?php
-            $konek = mysqli_connect('localhost','root','','spps_plm');
-            $ambildatastok = mysqli_query($konek, "SELECT * FROM barang WHERE stok < 1");
+            $ambildatastok = mysqli_query($db->konek(), "SELECT * FROM barang WHERE stok < 1");
 
             while($fetch=mysqli_fetch_array($ambildatastok)){
             $barang = $fetch['namaBarang'];
@@ -116,9 +116,8 @@ if($bagian == 'Bos'){
                                         </thead>
                                         <tbody class="text-center">
                                             <?php
-                                            $konek = mysqli_connect('localhost','root','','spps_plm');
                                             $dataHalaman = 10;
-                                            $banyakData = mysqli_num_rows(mysqli_query($konek, "SELECT * FROM barang INNER JOIN supplier ON barang.idSupplier = supplier.idSupplier ORDER BY barang.idBarang"));
+                                            $banyakData = mysqli_num_rows(mysqli_query($db->konek(), "SELECT * FROM barang INNER JOIN supplier ON barang.idSupplier = supplier.idSupplier ORDER BY barang.idBarang"));
                                             $banyakHalaman = ceil($banyakData / $dataHalaman);
                                             if(isset($_GET['halaman'])){
                                                 $halaman = $_GET['halaman'];
@@ -131,7 +130,7 @@ if($bagian == 'Bos'){
                                                 // Search
                                                 if(isset($_POST['cari'])){
                                                     $keyword=$_POST['keyword'];
-                                                    $ambil = mysqli_query($konek, "SELECT * FROM barang INNER JOIN supplier ON barang.idSupplier = supplier.idSupplier WHERE 
+                                                    $ambil = mysqli_query($db->konek(), "SELECT * FROM barang INNER JOIN supplier ON barang.idSupplier = supplier.idSupplier WHERE 
                                                     idBarang LIKE '%$keyword%' OR
                                                     namaBarang LIKE '%$keyword%' OR
                                                     jenisBarang LIKE '%$keyword%' OR
@@ -139,7 +138,7 @@ if($bagian == 'Bos'){
                                                     namaSupplier LIKE '%$keyword%' 
                                                     ORDER BY barang.idBarang LIMIT $dataAwal, $dataHalaman"); 
                                                 }else{
-                                                    $ambil = mysqli_query($konek, "SELECT * FROM barang INNER JOIN supplier ON barang.idSupplier = supplier.idSupplier ORDER BY barang.idBarang LIMIT $dataAwal, $dataHalaman"); 
+                                                    $ambil = mysqli_query($db->konek(), "SELECT * FROM barang INNER JOIN supplier ON barang.idSupplier = supplier.idSupplier ORDER BY barang.idBarang LIMIT $dataAwal, $dataHalaman"); 
                                                 }
                                                     while($row = mysqli_fetch_assoc($ambil)){
                                                     ?>

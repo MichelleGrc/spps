@@ -1,5 +1,6 @@
 <?php
 include_once '../class/laporan.php'; 
+$db = new Koneksi(); //menghubungkan ke tabel database
 ?>
 <html>
 <head>
@@ -17,55 +18,59 @@ include_once '../class/laporan.php';
 <body>
 <div class="container">
     <br></br>
-			<h2>Laporan Stok Masuk</h2>
-            <h4>PD Libra Motor</h4>
-				<div class="data-tables datatable-dark">
-					<table class="table table-hover table-bordered" id="mauexport">
-                        <thead>
-                            <tr class="text-center">
-                                <th>No</th>
-                                <th>ID</th>
-                                <th>Nama Supplier</th>
-                                <th>Nama Barang</th>
-                                <th>Kuantitas</th>
-                                <th>Harga Beli</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            <?php
-                            //menampilkan semua data dengan while
-                                if (isset($_POST["submit"])) {    
-                                    $tgl=$_POST['tgl'];
-                                    $tahun=$_POST['tahun'];
-                                    $tampil = $lap->showBarangMasuk($tgl, $tahun);
-                                                
-                                    echo "Periode Bulan $tgl Tahun $tahun";
-                                                
-                                $no=1;
-                                if($tampil)
-                                {
-                                    while($row = mysqli_fetch_assoc($tampil)){
-                                    ?>
-                                        <tr>
-                                            <td><?php echo $no++; ?></td>
-                                            <td><?php echo $row['idPembelian']; ?></td>
-                                            <td><?php echo $row['namaSupplier']; ?></td>
-                                            <td><?php echo $row['namaBarang']; ?></td>
-                                            <td><?php echo $row['kuantitas']; ?></td>
-                                            <td><?php echo $row['hargaBeli']; ?></td>
-                                            <td><?php echo ($row['kuantitas'])*($row['hargaBeli']); ?></td>
-                                        </tr>
-                                    <?php
-                                    }
-                                }
-                            }
-                                    ?>
-                            </tbody>
-                        </table>
-				</div>
+    <h2>Laporan Stok Masuk</h2>
+    <h4>PD Libra Motor</h4>
+    <div class="data-tables datatable-dark">
+        <table class="table table-hover table-bordered" id="mauexport">
+            <thead>
+                <tr class="text-center">
+                    <th>No</th>
+                    <th>ID</th>
+                    <th>Nama Supplier</th>
+                    <th>Nama Barang</th>
+                    <th>Kuantitas</th>
+                    <th>Harga Beli</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <?php
+                // Query to fetch data from the database
+                
+                $query = "SELECT pembelian.idPembelian, namaSupplier, namaBarang, kuantitas, hargaBeli, kuantitas*hargaBeli as total
+                FROM barang INNER JOIN supplier 
+                ON barang.idSupplier = supplier.idSupplier 
+                INNER JOIN detail_pembelian
+                ON barang.idBarang = detail_pembelian.idBarang
+                INNER JOIN pembelian
+                ON detail_pembelian.idPembelian = pembelian.idPembelian
+                ORDER BY pembelian.idPembelian";
+                $result = mysqli_query($db->konek(), $query);
+
+                if(mysqli_num_rows($result) > 0){
+                    $no = 1;
+                    while($row = mysqli_fetch_assoc($result)){
+                        ?>
+                        <tr>
+                            <td><?php echo $no++; ?></td>
+                            <td><?php echo $row['idPembelian']; ?></td>
+                            <td><?php echo $row['namaSupplier']; ?></td>
+                            <td><?php echo $row['namaBarang']; ?></td>
+                            <td><?php echo $row['kuantitas']; ?></td>
+                            <td><?php echo 'Rp ' . number_format($row['hargaBeli'],2,',','.'); ?></td>
+                            <td><?php echo 'Rp ' . number_format($row['kuantitas'] * $row['hargaBeli'],2,',','.'); ?></td>
+                        </tr>
+                        <?php
+                    }
+                } else {
+                    echo "<tr><td colspan='7'>No data found</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
 </div>
-	
+
 <script>
 $(document).ready(function() {
     $('#mauexport').DataTable( {
@@ -74,8 +79,7 @@ $(document).ready(function() {
             'copy','csv','excel', 'pdf', 'print'
         ]
     } );
-} );
-
+});
 </script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -88,8 +92,5 @@ $(document).ready(function() {
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
 
-	
-
 </body>
-
 </html>

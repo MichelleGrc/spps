@@ -1,6 +1,7 @@
 <?php
 include_once '../class/supplier.php';  //menyertakan file supplier.php
 $supplier = new Supplier();              //membuat objek dari class Supplier()
+$db = new Koneksi(); //menghubungkan ke tabel database
 
 $select = new Select();
 if(isset($_SESSION["id"]))
@@ -89,9 +90,8 @@ if($bagian == 'Bos'){
                                         </thead>
                                         <tbody class="text-center">
                                             <?php
-                                            $konek = mysqli_connect('localhost','root','','spps_plm');
                                             $dataHalaman = 10;
-                                            $banyakData = mysqli_num_rows(mysqli_query($konek, "SELECT * FROM supplier ORDER BY idSupplier"));
+                                            $banyakData = mysqli_num_rows(mysqli_query($db->konek(), "SELECT * FROM supplier ORDER BY idSupplier"));
                                             $banyakHalaman = ceil($banyakData / $dataHalaman);
                                             if(isset($_GET['halaman'])){
                                                 $halaman = $_GET['halaman'];
@@ -105,12 +105,12 @@ if($bagian == 'Bos'){
                                                 // Search
                                                 if(isset($_POST['cari'])){
                                                     $keyword=$_POST['keyword'];
-                                                    $ambil = mysqli_query($konek, "SELECT * FROM supplier WHERE 
+                                                    $ambil = mysqli_query($db->konek(), "SELECT * FROM supplier WHERE 
                                                     idSupplier LIKE '%$keyword%' OR
                                                     namaSupplier LIKE '%$keyword%' 
                                                     ORDER BY idSupplier LIMIT $dataAwal, $dataHalaman"); 
                                                 }else{
-                                                    $ambil = mysqli_query($konek, "SELECT * FROM supplier ORDER BY idSupplier LIMIT $dataAwal, $dataHalaman"); 
+                                                    $ambil = mysqli_query($db->konek(), "SELECT * FROM supplier ORDER BY idSupplier LIMIT $dataAwal, $dataHalaman"); 
                                                 }
                                                     while($row = mysqli_fetch_assoc($ambil)){
                                                     ?>

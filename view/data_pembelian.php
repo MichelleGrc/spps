@@ -1,6 +1,7 @@
 <?php
 include_once '../class/pembelian.php';  //menyertakan file pembelian.php
 $pembelian = new Pembelian();              //membuat objek dari class Pembelian()
+$db = new Koneksi(); //menghubungkan ke tabel database
 
 $select = new Select();
 if(isset($_SESSION["id"]))
@@ -73,9 +74,8 @@ if($bagian == 'Bos'){
                                         </thead>
                                         <tbody class="text-center">
                                             <?php
-                                            $konek = mysqli_connect('localhost','root','','spps_plm');
                                             $dataHalaman = 10;
-                                            $banyakData = mysqli_num_rows(mysqli_query($konek, "SELECT * FROM pembelian INNER JOIN detail_pembelian 
+                                            $banyakData = mysqli_num_rows(mysqli_query($db->konek(), "SELECT * FROM pembelian INNER JOIN detail_pembelian 
                                             ON detail_pembelian.idPembelian = pembelian.idPembelian 
                                             INNER JOIN barang
                                             ON barang.idBarang = detail_pembelian.idBarang
@@ -97,7 +97,7 @@ if($bagian == 'Bos'){
                                                 // Search
                                                 if(isset($_POST['cari'])){
                                                     $keyword=$_POST['keyword'];
-                                                    $ambil = mysqli_query($konek, "SELECT * FROM pembelian INNER JOIN detail_pembelian 
+                                                    $ambil = mysqli_query($db->konek(), "SELECT * FROM pembelian INNER JOIN detail_pembelian 
                                                     ON detail_pembelian.idPembelian = pembelian.idPembelian 
                                                     INNER JOIN barang
                                                     ON barang.idBarang = detail_pembelian.idBarang
@@ -113,7 +113,7 @@ if($bagian == 'Bos'){
                                                     namaSupplier LIKE '%$keyword%' 
                                                     ORDER BY pembelian.idPembelian LIMIT $dataAwal, $dataHalaman"); 
                                                 }else{
-                                                    $ambil = mysqli_query($konek, "SELECT * FROM pembelian INNER JOIN detail_pembelian 
+                                                    $ambil = mysqli_query($db->konek(), "SELECT * FROM pembelian INNER JOIN detail_pembelian 
                                                     ON detail_pembelian.idPembelian = pembelian.idPembelian 
                                                     INNER JOIN barang
                                                     ON barang.idBarang = detail_pembelian.idBarang
