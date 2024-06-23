@@ -16,12 +16,51 @@ $db = new Koneksi(); //menghubungkan ke tabel database
 </head>
 
 <body>
+<script>
+$(document).ready(function() {
+    $('#export').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'excel', 'pdf', 'print'
+        ]
+    } );
+});
+</script>
 <div class="container">
     <br></br>
     <h2>Laporan Stok Masuk</h2>
     <h4>PD Libra Motor</h4>
     <div class="data-tables datatable-dark">
-        <table class="table table-hover table-bordered" id="mauexport">
+    <form action="view_lapmasuk.php" method="post">
+                                        <div class="mb-3">
+                                            <label for="input_tgl" class="form-label">Bulan</label>
+                                            <select type="text" class="form-control" name="tgl" required>
+                                                <option value="">Pilih Bulan</option>
+                                                <option value="01">Januari</option>
+                                                <option value="02">Februari</option>
+                                                <option value="03">Maret</option>
+                                                <option value="04">April</option>
+                                                <option value="05">Mei</option>
+                                                <option value="06">Juni</option>
+                                                <option value="07">Juli</option>
+                                                <option value="08">Agustus</option>
+                                                <option value="09">September</option>
+                                                <option value="10">Oktober</option>
+                                                <option value="11">November</option>
+                                                <option value="12">Desember</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="input_tahun" class="form-label">Tahun</label>
+                                            <input type="number" class="form-control" name="tahun" required>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <input type="submit" name="submit" value="Proses" class="btn btn-success form-control">
+                                            </div>                    
+                                        </div>
+                                    </form>
+        <table class="table table-hover table-bordered" id="export">
             <thead>
                 <tr class="text-center">
                     <th>No</th>
@@ -36,7 +75,6 @@ $db = new Koneksi(); //menghubungkan ke tabel database
             <tbody class="text-center">
                 <?php
                 // Query to fetch data from the database
-                
                 $query = "SELECT pembelian.idPembelian, namaSupplier, namaBarang, kuantitas, hargaBeli, kuantitas*hargaBeli as total
                 FROM barang INNER JOIN supplier 
                 ON barang.idSupplier = supplier.idSupplier 
@@ -47,9 +85,12 @@ $db = new Koneksi(); //menghubungkan ke tabel database
                 ORDER BY pembelian.idPembelian";
                 $result = mysqli_query($db->konek(), $query);
 
+                $totalHarga = 0;
+
                 if(mysqli_num_rows($result) > 0){
                     $no = 1;
                     while($row = mysqli_fetch_assoc($result)){
+                        $totalHarga+= $row['total'];
                         ?>
                         <tr>
                             <td><?php echo $no++; ?></td>
@@ -58,29 +99,22 @@ $db = new Koneksi(); //menghubungkan ke tabel database
                             <td><?php echo $row['namaBarang']; ?></td>
                             <td><?php echo $row['kuantitas']; ?></td>
                             <td><?php echo 'Rp ' . number_format($row['hargaBeli'],2,',','.'); ?></td>
-                            <td><?php echo 'Rp ' . number_format($row['kuantitas'] * $row['hargaBeli'],2,',','.'); ?></td>
+                            <td><?php echo 'Rp ' . number_format($row['total'],2,',','.'); ?></td>
                         </tr>
                         <?php
                     }
                 } else {
-                    echo "<tr><td colspan='7'>No data found</td></tr>";
+                    echo "<tr><td colspan='7'>Tidak Ada Data</td></tr>";
                 }
                 ?>
             </tbody>
+                <tr>
+                    <th colspan="6" class="text-right">Total Harga</th>
+                    <th class="text-center"><?php echo 'Rp ' . number_format($totalHarga,2,',','.'); ?></th>
+                </tr>
         </table>
     </div>
 </div>
-
-<script>
-$(document).ready(function() {
-    $('#mauexport').DataTable( {
-        dom: 'Bfrtip',
-        buttons: [
-            'copy','csv','excel', 'pdf', 'print'
-        ]
-    } );
-});
-</script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
