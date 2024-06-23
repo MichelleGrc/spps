@@ -75,8 +75,8 @@ $login = new Login(); //membuat object untuk class Login()
                             </a>
                             <div class="collapse" id="collapseLaporan" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="laporan_masuk.php">Barang Masuk</a>
-                                    <a class="nav-link" href="laporan_keluar.php">Barang Keluar</a>
+                                    <a class="nav-link" href="laporan_masuk.php">Stok Masuk</a>
+                                    <a class="nav-link" href="laporan_keluar.php">Stok Keluar</a>
                                 </nav>
                             </div>
                             <a class="nav-link" href="../logout.php" onclick="return confirm('Anda Yakin Ingin Logout?')">

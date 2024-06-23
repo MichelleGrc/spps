@@ -92,7 +92,6 @@ if($bagian == 'Bos'){
                                 <th>No</th>
                                 <th>ID</th>
                                 <th>Tanggal Keluar</th>
-                                <th>Nama Supplier</th>
                                 <th>Nama Barang</th>
                                 <th>Kuantitas</th>
                             </tr>
@@ -105,10 +104,8 @@ if($bagian == 'Bos'){
                             //$tampil = $lap->showBarangMasuk($tgl, $tahun);
 
                             // Query to fetch data from the database
-                            $query = "SELECT penjualan.idPenjualan, tanggalPenjualan, namaSupplier, namaBarang, kuantitas, hargaJual
+                            $query = "SELECT penjualan.idPenjualan, tanggalPenjualan, namaBarang, kuantitas, hargaJual
                             FROM barang
-                            INNER JOIN supplier 
-                            ON barang.idSupplier = supplier.idSupplier 
                             INNER JOIN detail_penjualan
                             ON barang.idBarang = detail_penjualan.idBarang
                             INNER JOIN penjualan
@@ -129,7 +126,6 @@ if($bagian == 'Bos'){
                                         <td><?php echo $no++; ?></td>
                                         <td><?php echo $row['idPenjualan']; ?></td>
                                         <td><?php echo $row['tanggalPenjualan']; ?></td>
-                                        <td><?php echo $row['namaSupplier']; ?></td>
                                         <td><?php echo $row['namaBarang']; ?></td>
                                         <td><?php echo $row['kuantitas']; ?></td>
                                     </tr>
@@ -142,7 +138,7 @@ if($bagian == 'Bos'){
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="5" class="text-right">Total Kuantitas</th>
+                                <th colspan="4" class="text-right">Total Kuantitas</th>
                                 <th class="text-center">
                                     <?php 
                                         echo $totalKuantitas; 
