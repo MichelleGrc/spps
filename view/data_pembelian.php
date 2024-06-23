@@ -106,11 +106,13 @@ if($bagian == 'Bos'){
                                                     INNER JOIN pengguna
                                                     ON pengguna.idPengguna = pembelian.idPengguna
                                                     WHERE 
-                                                    idPembelian LIKE '%$keyword%' OR
+                                                    pembelian.idPembelian LIKE '%$keyword%' OR
                                                     tanggalPembelian LIKE '%$keyword%' OR
                                                     namaPengguna LIKE '%$keyword%' OR
                                                     namaBarang LIKE '%$keyword%'OR
-                                                    namaSupplier LIKE '%$keyword%' 
+                                                    namaSupplier LIKE '%$keyword%' OR
+                                                    kuantitas LIKE '%$keyword%' OR
+                                                    hargaBeli LIKE '%$keyword%'
                                                     ORDER BY pembelian.idPembelian LIMIT $dataAwal, $dataHalaman"); 
                                                 }else{
                                                     $ambil = mysqli_query($db->konek(), "SELECT * FROM pembelian INNER JOIN detail_pembelian 
@@ -134,8 +136,8 @@ if($bagian == 'Bos'){
                                                             <td><?php echo $row['namaBarang']; ?></td>
                                                             <td><?php echo $row['namaSupplier']; ?></td>
                                                             <td><?php echo $row['kuantitas']; ?></td>
-                                                            <td><?php echo $row['hargaBeli']; ?></td>
-                                                            <td><?php echo ($row['hargaBeli'])*($row['kuantitas']); ?></td>
+                                                            <td><?php echo 'Rp ' . number_format($row['hargaBeli'],2,',','.'); ?></td>
+                                                            <td><?php echo 'Rp ' . number_format(($row['hargaBeli'])*($row['kuantitas'])) . ',00'; ?></td>
                                                             <td>
                                                                 <a class="btn btn-warning" href="detail_pembelian.php?idPembelian=<?php echo base64_encode($row['idPembelian'])?>">Detail</a>
                                                             </td>

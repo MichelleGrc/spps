@@ -9,6 +9,9 @@ if(isset($_SESSION["id"]))
     //jika user berhasil login, proses dilanjutkan
     $user = $select->selectUserById($_SESSION["id"]);
     $bagian = $user['bagian'];
+    if($bagian !== 'Bos' & $bagian !== 'Penjualan'){
+        header("Location: ../index.php");
+    }
 }else{
     //jika user belum login, pengguna langsung diarahkan lagi ke form login di index.php
     header("Location: ../index.php");
@@ -101,10 +104,12 @@ if($bagian == 'Bos'){
                                                     INNER JOIN pengguna
                                                     ON penjualan.idPengguna = pengguna.idPengguna
                                                     WHERE 
-                                                    idPenjualan LIKE '%$keyword%' OR
+                                                    penjualan.idPenjualan LIKE '%$keyword%' OR
                                                     namaPengguna LIKE '%$keyword%' OR
                                                     tanggalPenjualan LIKE '%$keyword%' OR
-                                                    namaBarang LIKE '%$keyword%'
+                                                    namaBarang LIKE '%$keyword%' OR
+                                                    kuantitas LIKE '%$keyword%' OR
+                                                    hargaJual LIKE '%$keyword%'
                                                     ORDER BY penjualan.idPenjualan 
                                                     LIMIT $dataAwal, $dataHalaman"); 
                                                 }else{
@@ -126,8 +131,8 @@ if($bagian == 'Bos'){
                                                             <td><?php echo $row['tanggalPenjualan']; ?></td>
                                                             <td><?php echo $row['namaBarang']; ?></td>
                                                             <td><?php echo $row['kuantitas']; ?></td>
-                                                            <td><?php echo $row['hargaJual']; ?></td>
-                                                            <td><?php echo ($row['hargaJual'])*($row['kuantitas']); ?></td>
+                                                            <td><?php echo 'Rp ' . number_format($row['hargaJual'],2,',','.'); ?></td>
+                                                            <td><?php echo 'Rp ' . number_format(($row['hargaJual'])*($row['kuantitas'])) . ',00'; ?></td>
                                                             <td>
                                                                 <a class="btn btn-warning" href="../detail_penjualan.php?idPenjualan=<?php echo base64_encode($row['idPenjualan'])?>">Detail</a>
                                                             </td>

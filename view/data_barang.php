@@ -135,6 +135,10 @@ if($bagian == 'Bos'){
                                                     namaBarang LIKE '%$keyword%' OR
                                                     jenisBarang LIKE '%$keyword%' OR
                                                     merk LIKE '%$keyword%'OR
+                                                    satuan LIKE '%$keyword%' OR
+                                                    stok LIKE '%$keyword%' OR
+                                                    hargaBeli LIKE '%$keyword%' OR
+                                                    hargaJual LIKE '%$keyword%' OR
                                                     namaSupplier LIKE '%$keyword%' 
                                                     ORDER BY barang.idBarang LIMIT $dataAwal, $dataHalaman"); 
                                                 }else{

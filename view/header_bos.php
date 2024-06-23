@@ -10,6 +10,9 @@ if(isset($_SESSION["id"]))
     //jika user berhasil login, proses dilanjutkan
     $user = $select->selectUserById($_SESSION["id"]);
     $bagian = $user['bagian'];
+    if($bagian !== 'Bos'){
+        header("Location: ../index.php");
+    }
 }else{
     //jika user belum login, pengguna langsung diarahkan lagi ke form login di index.php
     header("Location: ../index.php");
@@ -30,10 +33,18 @@ $login = new Login(); //membuat object untuk class Login()
         <link href="css/styles.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <a class="navbar-brand" href="index.html">PD Libra Motor</a>
+            <a class="navbar-brand" href="#">PD Libra Motor</a>
             <!-- <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button> -->
             <!-- Navbar Search-->
             <!-- <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
@@ -97,9 +108,9 @@ $login = new Login(); //membuat object untuk class Login()
                             </a>
                             <div class="collapse" id="collapseLaporan" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="view_lapmasuk.php">Barang Masuk</a>
-                                    <a class="nav-link" href="#">Barang Keluar</a>
-                                    <a class="nav-link" href="#">Penjualan</a>
+                                    <a class="nav-link" href="laporan_masuk.php">Barang Masuk</a>
+                                    <a class="nav-link" href="laporan_keluar.php">Barang Keluar</a>
+                                    <a class="nav-link" href="laporan_penjualan.php">Penjualan</a>
                                 </nav>
                             </div>
                             <a class="nav-link" href="../logout.php" onclick="return confirm('Anda Yakin Ingin Logout?')">

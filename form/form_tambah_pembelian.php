@@ -25,9 +25,9 @@ if(isset($_SESSION["id"]))
     header("Location: ../index.php");
 }
 
-if($_SERVER['REQUEST_METHOD']=='POST'){
-    $tambahPembelian = $pembelian->tambahPembelian($_POST);   //menggunakan method tambahPembelian()
-}
+// if($_SERVER['REQUEST_METHOD']=='POST'){
+//     $tambahPembelian = $pembelian->tambahPembelian($_POST);   //menggunakan method tambahPembelian()
+// }
 ?>
 
 <!DOCTYPE html>
@@ -51,12 +51,14 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                         <?php
                             //muncul alert dengan pesan berhasil atau tidaknya proses tambah
                             if(isset($tambahPembelian)){
+                                echo "<script>alert('Data Berhasil Tersimpan!');
+                                document.location='../view/data_pembelian.php'</script>";
                             ?>
-                                <div class="alert alert-warning" role="alert">
+                                <!-- <div class="alert alert-warning" role="alert">
                                     <strong>
                                         <h6 class="text-center"><?=$tambahPembelian?></h2>
                                     </strong>
-                                </div>
+                                </div> -->
                             <?php
                             }
                         ?>
@@ -85,9 +87,26 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                             </div>
                         </div>
                         <div class="card-body">
+                            <form action="../form/form_tambah_pembelian.php" method="post">
+                                <div class="mb-3">
+                                    <label for="input_tahun" class="form-label">Mau Input Berapa Data?</label>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="col-9">
+                                        <input type="number" class="form-control" name="jum" required>
+                                    </div>
+                                    <div class="col-3">
+                                        <input type="submit" name="proses" value="Proses" class="btn btn-success form-control">
+                                    </div>                    
+                                </div>
+                            </form> <br>
+                            <?php
+                            if (isset($_POST["proses"])) { ?>    
+
                             <form action="" method="post" name="form_tambah_pembelian" enctype="multipart/form-data">
                                 <div class="mb-3">
-                                <label for="input_id_pembelian" class="form-label">ID</label>
+                                    <label for="input_id_pembelian" class="form-label">ID</label>
                                     <input type="text" class="form-control" name="idPembelian" value="<?php echo $kodeauto ?>" readonly>
                                 </div>
                                 <div class="mb-3">
@@ -98,44 +117,63 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                     <label for="input_tanggal_pembelian" class="form-label">Tanggal Pembelian</label>
                                     <input type="text" class="form-control" name="tanggalPembelian" value="<?php echo date('d-m-Y') ?>" readonly>
                                 </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="input_id_barang" class="form-label">ID Barang</label>
-                                        <select class="form-control" name="idBarang" required>
-                                            <option value="">Pilih Barang</option>
-                                            <?php
-                                            //karena data idBarang di form transaksi ini diambil dari tb supplier
-                                            //maka query dari barang di-select dahulu sebagai berikut
-                                                $query = "SELECT * FROM barang";
-                                                $hasil = $db->fetchID($query);
 
-                                                while($row = mysqli_fetch_array($hasil))
-                                                { 
-                                                    //data idSupplier ditampilkan dengan while dalam option select
-                                                    $idBarang = $row['idBarang'];  //untuk menampilkan idBarang dalam option
-                                                    $stok = $row['stok'];  //untuk menampilkan stok dalam option
-                                                    $namaBarang = $row['namaBarang'];     //untuk menampilkan namaBarang dalam option    
-                                                    ?>
-                                                    <option value="<?=$idBarang?>"> <?= $namaBarang ?> (Stok: <?=$stok?>) </option>;
+                                <?php
+                                $jum=$_POST['jum'];
+                                for ($i=1; $i<=$jum; $i++){
+                                ?> 
+                                    <div class="mb-3">
+                                        <input type="hidden" name="idPembelian2[]" value="<?php echo $kodeauto;?>">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="form-label">ID Barang</label>
+                                            <select class="form-control" name="idBarang[]" required>
+                                                <option value="">Pilih Barang</option>
                                                 <?php
-                                                }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="col">
-                                        <label for="input_kuantitas" class="form-label">Kuantitas</label>
-                                        <input type="text" class="form-control" name="kuantitas" required>
-                                    </div>
-                                </div>
+                                                //karena data idBarang di form transaksi ini diambil dari tb supplier
+                                                //maka query dari barang di-select dahulu sebagai berikut
+                                                    $query = "SELECT * FROM barang";
+                                                    $hasil = $db->fetchID($query);
+
+                                                    while($row = mysqli_fetch_array($hasil))
+                                                    { 
+                                                        //data idSupplier ditampilkan dengan while dalam option select
+                                                        $idBarang = $row['idBarang'];  //untuk menampilkan idBarang dalam option
+                                                        $stok = $row['stok'];  //untuk menampilkan stok dalam option
+                                                        $namaBarang = $row['namaBarang'];     //untuk menampilkan namaBarang dalam option    
+                                                        ?>
+                                                        <option value="<?=$idBarang?>"> <?= $namaBarang ?> (Stok: <?=$stok?>) </option>;
+                                                    <?php
+                                                    }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label">Kuantitas</label>
+                                            <input type="text" class="form-control" name="kuantitas[]" required>
+                                        </div>
+                                    </div><br>
+                                <?php 
+                                }?>
                                 <br>
                                 <div class="row">
+                                    <input type="hidden" name="jum" value="<?php echo $jum;?>">
                                     <div class="col">
-                                        <input type="submit" value="Submit" class="btn btn-success form-control">
+                                        <input type="submit" name="submit" value="Submit" class="btn btn-success form-control">
                                     </div>
                                     <div class="col">
                                         <input class="btn btn-danger form-control" type="reset" value="Reset">
-                                    </div>                                
+                                    </div>         
                                 </div>
+                                <?php
+                            }
+
+                            if(isset($_POST["submit"])){
+                                $jum = $_POST['jum'];
+                                $tambahPembelian = $pembelian->tambahPembelian($_POST, $jum);   //menggunakan method tambahPembelian()
+                            }
+                            ?>
                             </form>
                         </div>
                 </div>

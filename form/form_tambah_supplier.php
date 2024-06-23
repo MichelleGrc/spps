@@ -20,6 +20,9 @@ if(isset($_SESSION["id"]))
     //jika user berhasil login, proses dilanjutkan
     $user = $select->selectUserById($_SESSION["id"]);
     $bagian = $user['bagian'];
+    if($bagian !== 'Bos'){
+        header("Location: ../index.php");
+    }
 }else{
     //jika user belum login, pengguna langsung diarahkan lagi ke form login di index.php
     header("Location: ../index.php");
@@ -52,12 +55,14 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                             //muncul alert dengan pesan berhasil atau tidaknya proses tambah
                             if(isset($tambahSupplier)){
                             ?>
-                                <div class="alert alert-warning" role="alert">
+                                <!-- <div class="alert alert-warning" role="alert">
                                     <strong>
                                         <h6 class="text-center"><?=$tambahSupplier?></h2>
                                     </strong>
-                                </div>
+                                </div> -->
                             <?php
+                                echo "<script>alert('Data Berhasil Tersimpan!');
+                                document.location='../view/data_supplier.php'</script>";
                             }
                         ?>
                         
@@ -88,7 +93,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                             <form action="" method="post" name="form_tambah_supplier" enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <label for="input_id_supplier" class="form-label">ID</label>
-                                    <input type="text" class="form-control" name="idSupplier" value="<?php echo $kodeauto ?>" readonly>
+                                    <input type="text" class="form-control" name="idSupplier2" value="<?php echo $kodeauto ?>" disabled>
+                                    <input type="hidden" class="form-control" name="idSupplier" value="<?php echo $kodeauto ?>">
                                 </div>
                                 <div class="mb-3">
                                     <label for="input_nama_supplier" class="form-label">Nama</label>

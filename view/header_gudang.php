@@ -10,6 +10,9 @@ if(isset($_SESSION["id"]))
     //jika user berhasil login, proses dilanjutkan
     $user = $select->selectUserById($_SESSION["id"]);
     $bagian = $user['bagian'];
+    if($bagian !== 'Gudang'){
+        header("Location: ../index.php");
+    }
 }else{
     //jika user belum login, pengguna langsung diarahkan lagi ke form login di index.php
     header("Location: ../index.php");
@@ -33,7 +36,7 @@ $login = new Login(); //membuat object untuk class Login()
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <a class="navbar-brand" href="index.html">PD Libra Motor</a>
+            <a class="navbar-brand" href="#">PD Libra Motor</a>
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
@@ -72,8 +75,8 @@ $login = new Login(); //membuat object untuk class Login()
                             </a>
                             <div class="collapse" id="collapseLaporan" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">Barang Masuk</a>
-                                    <a class="nav-link" href="#">Barang Keluar</a>
+                                    <a class="nav-link" href="laporan_masuk.php">Barang Masuk</a>
+                                    <a class="nav-link" href="laporan_keluar.php">Barang Keluar</a>
                                 </nav>
                             </div>
                             <a class="nav-link" href="../logout.php" onclick="return confirm('Anda Yakin Ingin Logout?')">

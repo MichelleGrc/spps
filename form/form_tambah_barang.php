@@ -51,12 +51,14 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                         <?php
                             //muncul alert dengan pesan berhasil atau tidaknya proses tambah
                             if(isset($tambahBarang)){
+                                echo "<script>alert('Data Berhasil Tersimpan!');
+                                document.location='../view/data_barang.php'</script>";
                             ?>
-                                <div class="alert alert-warning" role="alert">
+                                <!-- <div class="alert alert-warning" role="alert">
                                     <strong>
                                         <h6 class="text-center"><?=$tambahBarang?></h2>
                                     </strong>
-                                </div>
+                                </div> -->
                             <?php
                             }
                         ?>
@@ -88,7 +90,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                             <form action="" method="post" name="form_tambah_barang" enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <label for="input_id_barang" class="form-label">ID</label>
-                                    <input type="text" class="form-control" name="idBarang" value="<?php echo $kodeauto ?>" readonly>
+                                    <input type="text" class="form-control" name="idBarang2" value="<?php echo $kodeauto ?>" disabled>
+                                    <input type="hidden" class="form-control" name="idBarang" value="<?php echo $kodeauto ?>">
                                 </div>
                                 <div class="mb-3">
                                     <label for="input_nama_barang" class="form-label">Nama</label>

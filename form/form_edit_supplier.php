@@ -8,6 +8,9 @@ if(isset($_SESSION["id"]))
 {
     //jika user berhasil login, proses dilanjutkan
     $user = $select->selectUserById($_SESSION["id"]);
+    if($bagian !== 'Bos'){
+        header("Location: ../index.php");
+    }
 }else{
     //jika user belum login, pengguna langsung diarahkan lagi ke form login di index.php
     header("Location: ../index.php");
@@ -20,6 +23,9 @@ if(isset($_GET['idSupplier']))
     //tujuan dekode agar idSupplier yang tampil di link hanya berbentuk kode saja
     $id = base64_decode($_GET['idSupplier']);
     $bagian = $user['bagian'];
+    if($bagian !== 'Bos'){
+        header("Location: ../index.php");
+    }
 }
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
@@ -49,12 +55,14 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                             //muncul alert dengan pesan berhasil atau tidaknya proses edit
                             if(isset($editSupplier)){
                             ?>
-                                <div class="alert alert-warning" role="alert">
+                                <!-- <div class="alert alert-warning" role="alert">
                                     <strong>
                                         <h6 class="text-center"><?=$editSupplier?></h2>
                                     </strong>
-                                </div>
+                                </div> -->
                             <?php
+                                echo "<script>alert('Data Berhasil Diedit!');
+                                document.location='../view/data_supplier.php'</script>";
                             }
                         ?>
                         
@@ -92,7 +100,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                         <form action="" method="post" name="form_edit_supplier" enctype="multipart/form-data">
                                             <div class="mb-3">
                                                 <label for="input_id_supplier" class="form-label">ID</label>
-                                                <input type="text" class="form-control" name="idSupplier" value="<?=$row['idSupplier']?>" readonly>
+                                                <input type="text" class="form-control" name="idSupplier2" value="<?=$row['idSupplier']?>" disabled>
+                                                <input type="hidden" class="form-control" name="idSupplier" value="<?=$row['idSupplier']?>">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="input_nama_supplier" class="form-label">Nama</label>

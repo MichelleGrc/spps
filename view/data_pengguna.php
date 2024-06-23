@@ -9,6 +9,9 @@ if(isset($_SESSION["id"]))
     //jika user berhasil login, proses dilanjutkan
     $user = $select->selectUserById($_SESSION["id"]);
     $bagian = $user['bagian'];
+    if($bagian !== 'Bos'){
+        header("Location: ../index.php");
+    }
 }else{
     //jika user belum login, pengguna langsung diarahkan lagi ke form login di index.php
     header("Location: ../index.php");
@@ -109,7 +112,8 @@ if($bagian == 'Bos'){
                                                     $ambil = mysqli_query($db->konek(), "SELECT * FROM pengguna WHERE 
                                                     idPengguna LIKE '%$keyword%' OR
                                                     namaPengguna LIKE '%$keyword%' OR
-                                                    bagian LIKE '%$keyword%' 
+                                                    bagian LIKE '%$keyword%' OR
+                                                    username LIKE '%$keyword%' 
                                                     ORDER BY idPengguna LIMIT $dataAwal, $dataHalaman"); 
                                                 }else{
                                                     $ambil = mysqli_query($db->konek(), "SELECT * FROM pengguna ORDER BY idPengguna LIMIT $dataAwal, $dataHalaman"); 

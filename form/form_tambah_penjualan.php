@@ -20,6 +20,9 @@ if(isset($_SESSION["id"]))
     //jika user berhasil login, proses dilanjutkan
     $user = $select->selectUserById($_SESSION["id"]);
     $bagian = $user['bagian'];
+    if($bagian !== 'Bos' & $bagian !== 'Penjualan'){
+        header("Location: ../index.php");
+    }
 }else{
     //jika user belum login, pengguna langsung diarahkan lagi ke form login di index.php
     header("Location: ../index.php");
@@ -51,12 +54,14 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                         <?php
                             //muncul alert dengan pesan berhasil atau tidaknya proses tambah
                             if(isset($tambahPenjualan)){
+                                echo "<script>alert('Data Berhasil Tersimpan!');
+                                document.location='../view/data_penjualan.php'</script>";
                             ?>
-                                <div class="alert alert-warning" role="alert">
+                                <!-- <div class="alert alert-warning" role="alert">
                                     <strong>
                                         <h6 class="text-center"><?=$tambahPenjualan?></h2>
                                     </strong>
-                                </div>
+                                </div> -->
                             <?php
                             }
                         ?>
@@ -88,15 +93,18 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                             <form action="" method="post" name="form_tambah_penjualan" enctype="multipart/form-data">
                                 <div class="mb-3">
                                 <label for="input_id_penjualan" class="form-label">ID</label>
-                                    <input type="text" class="form-control" name="idPenjualan" value="<?php echo $kodeauto ?>" readonly>
+                                    <input type="text" class="form-control" name="idPenjualan2" value="<?php echo $kodeauto ?>" disabled>
+                                    <input type="hidden" class="form-control" name="idPenjualan" value="<?php echo $kodeauto ?>">
                                 </div>
                                 <div class="mb-3">
                                     <label for="input_id_pengguna" class="form-label">Pengguna</label>
-                                    <input type="text" class="form-control" name="idPengguna" value="<?php echo $user["idPengguna"]; ?>" readonly>
+                                    <input type="text" class="form-control" name="idPengguna2" value="<?php echo $user["idPengguna"]; ?>" disabled>
+                                    <input type="hidden" class="form-control" name="idPengguna" value="<?php echo $user["idPengguna"]; ?>">
                                 </div>
                                 <div class="mb-3">
                                     <label for="input_tanggal_penjualan" class="form-label">Tanggal Penjualan</label>
-                                    <input type="text" class="form-control" name="tanggalPenjualan" value="<?php echo date('d-m-Y') ?>" readonly>
+                                    <input type="text" class="form-control" name="tanggalPenjualan2" value="<?php echo date('d-m-Y') ?>" disabled>
+                                    <input type="hidden" class="form-control" name="tanggalPenjualan" value="<?php echo date('d-m-Y') ?>">
                                 </div>
                                 <div class="mb-3">
                                     <label for="input_id_barang" class="form-label">ID Barang</label>

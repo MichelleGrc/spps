@@ -21,6 +21,9 @@ if(isset($_GET['idPengguna']))
     //tujuan dekode agar idPengguna yang tampil di link hanya berbentuk kode saja
     $id = base64_decode($_GET['idPengguna']);
     $bagian = $user['bagian'];
+    if($bagian !== 'Bos'){
+        header("Location: ../index.php");
+    }
 }
 
 $ubahPass = new UbahPass(); //object untuk class UbahPass() dari koneksi.php
@@ -51,12 +54,15 @@ $ubahPass = new UbahPass(); //object untuk class UbahPass() dari koneksi.php
                         $hasil = $ubahPass->ubahPass($_POST["id"], $_POST["pass_lama"], $_POST["pass_baru"], $_POST["cpass_baru"]);
                         //pemeriksaan ubah password pengguna, data dari form dimasukkan ke class UbahPass() --> buka koneksi.php
 
-                        if ($hasil == 1) { ?>
-                            <div class="alert alert-warning" role="alert">
+                        if ($hasil == 1) { 
+                            echo "<script>alert('Password Berhasil Diubah!');
+                            document.location='../view/data_pengguna.php'</script>";
+                            ?>
+                            <!-- <div class="alert alert-warning" role="alert">
                                 <strong>
                                     <h6 class="text-center">Ubah Password Berhasil</h6>
                                 </strong>
-                            </div>
+                            </div> -->
                         <?php } elseif ($hasil == 10) { ?>
                             <div class="alert alert-warning" role="alert">
                                 <strong>
@@ -94,13 +100,17 @@ $ubahPass = new UbahPass(); //object untuk class UbahPass() dari koneksi.php
                             <form method="post" autocomplete="off">
                                 <div class=" mb-3">
                                     <label>ID</label>
-                                    <input name="id" class="form-control" type="text" required="required"
-                                        autocomplete="off" value="<?=$row['idPengguna']?>" readonly>
+                                    <input name="id2" class="form-control" type="text" required="required"
+                                        autocomplete="off" value="<?=$row['idPengguna']?>" disabled>
+                                    <input name="id" class="form-control" type="hidden" required="required"
+                                    value="<?=$row['idPengguna']?>">
                                 </div> <!-- form-group// -->    
                                 <div class="mb-3">
                                     <label>Username</label>
-                                    <input name="namaPengguna" class="form-control" type="text" required="required"
-                                        autocomplete="off" value="<?=$row['namaPengguna']?>" readonly>
+                                    <input name="namaPengguna2" class="form-control" type="text" required="required"
+                                        autocomplete="off" value="<?=$row['namaPengguna']?>" disabled>
+                                    <input name="namaPengguna" class="form-control" type="hidden" required="required"
+                                        autocomplete="off" value="<?=$row['namaPengguna']?>" >
                                 </div> <!-- form-group// -->
                                 <div class="mb-3">
                                     <label>Password Lama</label>

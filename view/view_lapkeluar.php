@@ -8,6 +8,9 @@ if(isset($_SESSION["id"]))
     //jika user berhasil login, proses dilanjutkan
     $user = $select->selectUserById($_SESSION["id"]);
     $bagian = $user['bagian'];
+    if($bagian !== 'Bos' & $bagian !== 'Gudang'){
+        header("Location: ../index.php");
+    }
 }else{
     //jika user belum login, pengguna langsung diarahkan lagi ke form login di index.php
     header("Location: ../index.php");
@@ -41,12 +44,12 @@ if($bagian == 'Bos'){
                                             <a class="btn btn-primary float-end" href='../view/export.php'>Export</a>                                   
                                         </div>
                                         <div class="col-6">
-                                            <h2 class="text-center">LAPORAN BARANG MASUK</h2>
+                                            <h2 class="text-center">LAPORAN BARANG KELUAR</h2>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <form action="view_lapmasuk.php" method="post">
+                                    <form action="view_lapkeluar.php" method="post">
                                         <div class="mb-3">
                                             <label for="input_tgl" class="form-label">Bulan</label>
                                             <select type="text" class="form-control" name="tgl" required>
@@ -81,10 +84,9 @@ if($bagian == 'Bos'){
                                             <tr class="text-center">
                                                 <th>No</th>
                                                 <th>ID</th>
-                                                <th>Nama Supplier</th>
                                                 <th>Nama Barang</th>
                                                 <th>Kuantitas</th>
-                                                <th>Harga Beli</th>
+                                                <th>Harga Jual</th>
                                                 <th>Total</th>
                                             </tr>
                                         </thead>
@@ -94,7 +96,7 @@ if($bagian == 'Bos'){
                                                 if (isset($_POST["submit"])) {    
                                                     $tgl=$_POST['tgl'];
                                                     $tahun=$_POST['tahun'];
-                                                    $tampil = $lap->showBarangMasuk($tgl, $tahun);
+                                                    $tampil = $lap->showBarangKeluar($tgl, $tahun);
                                                 
                                                     echo "Periode Bulan $tgl Tahun $tahun";
                                                 
@@ -105,18 +107,19 @@ if($bagian == 'Bos'){
                                                     ?>
                                                         <tr>
                                                             <td><?php echo $no++; ?></td>
-                                                            <td><?php echo $row['idPembelian']; ?></td>
-                                                            <td><?php echo $row['namaSupplier']; ?></td>
+                                                            <td><?php echo $row['idPenjualan']; ?></td>
                                                             <td><?php echo $row['namaBarang']; ?></td>
                                                             <td><?php echo $row['kuantitas']; ?></td>
-                                                            <td><?php echo $row['hargaBeli']; ?></td>
-                                                            <td><?php echo ($row['kuantitas'])*($row['hargaBeli']); ?></td>
+                                                            <td><?php echo $row['hargaJual']; ?></td>
+                                                            <td><?php echo ($row['kuantitas'])*($row['hargaJual']); ?></td>
                                                         </tr>
                                                     <?php
                                                     }
                                                 }
                                             }
                                                 ?>
+                                                <input type="hidden" name="tgl" value="<?php echo $tgl;?>">
+                                                <input type="hidden" name="tahun" value="<?php echo $tahun;?>">
                                         </tbody>
                                     </table>
                                 </div>

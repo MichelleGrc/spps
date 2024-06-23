@@ -7,6 +7,9 @@ if(isset($_SESSION["id"]))
     //jika user berhasil login, proses dilanjutkan
     $user = $select->selectUserById($_SESSION["id"]);
     $bagian = $user['bagian'];
+    if($bagian !== 'Bos'){
+        header("Location: ../index.php");
+    }
 }else{
     //jika user belum login, pengguna langsung diarahkan lagi ke form login di index.php
     header("Location: ../index.php");
@@ -51,12 +54,15 @@ $register = new Register();
                         $hasil = $register->registrasi($_POST["nama_pengguna"], $_POST["username"], $_POST["bagian"], $_POST["password"], $_POST["cpassword"]);
                         //pemeriksaan register pengguna, data dari form dimasukkan ke class Register() --> buka koneksi.php
 
-                        if ($hasil == 1) { ?>
-                            <div class="alert alert-warning" role="alert">
+                        if ($hasil == 1) { 
+                            echo "<script>alert('Registrasi Berhasil!');
+                            document.location='../view/data_pengguna.php'</script>";
+                            ?>
+                            <!-- <div class="alert alert-warning" role="alert">
                                 <strong>
                                     <h6 class="text-center">Registrasi Berhasil</h6>
                                 </strong>
-                            </div>
+                            </div> -->
                         <?php } elseif ($hasil == 10) { ?>
                             <div class="alert alert-warning" role="alert">
                                 <strong>

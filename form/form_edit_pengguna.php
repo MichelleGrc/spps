@@ -9,6 +9,9 @@ if(isset($_SESSION["id"]))
     //jika user berhasil login, proses dilanjutkan
     $user = $select->selectUserById($_SESSION["id"]);
     $bagian = $user['bagian'];
+    if($bagian !== 'Bos'){
+        header("Location: ../index.php");
+    }
 }else{
     //jika user belum login, pengguna langsung diarahkan lagi ke form login di index.php
     header("Location: ../index.php");
@@ -48,8 +51,10 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                         <?php
                             //muncul alert dengan pesan berhasil atau tidaknya proses edit
                             if(isset($editPengguna)){
+                                echo "<script>alert('Data Berhasil Diedit!');
+                                document.location='../view/data_pengguna.php'</script>";
                             ?>
-                                <div class="alert alert-warning" role="alert">
+                                <!-- <div class="alert alert-warning" role="alert">
                                     <strong>
                                         <h6 class="text-center"><?=$editPengguna?></h2>
                                     </strong>
@@ -92,7 +97,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                         <form action="" method="post" name="form_edit_pengguna" enctype="multipart/form-data">
                                             <div class="mb-3">
                                                 <label for="input_id_pengguna" class="form-label">ID</label>
-                                                <input type="text" class="form-control" name="idPengguna" value="<?=$row['idPengguna']?>" readonly>
+                                                <input type="text" class="form-control" name="idPengguna2" value="<?=$row['idPengguna']?>" disabled>
+                                                <input type="hidden" class="form-control" name="idPengguna" value="<?=$row['idPengguna']?>">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="input_nama_pengguna" class="form-label">Nama</label>
