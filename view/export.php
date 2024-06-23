@@ -31,35 +31,6 @@ $(document).ready(function() {
     <h2>Laporan Stok Masuk</h2>
     <h4>PD Libra Motor</h4>
     <div class="data-tables datatable-dark">
-    <form action="view_lapmasuk.php" method="post">
-                                        <div class="mb-3">
-                                            <label for="input_tgl" class="form-label">Bulan</label>
-                                            <select type="text" class="form-control" name="tgl" required>
-                                                <option value="">Pilih Bulan</option>
-                                                <option value="01">Januari</option>
-                                                <option value="02">Februari</option>
-                                                <option value="03">Maret</option>
-                                                <option value="04">April</option>
-                                                <option value="05">Mei</option>
-                                                <option value="06">Juni</option>
-                                                <option value="07">Juli</option>
-                                                <option value="08">Agustus</option>
-                                                <option value="09">September</option>
-                                                <option value="10">Oktober</option>
-                                                <option value="11">November</option>
-                                                <option value="12">Desember</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="input_tahun" class="form-label">Tahun</label>
-                                            <input type="number" class="form-control" name="tahun" required>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <input type="submit" name="submit" value="Proses" class="btn btn-success form-control">
-                                            </div>                    
-                                        </div>
-                                    </form>
         <table class="table table-hover table-bordered" id="export">
             <thead>
                 <tr class="text-center">
