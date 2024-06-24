@@ -74,13 +74,15 @@ if($bagian == 'Bos'){
                                         <tbody class="text-center">
                                             <?php
                                             $dataHalaman = 10;
-                                            $banyakData = mysqli_num_rows(mysqli_query($db->konek(), "SELECT * FROM penjualan INNER JOIN detail_penjualan 
+                                            $banyakData = mysqli_num_rows(mysqli_query($db->konek(), "SELECT penjualan.idPenjualan, tanggalPenjualan, namaPengguna, sum(kuantitas) as totKuantitas
+                                            FROM penjualan INNER JOIN detail_penjualan 
                                             ON detail_penjualan.idPenjualan = penjualan.idPenjualan 
                                             INNER JOIN barang
                                             ON barang.idBarang = detail_penjualan.idBarang
                                             INNER JOIN pengguna
-                                            ON penjualan.idPengguna = pengguna.idPengguna
-                                            ORDER BY penjualan.idPenjualan"));
+                                            ON pengguna.idPengguna = penjualan.idPengguna
+                                            GROUP BY idPenjualan
+                                            ORDER BY penjualan.idPenjualan "));
                                             $banyakHalaman = ceil($banyakData / $dataHalaman);
                                             if(isset($_GET['halaman'])){
                                                 $halaman = $_GET['halaman'];
@@ -94,19 +96,18 @@ if($bagian == 'Bos'){
                                                 // Search
                                                 if(isset($_POST['cari'])){
                                                     $keyword=$_POST['keyword'];
-                                                    $ambil = mysqli_query($db->konek(), "SELECT * FROM penjualan INNER JOIN detail_penjualan 
+                                                    $ambil = mysqli_query($db->konek(), "SELECT penjualan.idPenjualan, tanggalPenjualan, namaPengguna, sum(kuantitas) as totKuantitas
+                                                    FROM penjualan INNER JOIN detail_penjualan 
                                                     ON detail_penjualan.idPenjualan = penjualan.idPenjualan 
                                                     INNER JOIN barang
                                                     ON barang.idBarang = detail_penjualan.idBarang
                                                     INNER JOIN pengguna
-                                                    ON penjualan.idPengguna = pengguna.idPengguna
+                                                    ON pengguna.idPengguna = penjualan.idPengguna
                                                     WHERE 
                                                     penjualan.idPenjualan LIKE '%$keyword%' OR
                                                     namaPengguna LIKE '%$keyword%' OR
-                                                    tanggalPenjualan LIKE '%$keyword%' OR
-                                                    namaBarang LIKE '%$keyword%' OR
-                                                    kuantitas LIKE '%$keyword%' OR
-                                                    hargaJual LIKE '%$keyword%'
+                                                    tanggalPenjualan LIKE '%$keyword%'
+                                                    GROUP BY idPenjualan
                                                     ORDER BY penjualan.idPenjualan 
                                                     LIMIT $dataAwal, $dataHalaman"); 
                                                 }else{

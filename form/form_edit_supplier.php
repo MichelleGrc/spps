@@ -8,6 +8,7 @@ if(isset($_SESSION["id"]))
 {
     //jika user berhasil login, proses dilanjutkan
     $user = $select->selectUserById($_SESSION["id"]);
+    $bagian = $user['bagian'];
     if($bagian !== 'Bos'){
         header("Location: ../index.php");
     }
@@ -22,10 +23,6 @@ if(isset($_GET['idSupplier']))
     //setelah id tersebut dikode saat menekan tombol hapus
     //tujuan dekode agar idSupplier yang tampil di link hanya berbentuk kode saja
     $id = base64_decode($_GET['idSupplier']);
-    $bagian = $user['bagian'];
-    if($bagian !== 'Bos'){
-        header("Location: ../index.php");
-    }
 }
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
