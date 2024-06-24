@@ -61,7 +61,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                     </strong>
                                 </div> -->
                             <?php
-                                echo "<script>alert('Data Berhasil Diedit!');
+                                echo "<script>alert('$editSupplier');
                                 document.location='../view/data_supplier.php'</script>";
                             }
                         ?>

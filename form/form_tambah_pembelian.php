@@ -51,7 +51,7 @@ if(isset($_SESSION["id"]))
                         <?php
                             //muncul alert dengan pesan berhasil atau tidaknya proses tambah
                             if(isset($tambahPembelian)){
-                                echo "<script>alert('Data Berhasil Tersimpan!');
+                                echo "<script>alert('$tambahPembelian');
                                 document.location='../view/data_pembelian.php'</script>";
                             ?>
                                 <!-- <div class="alert alert-warning" role="alert">
@@ -66,28 +66,18 @@ if(isset($_SESSION["id"]))
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-3">
-                                <?php
-                                if($bagian == 'Bos'){ ?>
-                                    <a class="btn btn-dark float-start" href='../view/halaman_utama.php'>Halaman Utama</a>
-                                <?php }else if($bagian == 'Penjualan'){ ?>
-                                    <a class="btn btn-dark float-start" href='../view/halaman_utama_penj.php'>Halaman Utama</a>
-                                <?php }else if($bagian == 'Gudang'){ ?>
-                                    <a class="btn btn-dark float-start" href='../view/halaman_utama_gudang.php'>Halaman Utama</a>
-                                <?php }else{
-                                    echo 'Bagian Tidak Dikenali!';
-                                }
-                                ?>
+                                    <a class="btn btn-dark float-start" href='../view/data_pembelian.php'>Kembali</a>                                   
                                 </div>
                                 <div class="col-6">
                                     <h2 class="text-center">TAMBAH PEMBELIAN</h2>
                                 </div>
                                 <div class="col-3">
-                                    <a class="btn btn-primary float-end" href='../view/data_pembelian.php'>Kembali</a>                                   
+                                    <a href="javascript:void(0)" class="form-tambah-barang float-end btn btn-primary">Tambah Barang</a>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
-                            <form action="../form/form_tambah_pembelian.php" method="post">
+                            <!-- <form action="../form/form_tambah_pembelian.php" method="post">
                                 <div class="mb-3">
                                     <label for="input_tahun" class="form-label">Mau Input Berapa Data?</label>
                                     
@@ -100,80 +90,73 @@ if(isset($_SESSION["id"]))
                                         <input type="submit" name="proses" value="Proses" class="btn btn-success form-control">
                                     </div>                    
                                 </div>
-                            </form> <br>
-                            <?php
-                            if (isset($_POST["proses"])) { ?>    
+                            </form> <br> -->
 
-                            <form action="" method="post" name="form_tambah_pembelian" enctype="multipart/form-data">
+                            <form action="../class/pembelian.php" method="POST">
                                 <div class="mb-3">
-                                    <label for="input_id_pembelian" class="form-label">ID</label>
-                                    <input type="text" class="form-control" name="idPembelian" value="<?php echo $kodeauto ?>" readonly>
+                                    <label for="">ID</label>
+                                    <input type="text" class="form-control" name="idPembelian2" value="<?php echo $kodeauto ?>" disabled>
+                                    <input type="hidden" class="form-control" name="idPembelian" value="<?php echo $kodeauto ?>">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="input_id_pengguna" class="form-label">Pengguna</label>
-                                    <input type="text" class="form-control" name="idPengguna" value="<?php echo $user["idPengguna"]; ?>" readonly>
+                                    <label for="">Pengguna</label>
+                                    <input type="text" class="form-control" name="idPengguna2" value="<?php echo $user["idPengguna"]; ?>" disabled>
+                                    <input type="hidden" class="form-control" name="idPengguna" value="<?php echo $user["idPengguna"]; ?>">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="input_tanggal_pembelian" class="form-label">Tanggal Pembelian</label>
-                                    <input type="text" class="form-control" name="tanggalPembelian" value="<?php echo date('d-m-Y') ?>" readonly>
+                                    <label for="">Tanggal Pembelian</label>
+                                    <input type="text" class="form-control" name="tanggalPembelian2" value="<?php echo date('d-m-Y') ?>" disabled>
+                                    <input type="hidden" class="form-control" name="tanggalPembelian" value="<?php echo date('d-m-Y') ?>">
                                 </div>
 
-                                <?php
-                                $jum=$_POST['jum'];
-                                for ($i=1; $i<=$jum; $i++){
-                                ?> 
-                                    <div class="mb-3">
-                                        <input type="hidden" name="idPembelian2[]" value="<?php echo $kodeauto;?>">
-                                    </div>
+                                <div class="main-form mt-3 border-bottom">
                                     <div class="row">
                                         <div class="col">
-                                            <label class="form-label">ID Barang</label>
-                                            <select class="form-control" name="idBarang[]" required>
-                                                <option value="">Pilih Barang</option>
-                                                <?php
-                                                //karena data idBarang di form transaksi ini diambil dari tb supplier
-                                                //maka query dari barang di-select dahulu sebagai berikut
-                                                    $query = "SELECT * FROM barang";
-                                                    $hasil = $db->fetchID($query);
-
-                                                    while($row = mysqli_fetch_array($hasil))
-                                                    { 
-                                                        //data idSupplier ditampilkan dengan while dalam option select
-                                                        $idBarang = $row['idBarang'];  //untuk menampilkan idBarang dalam option
-                                                        $stok = $row['stok'];  //untuk menampilkan stok dalam option
-                                                        $namaBarang = $row['namaBarang'];     //untuk menampilkan namaBarang dalam option    
-                                                        ?>
-                                                        <option value="<?=$idBarang?>"> <?= $namaBarang ?> (Stok: <?=$stok?>) </option>;
+                                            <input type="hidden" class="form-control" name="idPembelians[]" value="<?php echo $kodeauto ?>">
+                                            <div class="form-group mb-2">
+                                                <label class="form-label">ID Barang</label>
+                                                <select class="form-control" name="idBarang[]" required>
+                                                    <option value="">Pilih Barang</option>
                                                     <?php
-                                                    }
-                                                ?>
-                                            </select>
+                                                    //karena data idBarang di form transaksi ini diambil dari tb supplier
+                                                    //maka query dari barang di-select dahulu sebagai berikut
+                                                        $query = "SELECT * FROM barang";
+                                                        $hasil = $db->fetchID($query);
+
+                                                        while($row = mysqli_fetch_array($hasil))
+                                                        { 
+                                                            //data idSupplier ditampilkan dengan while dalam option select
+                                                            $idBarang = $row['idBarang'];  //untuk menampilkan idBarang dalam option
+                                                            $stok = $row['stok'];  //untuk menampilkan stok dalam option
+                                                            $namaBarang = $row['namaBarang'];     //untuk menampilkan namaBarang dalam option    
+                                                            ?>
+                                                            <option value="<?=$idBarang?>"> <?= $namaBarang ?> (Stok: <?=$stok?>) </option>;
+                                                        <?php
+                                                        }
+                                                    ?>
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="col">
-                                            <label class="form-label">Kuantitas</label>
-                                            <input type="text" class="form-control" name="kuantitas[]" required>
+                                            <div class="form-group mb-2">
+                                                <label class="form-label">Kuantitas</label>
+                                                <input type="text" class="form-control" name="kuantitas[]" required>
+                                            </div>
                                         </div>
-                                    </div><br>
-                                <?php 
-                                }?>
-                                <br>
+                                    </div>
+                                </div>
+
+                                <div class="paste-form-baru"></div>
+
+                                <br><br>
                                 <div class="row">
-                                    <input type="hidden" name="jum" value="<?php echo $jum;?>">
                                     <div class="col">
-                                        <input type="submit" name="submit" value="Submit" class="btn btn-success form-control">
+                                        <input type="submit" class="btn btn-success form-control" name="simpan"></button>
                                     </div>
                                     <div class="col">
                                         <input class="btn btn-danger form-control" type="reset" value="Reset">
                                     </div>         
                                 </div>
-                                <?php
-                            }
-
-                            if(isset($_POST["submit"])){
-                                $jum = $_POST['jum'];
-                                $tambahPembelian = $pembelian->tambahPembelian($_POST, $jum);   //menggunakan method tambahPembelian()
-                            }
-                            ?>
                             </form>
                         </div>
                 </div>
@@ -181,5 +164,60 @@ if(isset($_SESSION["id"]))
         </div>
     </div>
     <br><br>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(document).on('click','.remove-btn', function(){
+                $(this).closest('.main-form').remove();
+            });
+
+            $(document).on('click','.form-tambah-barang', function(){
+                $('.paste-form-baru')
+                .append('<div class="main-form mt-3 border-bottom">\
+                            <div class="row">\
+                                <div class="col-5">\
+                                    <input type="hidden" class="form-control" name="idPembelians[]" value="<?php echo $kodeauto ?>">\
+                                    <div class="form-group mb-2">\
+                                        <label class="form-label">ID Barang</label>\
+                                        <select class="form-control" name="idBarang[]" required>\
+                                            <option value="">Pilih Barang</option>\
+                                            <?php
+                                            //karena data idBarang di form transaksi ini diambil dari tb supplier
+                                            //maka query dari barang di-select dahulu sebagai berikut
+                                                $query = "SELECT * FROM barang";
+                                                $hasil = $db->fetchID($query);
+
+                                                while($row = mysqli_fetch_array($hasil))
+                                                { 
+                                                    //data idSupplier ditampilkan dengan while dalam option select
+                                                    $idBarang = $row['idBarang'];  //untuk menampilkan idBarang dalam option
+                                                    $stok = $row['stok'];  //untuk menampilkan stok dalam option
+                                                    $namaBarang = $row['namaBarang'];     //untuk menampilkan namaBarang dalam option    
+                                                    ?>\
+                                                    <option value="<?=$idBarang?>"> <?= $namaBarang ?> (Stok: <?=$stok?>) </option>;\
+                                                <?php
+                                                }
+                                            ?>
+                                        </select>\
+                                    </div>\
+                                </div>\
+                                <div class="col-5">\
+                                    <div class="form-group mb-2">\
+                                        <label class="form-label">Kuantitas</label>\
+                                        <input type="text" class="form-control" name="kuantitas[]" required>\
+                                    </div>\
+                                </div>\
+                                <div class="col-2">\
+                                    <div class="form-group mb-2">\
+                                        <br>\
+                                        <button type="button" class="remove-btn btn btn-danger form-control">Hapus</button>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        </div>');
+            });
+        });
+    </script>
 </body>
 </html>

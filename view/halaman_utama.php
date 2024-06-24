@@ -44,7 +44,7 @@ include('header_bos.php');
                     <div class="card text-bg-success mb-3" style="width: 18rem;">
                         <div class="card-header">Total Pembelian</div>
                         <?php
-                        $query = "SELECT * FROM pembelian";
+                        $query = "SELECT * FROM detail_pembelian";
                         $jml = $db->getNumRows($query);
                         ?>
                         <div class="card-body">

@@ -51,7 +51,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                         <?php
                             //muncul alert dengan pesan berhasil atau tidaknya proses tambah
                             if(isset($tambahBarang)){
-                                echo "<script>alert('Data Berhasil Tersimpan!');
+                                echo "<script>alert('$tambahBarang');
                                 document.location='../view/data_barang.php'</script>";
                             ?>
                                 <!-- <div class="alert alert-warning" role="alert">

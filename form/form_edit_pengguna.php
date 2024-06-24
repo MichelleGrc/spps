@@ -51,7 +51,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                         <?php
                             //muncul alert dengan pesan berhasil atau tidaknya proses edit
                             if(isset($editPengguna)){
-                                echo "<script>alert('Data Berhasil Diedit!');
+                                echo "<script>alert('$editPengguna');
                                 document.location='../view/data_pengguna.php'</script>";
                             ?>
                                 <!-- <div class="alert alert-warning" role="alert">

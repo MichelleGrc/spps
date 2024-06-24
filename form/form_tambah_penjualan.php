@@ -54,8 +54,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                         <?php
                             //muncul alert dengan pesan berhasil atau tidaknya proses tambah
                             if(isset($tambahPenjualan)){
-                                echo "<script>alert('Data Berhasil Tersimpan!');
-                                document.location='../view/data_penjualan.php'</script>";
+                                echo "<script>alert('$tambahPenjualan');</script>";
                             ?>
                                 <!-- <div class="alert alert-warning" role="alert">
                                     <strong>
@@ -69,77 +68,81 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-3">
-                                <?php
-                                if($bagian == 'Bos'){ ?>
-                                    <a class="btn btn-dark float-start" href='../view/halaman_utama.php'>Halaman Utama</a>
-                                <?php }else if($bagian == 'Penjualan'){ ?>
-                                    <a class="btn btn-dark float-start" href='../view/halaman_utama_penj.php'>Halaman Utama</a>
-                                <?php }else if($bagian == 'Gudang'){ ?>
-                                    <a class="btn btn-dark float-start" href='../view/halaman_utama_gudang.php'>Halaman Utama</a>
-                                <?php }else{
-                                    echo 'Bagian Tidak Dikenali!';
-                                }
-                                ?>
+                                    <a class="btn btn-dark float-start" href='../view/data_penjualan.php'>Kembali</a>                                   
                                 </div>
                                 <div class="col-6">
                                     <h2 class="text-center">TAMBAH PENJUALAN</h2>
                                 </div>
                                 <div class="col-3">
-                                    <a class="btn btn-primary float-end" href='../view/data_penjualan.php'>Kembali</a>                                   
+                                    <a href="javascript:void(0)" class="form-tambah-barang float-end btn btn-primary">Tambah Barang</a>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
-                            <form action="" method="post" name="form_tambah_penjualan" enctype="multipart/form-data">
+                        <form action="../class/penjualan.php" method="POST">
                                 <div class="mb-3">
-                                <label for="input_id_penjualan" class="form-label">ID</label>
+                                    <label for="">ID</label>
                                     <input type="text" class="form-control" name="idPenjualan2" value="<?php echo $kodeauto ?>" disabled>
                                     <input type="hidden" class="form-control" name="idPenjualan" value="<?php echo $kodeauto ?>">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="input_id_pengguna" class="form-label">Pengguna</label>
+                                    <label for="">Pengguna</label>
                                     <input type="text" class="form-control" name="idPengguna2" value="<?php echo $user["idPengguna"]; ?>" disabled>
                                     <input type="hidden" class="form-control" name="idPengguna" value="<?php echo $user["idPengguna"]; ?>">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="input_tanggal_penjualan" class="form-label">Tanggal Penjualan</label>
+                                    <label for="">Tanggal Penjualan</label>
                                     <input type="text" class="form-control" name="tanggalPenjualan2" value="<?php echo date('d-m-Y') ?>" disabled>
                                     <input type="hidden" class="form-control" name="tanggalPenjualan" value="<?php echo date('d-m-Y') ?>">
                                 </div>
-                                <div class="mb-3">
-                                    <label for="input_id_barang" class="form-label">ID Barang</label>
-                                    <select class="form-control" name="idBarang" required>
-                                        <option value="">Pilih Barang</option>
-                                        <?php
-                                        //karena data idBarang di form transaksi ini diambil dari tb supplier
-                                        //maka query dari barang di-select dahulu sebagai berikut
-                                            $query = "SELECT * FROM barang";
-                                            $hasil = $db->fetchID($query);
 
-                                            while($row = mysqli_fetch_array($hasil))
-                                            { 
-                                                //data idSupplier ditampilkan dengan while dalam option select
-                                                $idBarang = $row['idBarang'];  //untuk menampilkan idBarang dalam option
-                                                $stok = $row['stok'];  //untuk menampilkan stok dalam option
-                                                $namaBarang = $row['namaBarang'];     //untuk menampilkan namaBarang dalam option    
-                                                ?>
-                                                <option value="<?=$idBarang?>"> <?= $namaBarang ?> (Stok: <?=$stok?>) </option>;
-                                            <?php
-                                            }
-                                        ?>
-                                    </select>
+                                <div class="main-form mt-3 border-bottom">
+                                    <div class="row">
+                                        <div class="col">
+                                            <input type="hidden" class="form-control" name="idPenjualans[]" value="<?php echo $kodeauto ?>">
+                                            <div class="form-group mb-2">
+                                                <label class="form-label">ID Barang</label>
+                                                <select class="form-control" name="idBarang[]" required>
+                                                    <option value="">Pilih Barang</option>
+                                                    <?php
+                                                    //karena data idBarang di form transaksi ini diambil dari tb supplier
+                                                    //maka query dari barang di-select dahulu sebagai berikut
+                                                        $query = "SELECT * FROM barang";
+                                                        $hasil = $db->fetchID($query);
+
+                                                        while($row = mysqli_fetch_array($hasil))
+                                                        { 
+                                                            //data idSupplier ditampilkan dengan while dalam option select
+                                                            $idBarang = $row['idBarang'];  //untuk menampilkan idBarang dalam option
+                                                            $stok = $row['stok'];  //untuk menampilkan stok dalam option
+                                                            $namaBarang = $row['namaBarang'];     //untuk menampilkan namaBarang dalam option    
+                                                            ?>
+                                                            <option value="<?=$idBarang?>"> <?= $namaBarang ?> (Stok: <?=$stok?>) </option>;
+                                                        <?php
+                                                        }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group mb-2">
+                                                <label class="form-label">Kuantitas</label>
+                                                <input type="text" class="form-control" name="kuantitas[]" required>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="input_kuantitas" class="form-label">Kuantitas</label>
-                                    <input type="text" class="form-control" name="kuantitas" required>
-                                </div>
+
+                                <div class="paste-form-baru"></div>
+
+                                <br><br>
                                 <div class="row">
                                     <div class="col">
-                                        <input type="submit" value="Submit" class="btn btn-success form-control">
+                                        <input type="submit" class="btn btn-success form-control" name="simpan"></button>
                                     </div>
                                     <div class="col">
                                         <input class="btn btn-danger form-control" type="reset" value="Reset">
-                                    </div>                                
+                                    </div>         
                                 </div>
                             </form>
                         </div>
@@ -148,5 +151,60 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         </div>
     </div>
     <br><br>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(document).on('click','.remove-btn', function(){
+                $(this).closest('.main-form').remove();
+            });
+
+            $(document).on('click','.form-tambah-barang', function(){
+                $('.paste-form-baru')
+                .append('<div class="main-form mt-3 border-bottom">\
+                            <div class="row">\
+                                <div class="col-5">\
+                                    <input type="hidden" class="form-control" name="idPenjualans[]" value="<?php echo $kodeauto ?>">\
+                                    <div class="form-group mb-2">\
+                                        <label class="form-label">ID Barang</label>\
+                                        <select class="form-control" name="idBarang[]" required>\
+                                            <option value="">Pilih Barang</option>\
+                                            <?php
+                                            //karena data idBarang di form transaksi ini diambil dari tb supplier
+                                            //maka query dari barang di-select dahulu sebagai berikut
+                                                $query = "SELECT * FROM barang";
+                                                $hasil = $db->fetchID($query);
+
+                                                while($row = mysqli_fetch_array($hasil))
+                                                { 
+                                                    //data idSupplier ditampilkan dengan while dalam option select
+                                                    $idBarang = $row['idBarang'];  //untuk menampilkan idBarang dalam option
+                                                    $stok = $row['stok'];  //untuk menampilkan stok dalam option
+                                                    $namaBarang = $row['namaBarang'];     //untuk menampilkan namaBarang dalam option    
+                                                    ?>\
+                                                    <option value="<?=$idBarang?>"> <?= $namaBarang ?> (Stok: <?=$stok?>) </option>;\
+                                                <?php
+                                                }
+                                            ?>
+                                        </select>\
+                                    </div>\
+                                </div>\
+                                <div class="col-5">\
+                                    <div class="form-group mb-2">\
+                                        <label class="form-label">Kuantitas</label>\
+                                        <input type="text" class="form-control" name="kuantitas[]" required>\
+                                    </div>\
+                                </div>\
+                                <div class="col-2">\
+                                    <div class="form-group mb-2">\
+                                        <br>\
+                                        <button type="button" class="remove-btn btn btn-danger form-control">Hapus</button>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        </div>');
+            });
+        });
+    </script>
 </body>
 </html>

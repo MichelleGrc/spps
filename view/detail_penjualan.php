@@ -1,6 +1,6 @@
 <?php
-include_once '../class/pembelian.php';  //menyertakan file pembelian.php
-$pembelian = new Pembelian();              //membuat objek dari class Pembelian()
+include_once '../class/penjualan.php';  //menyertakan file penjualan.php
+$penjualan = new Penjualan();              //membuat objek dari class Penjualan()
 
 $select = new Select();
 if(isset($_SESSION["id"]))
@@ -12,14 +12,14 @@ if(isset($_SESSION["id"]))
     header("Location: ../index.php");
 }
 
-if(isset($_GET['idPembelian']))
+if(isset($_GET['idPenjualan']))
 {
-    //mendekode idPembelian
+    //mendekode idPenjualan
     //tujuan dekode agar idBarang yang tampil di link hanya berbentuk kode saja
-    $id = base64_decode($_GET['idPembelian']);
+    $id = base64_decode($_GET['idPenjualan']);
 }
 
-$getID = $pembelian->getIDPembelian($id);
+$getID = $penjualan->getIDPenjualan($id);
 $row = mysqli_fetch_assoc($getID)
 ?>
 
@@ -29,7 +29,7 @@ $row = mysqli_fetch_assoc($getID)
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Pembelian</title>
+    <title>Detail Penjualan</title>
 
     <!-- untuk menyambungkan file css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" 
@@ -47,10 +47,10 @@ $row = mysqli_fetch_assoc($getID)
                                     <a class="btn btn-dark float-start" href='halaman_utama.php'>Halaman Utama</a>
                                 </div>
                                 <div class="col-6">
-                                    <h2 class="text-center"><?=$row['idPembelian']?></h2>
+                                    <h2 class="text-center"><?=$row['idPenjualan']?></h2>
                                 </div>
                                 <div class="col-3">
-                                    <a class="btn btn-primary float-end" href='data_pembelian.php'>Kembali</a>                                   
+                                    <a class="btn btn-primary float-end" href='data_penjualan.php'>Kembali</a>                                   
                                 </div>
                             </div>
                         </div>
@@ -63,29 +63,29 @@ $row = mysqli_fetch_assoc($getID)
                                         <th>Supplier</th>
                                         <th>Nama Barang</th>
                                         <th>Kuantitas</th>
-                                        <th>Harga Beli</th>
+                                        <th>Harga Jual</th>
                                         <th>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody class="text-center">
                                     <?php
-                                        $id = $row['idPembelian'];
-                                        $tampil = mysqli_query($db->konek(), "SELECT barang.idBarang, namaSupplier, namaBarang, kuantitas, hargaBeli, kuantitas*hargaBeli as tot
-                                                    FROM pembelian INNER JOIN detail_pembelian 
-                                                    ON detail_pembelian.idPembelian = pembelian.idPembelian 
+                                        $id = $row['idPenjualan'];
+                                        $tampil = mysqli_query($db->konek(), "SELECT barang.idBarang, namaSupplier, namaBarang, kuantitas, hargaJual, kuantitas*hargaJual as tot
+                                                    FROM penjualan INNER JOIN detail_penjualan 
+                                                    ON detail_penjualan.idPenjualan = penjualan.idPenjualan 
                                                     INNER JOIN barang
-                                                    ON barang.idBarang = detail_pembelian.idBarang
+                                                    ON barang.idBarang = detail_penjualan.idBarang
                                                     INNER JOIN supplier
                                                     ON supplier.idSupplier = barang.idSupplier
-                                                    WHERE pembelian.idPembelian = '$id'
-                                                    ORDER BY pembelian.idPembelian");
+                                                    WHERE penjualan.idPenjualan = '$id'
+                                                    ORDER BY penjualan.idPenjualan");
                                         $no=1;
                                         $totalKuantitas = 0;
                                         $totalHarga = 0;
                                         $total = 0;
                                         while($row = mysqli_fetch_assoc($tampil)){
                                             $totalKuantitas += $row['kuantitas'];
-                                            $totalHarga += $row['hargaBeli'];
+                                            $totalHarga += $row['hargaJual'];
                                             $total += $row['tot'];
                                         ?>
                                             <tr>
@@ -94,7 +94,7 @@ $row = mysqli_fetch_assoc($getID)
                                                 <td><?php echo $row['namaSupplier']; ?></td>
                                                 <td><?php echo $row['namaBarang']; ?></td>
                                                 <td><?php echo $row['kuantitas']; ?></td>
-                                                <td><?php echo 'Rp ' . number_format($row['hargaBeli'],2,',','.'); ?></td>
+                                                <td><?php echo 'Rp ' . number_format($row['hargaJual'],2,',','.'); ?></td>
                                                 <td><?php echo 'Rp ' . number_format($row['tot'],2,',','.'); ?></td>
                                             </tr>
                                         <?php

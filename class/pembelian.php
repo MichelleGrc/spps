@@ -1,49 +1,51 @@
 <?php
 include_once '../koneksi.php';
-// require '../form/form_tambah_pembelian.php';
-// $db = new Koneksi();
+$db = new Koneksi();
+$konek = mysqli_connect('localhost','root','','spps_plm');
 
-// if (isset($_POST["submit"])) {
-//     //mengambil data dari form
-//     $konek = mysqli_connect('localhost','root','','spps_plm');
-//     $jum = $_POST['jum'];
+if (isset($_POST["simpan"])) {
+    //mengambil data dari form
+    $idPembelian = $_POST['idPembelian'];
+    $tanggalPembelian = $_POST['tanggalPembelian'];
+    $idPengguna = $_POST['idPengguna'];
+    $idPembelians = $_POST['idPembelians'];
+    $idBarang = $_POST['idBarang'];
+    $kuantitas = $_POST['kuantitas'];
 
-//     $idPembelian = $_POST['idPembelian'];
-//     $idBarang = $_POST['idBarang'];
-//     $tanggalPembelian = $_POST['tanggalPembelian'];
-//     $kuantitas = $_POST['kuantitas'];
-//     $idPengguna = $_POST['idPengguna'];
+    $query = "INSERT INTO pembelian
+    SET idPembelian='$idPembelian', idPengguna ='$idPengguna', tanggalPembelian='$tanggalPembelian'";
+    $hasil = $db->insert($query);
 
-//     $query = "INSERT INTO pembelian
-//     SET idPembelian='$idPembelian', idPengguna ='$idPengguna', tanggalPembelian='$tanggalPembelian'";
-//     $hasil = $db->insert($query);
-//             //cek jumlah stok
-//             $query = "SELECT * FROM barang WHERE idBarang = '$idBarang[$i]'";
-//             $hitung = mysqli_query($konek, $query);
-//             $hasil = mysqli_fetch_assoc($hitung);
-//             $stoksekarang = $hasil['stok'];
-    
-//             $sisaStok = $stoksekarang + $kuantitas[$i];  //sisa stok adalah stok pada db ditambah jumlah pembelian
-//             $query3 = "UPDATE barang SET stok='$sisaStok[$i]' WHERE idBarang='$idBarang'";
-//             $sisaStok = mysqli_query($konek, $query);
+    foreach($idPembelians as $index => $idP){
+        //cek jumlah stok
+        $query = "SELECT * FROM barang WHERE idBarang = '$idBarang[$index]'";
+        $hitung = mysqli_query($konek, $query);
+        $hasil = mysqli_fetch_assoc($hitung);
+        $stoksekarang = $hasil['stok'];
 
-//     for ($i=1; $i<=$jum; $i++){
+        $sisaStok = $stoksekarang + $kuantitas[$index];  //sisa stok adalah stok pada db ditambah jumlah pembelian
+        $query3 = "UPDATE barang SET stok='$sisaStok' WHERE idBarang='$idBarang[$index]'";
+        $sisaStok = mysqli_query($konek, $query3);
 
+        $v_idPembelian = $idP;
+        $v_idBarang = $idBarang[$index];
+        $v_kuantitas = $kuantitas[$index];
 
-//         mysqli_query($konek, "INSERT INTO detail_pembelian SET idPembelian='$idPembelian[$i]', idBarang='$idBarang[$i]', kuantitas='$kuantitas[$i]");
-//         // $hasil = $db->insert($query2);
-//     }
-    
-//     if($hasil)
-//     {
-//         $pesan = "Data Berhasil Ditambahkan";
-//         return $pesan;
-//     }else{
-//         $pesan = "Data Gagal Ditambahkan";
-//         return $pesan;
-//     }
+        $query = "INSERT INTO detail_pembelian
+        SET idPembelian='$v_idPembelian', idBarang ='$v_idBarang', kuantitas='$v_kuantitas'";
+        $hasil = $db->insert($query);
 
-// }
+        if($hasil)
+        {
+            echo "<script>alert('Data Berhasil Ditambahkan!');
+            document.location='../view/data_pembelian.php'</script>";
+        }else{
+            echo "<script>alert('Data Gagal Ditambahkan!');
+            document.location='../view/data_pembelian.php'</script>";
+        }
+    }
+
+}
 
 class Pembelian
 {
@@ -53,46 +55,6 @@ class Pembelian
     public function __construct()
     {
         $this->db = new Koneksi();  //object kelas Koneksi
-    }
-
-    public function tambahPembelian($data, $jum)
-    {
-        //mengambil data dari form
-        $idPembelian = $data['idPembelian'];
-        $tanggalPembelian = $data['tanggalPembelian'];
-        $idPengguna = $data['idPengguna'];
-
-        $query = "INSERT INTO pembelian
-        SET idPembelian='$idPembelian', idPengguna ='$idPengguna', tanggalPembelian='$tanggalPembelian'";
-        $hasil = $this->db->insert($query);
-
-        for ($i=1; $i<=$jum; $i++){
-            $idPembelian2 = $data['idPembelian2'];
-            $idBarang = $data['idBarang'];
-            $kuantitas = $data['kuantitas'];
-
-            //cek jumlah stok
-            $query = "SELECT * FROM barang WHERE idBarang = '$idBarang[$i]'";
-            $this->stok = new cek();
-            $stoksekarang = $this->stok->cekStok($query);
-
-            $sisaStok = $stoksekarang + $kuantitas[$i];  //sisa stok adalah stok pada db ditambah jumlah pembelian
-            $query3 = "UPDATE barang SET stok='$sisaStok' WHERE idBarang='$idBarang[$i]'";
-            $sisaStok = $this->stok->sisaStok($query3);
-
-            $query2 = "INSERT INTO detail_pembelian
-            SET idPembelian='$idPembelian2[$i]', idBarang='$idBarang[$i]', kuantitas='$kuantitas[$i]'";
-            $hasil = $this->db->insert($query2);
-        }
-
-        if($hasil)
-        {
-            $pesan = "Data Berhasil Ditambahkan";
-            return $pesan;
-        }else{
-            $pesan = "Data Gagal Ditambahkan";
-            return $pesan;
-        }
     }
 
     public function tampilPembelian()

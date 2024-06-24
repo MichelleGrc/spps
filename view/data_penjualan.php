@@ -65,12 +65,9 @@ if($bagian == 'Bos'){
                                             <tr class="text-center">
                                                 <th>No</th>
                                                 <th>ID</th>
-                                                <th>Pengguna</th>
                                                 <th>Tanggal Penjualan</th>
-                                                <th>Barang</th>
+                                                <th>Pengguna</th>
                                                 <th>Kuantitas</th>
-                                                <th>Harga Jual</th>
-                                                <th>Total</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -113,28 +110,29 @@ if($bagian == 'Bos'){
                                                     ORDER BY penjualan.idPenjualan 
                                                     LIMIT $dataAwal, $dataHalaman"); 
                                                 }else{
-                                                    $ambil = mysqli_query($db->konek(), "SELECT * FROM penjualan INNER JOIN detail_penjualan 
+                                                    $ambil = mysqli_query($db->konek(), 
+                                                    "SELECT penjualan.idPenjualan, tanggalPenjualan, namaPengguna, sum(kuantitas) as totKuantitas
+                                                    FROM penjualan INNER JOIN detail_penjualan 
                                                     ON detail_penjualan.idPenjualan = penjualan.idPenjualan 
                                                     INNER JOIN barang
                                                     ON barang.idBarang = detail_penjualan.idBarang
                                                     INNER JOIN pengguna
-                                                    ON penjualan.idPengguna = pengguna.idPengguna
+                                                    ON pengguna.idPengguna = penjualan.idPengguna
+                                                    GROUP BY idPenjualan
                                                     ORDER BY penjualan.idPenjualan 
-                                                    LIMIT $dataAwal, $dataHalaman"); 
+                                                    LIMIT $dataAwal, $dataHalaman"
+                                                    ); 
                                                 }
                                                     while($row = mysqli_fetch_assoc($ambil)){
                                                     ?>
                                                         <tr>
                                                             <td><?php echo $no++; ?></td>
                                                             <td><?php echo $row['idPenjualan']; ?></td>
-                                                            <td><?php echo $row['namaPengguna']; ?></td>
                                                             <td><?php echo $row['tanggalPenjualan']; ?></td>
-                                                            <td><?php echo $row['namaBarang']; ?></td>
-                                                            <td><?php echo $row['kuantitas']; ?></td>
-                                                            <td><?php echo 'Rp ' . number_format($row['hargaJual'],2,',','.'); ?></td>
-                                                            <td><?php echo 'Rp ' . number_format(($row['hargaJual'])*($row['kuantitas'])) . ',00'; ?></td>
+                                                            <td><?php echo $row['namaPengguna']; ?></td>
+                                                            <td><?php echo $row['totKuantitas']; ?></td>
                                                             <td>
-                                                                <a class="btn btn-warning" href="../detail_penjualan.php?idPenjualan=<?php echo base64_encode($row['idPenjualan'])?>">Detail</a>
+                                                                <a class="btn btn-warning" href="detail_penjualan.php?idPenjualan=<?php echo base64_encode($row['idPenjualan'])?>">Detail</a>
                                                             </td>
                                                         </tr>
                                                     <?php

@@ -31,10 +31,10 @@ class Barang
 
         if($hasil)
         {
-            $pesan = "Data Berhasil Ditambahkan";
+            $pesan = "Data Berhasil Ditambahkan!";
             return $pesan;
         }else{
-            $pesan = "Data Gagal Ditambahkan";
+            $pesan = "Data Gagal Ditambahkan!";
             return $pesan;
         }
     }
@@ -76,10 +76,10 @@ class Barang
 
         if($hasil)
         {
-            $pesan = "Data Berhasil Diubah";
+            $pesan = "Data Berhasil Diubah!";
             return $pesan;
         }else{
-            $pesan = "Data Gagal Diubah";
+            $pesan = "Data Gagal Diubah!";
             return $pesan;
         }
     }
@@ -90,10 +90,10 @@ class Barang
         $hasil = $this->db->hapus($query);
         if($hasil)
         {
-            $pesan = "Data Berhasil Dihapus";
+            $pesan = "Data Berhasil Dihapus!";
             return $pesan;
         }else{
-            $pesan = "Data Gagal Dihapus";
+            $pesan = "Data Gagal Dihapus!";
             return $pesan;
         }
     }

@@ -1,57 +1,59 @@
 <?php
 include_once '../koneksi.php';
+$db = new Koneksi();
+$konek = mysqli_connect('localhost','root','','spps_plm');
+
+if (isset($_POST["simpan"])) {
+    //mengambil data dari form
+    $idPenjualan = $_POST['idPenjualan'];
+    $tanggalPenjualan = $_POST['tanggalPenjualan'];
+    $idPengguna = $_POST['idPengguna'];
+    $idPenjualans = $_POST['idPenjualans'];
+    $idBarang = $_POST['idBarang'];
+    $kuantitas = $_POST['kuantitas'];
+
+    $query = "INSERT INTO penjualan
+    SET idPenjualan='$idPenjualan', idPengguna ='$idPengguna', tanggalPenjualan='$tanggalPenjualan'";
+    $hasil = $db->insert($query);
+
+    foreach($idPenjualans as $index => $idP){
+        //cek jumlah stok
+        $query = "SELECT * FROM barang WHERE idBarang = '$idBarang[$index]'";
+        $hitung = mysqli_query($konek, $query);
+        $hasil = mysqli_fetch_assoc($hitung);
+        $stoksekarang = $hasil['stok'];
+
+        $sisaStok = $stoksekarang - $kuantitas[$index];  //sisa stok adalah stok pada db dikurang jumlah penjualan
+        $query3 = "UPDATE barang SET stok='$sisaStok' WHERE idBarang='$idBarang[$index]'";
+        $sisaStok = mysqli_query($konek, $query3);
+
+        $v_idPenjualan = $idP;
+        $v_idBarang = $idBarang[$index];
+        $v_kuantitas = $kuantitas[$index];
+
+        $query = "INSERT INTO detail_penjualan
+        SET idPenjualan='$v_idPenjualan', idBarang ='$v_idBarang', kuantitas='$v_kuantitas'";
+        $hasil = $db->insert($query);
+
+        if($hasil)
+        {
+            echo "<script>alert('Data Berhasil Ditambahkan!');
+            document.location='../view/data_penjualan.php'</script>";
+        }else{
+            echo "<script>alert('Data Gagal Ditambahkan!');
+            document.location='../view/data_penjualan.php'</script>";
+        }
+    }
+
+}
 
 class Penjualan
 {
     private $db;        //atribut untuk object dari kelas koneksi()
-    private $stok;      //atribut untuk object dari kelas cekStok()
 
     public function __construct()
     {
         $this->db = new Koneksi();  //object kelas Koneksi
-    }
-
-    public function tambahPenjualan($data)
-    {
-        //mengambil data dari form
-        $idPenjualan = $data['idPenjualan'];
-        $idBarang = $data['idBarang'];
-        $tanggalPenjualan = $data['tanggalPenjualan'];
-        $kuantitas = $data['kuantitas'];
-        $idPengguna = $data['idPengguna'];
-
-        //cek jumlah stok
-        $query = "SELECT * FROM barang WHERE idBarang = '$idBarang'";
-        $this->stok = new cek();
-        $stoksekarang = $this->stok->cekStok($query);
-
-        //jika stok lebih besar dari jumlah, maka pembelian memungkinkan
-        if($stoksekarang > $kuantitas){
-            $sisaStok = $stoksekarang - $kuantitas;  //sisa stok adalah stok pada db dikurang jumlah penjualan
-            $query3 = "UPDATE barang SET stok='$sisaStok' WHERE idBarang='$idBarang'";
-            $sisaStok = $this->stok->sisaStok($query3);
-
-            $query = "INSERT INTO penjualan
-            SET idPenjualan='$idPenjualan', idPengguna ='$idPengguna', tanggalPenjualan='$tanggalPenjualan'";
-            $query2 = "INSERT INTO detail_penjualan
-            SET idPenjualan='$idPenjualan', idBarang='$idBarang', kuantitas='$kuantitas';";
-
-            $hasil = $this->db->insert($query);
-            $hasil = $this->db->insert($query2);
-
-            if($hasil)
-            {
-                $pesan = "Data Berhasil Ditambahkan";
-                return $pesan;
-            }else{
-                $pesan = "Data Gagal Ditambahkan";
-                return $pesan;
-            }
-        }else{
-            //jika stok lebih kecil dari jumlah, maka pembelian tidak memungkinkan
-            $pesan = "Stok Tidak Cukup";
-            return $pesan;
-        }
     }
 
     public function tampilPenjualan()

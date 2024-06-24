@@ -40,10 +40,10 @@ class Pengguna
 
         if($hasil)
         {
-            $pesan = "Data Berhasil Diubah";
+            $pesan = "Data Berhasil Diubah!";
             return $pesan;
         }else{
-            $pesan = "Data Gagal Diubah";
+            $pesan = "Data Gagal Diubah!";
             return $pesan;
         }
     }
@@ -54,10 +54,10 @@ class Pengguna
         $hasil = $this->db->hapus($query);
         if($hasil)
         {
-            $pesan = "Data Berhasil Dihapus";
+            $pesan = "Data Berhasil Dihapus!";
             return $pesan;
         }else{
-            $pesan = "Data Gagal Dihapus";
+            $pesan = "Data Gagal Dihapus!";
             return $pesan;
         }
     }

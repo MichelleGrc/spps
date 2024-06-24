@@ -64,11 +64,7 @@ if($bagian == 'Bos'){
                                                 <th>ID</th>
                                                 <th>Tanggal Pembelian</th>
                                                 <th>Pengguna</th>
-                                                <th>Barang</th>
-                                                <th>Supplier</th>
                                                 <th>Kuantitas</th>
-                                                <th>Harga Beli</th>
-                                                <th>Total</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -115,16 +111,18 @@ if($bagian == 'Bos'){
                                                     hargaBeli LIKE '%$keyword%'
                                                     ORDER BY pembelian.idPembelian LIMIT $dataAwal, $dataHalaman"); 
                                                 }else{
-                                                    $ambil = mysqli_query($db->konek(), "SELECT * FROM pembelian INNER JOIN detail_pembelian 
+                                                    $ambil = mysqli_query($db->konek(), 
+                                                    "SELECT pembelian.idPembelian, tanggalPembelian, namaPengguna, sum(kuantitas) as totKuantitas
+                                                    FROM pembelian INNER JOIN detail_pembelian 
                                                     ON detail_pembelian.idPembelian = pembelian.idPembelian 
                                                     INNER JOIN barang
                                                     ON barang.idBarang = detail_pembelian.idBarang
-                                                    INNER JOIN supplier
-                                                    ON barang.idSupplier = supplier.idSupplier
                                                     INNER JOIN pengguna
                                                     ON pengguna.idPengguna = pembelian.idPengguna
+                                                    GROUP BY idPembelian
                                                     ORDER BY pembelian.idPembelian 
-                                                    LIMIT $dataAwal, $dataHalaman"); 
+                                                    LIMIT $dataAwal, $dataHalaman"
+                                                    ); 
                                                 }
                                                     while($row = mysqli_fetch_assoc($ambil)){
                                                     ?>
@@ -133,11 +131,7 @@ if($bagian == 'Bos'){
                                                             <td><?php echo $row['idPembelian']; ?></td>
                                                             <td><?php echo $row['tanggalPembelian']; ?></td>
                                                             <td><?php echo $row['namaPengguna']; ?></td>
-                                                            <td><?php echo $row['namaBarang']; ?></td>
-                                                            <td><?php echo $row['namaSupplier']; ?></td>
-                                                            <td><?php echo $row['kuantitas']; ?></td>
-                                                            <td><?php echo 'Rp ' . number_format($row['hargaBeli'],2,',','.'); ?></td>
-                                                            <td><?php echo 'Rp ' . number_format(($row['hargaBeli'])*($row['kuantitas'])) . ',00'; ?></td>
+                                                            <td><?php echo $row['totKuantitas']; ?></td>
                                                             <td>
                                                                 <a class="btn btn-warning" href="detail_pembelian.php?idPembelian=<?php echo base64_encode($row['idPembelian'])?>">Detail</a>
                                                             </td>

@@ -48,7 +48,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                         <?php
                             //muncul alert dengan pesan berhasil atau tidaknya proses edit
                             if(isset($editBarang)){
-                                echo "<script>alert('Data Berhasil Tersimpan!');
+                                echo "<script>alert('$editBarang');
                                 document.location='../view/data_barang.php'</script>";
                             ?>
                                 <!-- <div class="alert alert-warning" role="alert">
