@@ -79,7 +79,7 @@ if($bagian == 'Bos'){
                                             INNER JOIN pengguna
                                             ON pengguna.idPengguna = pembelian.idPengguna
                                             GROUP BY idPembelian
-                                            ORDER BY pembelian.idPembelian"));
+                                            ORDER BY pembelian.idPembelian DESC"));
                                             $banyakHalaman = ceil($banyakData / $dataHalaman);
                                             if(isset($_GET['halaman'])){
                                                 $halaman = $_GET['halaman'];
@@ -105,7 +105,7 @@ if($bagian == 'Bos'){
                                                     tanggalPembelian LIKE '%$keyword%' OR
                                                     namaPengguna LIKE '%$keyword%'
                                                     GROUP BY idPembelian
-                                                    ORDER BY pembelian.idPembelian 
+                                                    ORDER BY pembelian.idPembelian DESC
                                                     LIMIT $dataAwal, $dataHalaman"); 
                                                 }else{
                                                     $ambil = mysqli_query($db->konek(), 
@@ -117,7 +117,7 @@ if($bagian == 'Bos'){
                                                     INNER JOIN pengguna
                                                     ON pengguna.idPengguna = pembelian.idPengguna
                                                     GROUP BY idPembelian
-                                                    ORDER BY pembelian.idPembelian 
+                                                    ORDER BY pembelian.idPembelian DESC
                                                     LIMIT $dataAwal, $dataHalaman"
                                                     ); 
                                                 }

@@ -104,10 +104,10 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                             </div>
                                             <div class="mb-3">
                                                 <label for="input_jenis_barang" class="form-label">Jenis</label>
-                                                <select type="text" class="form-control" name="jenisBarang" value="<?=$row['jenisBarang']?>" required>
-                                                    <option value="">Pilih Jenis</option>
-                                                    <option value="Ori">Ori</option>
-                                                    <option value="Non Ori">Non Ori</option>
+                                                <select type="text" class="form-control" name="jenisBarang" required>
+                                                    <option value="" <?php if ($row['jenisBarang'] == '') echo ' selected="selected"'?>>Pilih Jenis</option>
+                                                    <option value="Ori" <?php if ($row['jenisBarang'] == 'Ori') echo ' selected="selected"'?>>Ori</option>
+                                                    <option value="Non Ori" <?php if ($row['jenisBarang'] == 'Non Ori') echo ' selected="selected"'?>>Non Ori</option>
                                                 </select>
                                             </div>
                                             <div class="mb-3">
@@ -116,14 +116,10 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                             </div>
                                             <div class="mb-3">
                                                 <label for="input_satuan" class="form-label">Satuan</label>
-                                                <select type="text" class="form-control" name="satuan" value="<?=$row['satuan']?>" required>
-                                                    <option value="">Pilih Satuan</option>
-                                                    <option value="PCS">PCS</option>
+                                                <select type="text" class="form-control" name="satuan" required>
+                                                    <option value="" <?php if ($row['satuan'] == '') echo ' selected="selected"'?>>Pilih Satuan</option>
+                                                    <option value="PCS" <?php if ($row['satuan'] == 'PCS') echo ' selected="selected"'?>>PCS</option>
                                                 </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="input_stok" class="form-label">Stok</label>
-                                                <input type="number" class="form-control" name="stok" value="<?=$row['stok']?>" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="input_harga_beli" class="form-label">Harga Beli</label>

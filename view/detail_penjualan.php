@@ -62,15 +62,16 @@ $row = mysqli_fetch_assoc($getID)
                                         <th>ID Barang</th>
                                         <th>Supplier</th>
                                         <th>Nama Barang</th>
-                                        <th>Kuantitas</th>
                                         <th>Harga Jual</th>
+                                        <th>Kuantitas</th>
                                         <th>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody class="text-center">
                                     <?php
                                         $id = $row['idPenjualan'];
-                                        $tampil = mysqli_query($db->konek(), "SELECT barang.idBarang, namaSupplier, namaBarang, kuantitas, hargaJual, kuantitas*hargaJual as tot
+                                        $tampil = mysqli_query($db->konek(), "SELECT barang.idBarang, namaSupplier, namaBarang, 
+                                        hargaJual, sum(kuantitas) as kuantitas, sum(kuantitas)*hargaJual as tot
                                                     FROM penjualan INNER JOIN detail_penjualan 
                                                     ON detail_penjualan.idPenjualan = penjualan.idPenjualan 
                                                     INNER JOIN barang
@@ -78,14 +79,14 @@ $row = mysqli_fetch_assoc($getID)
                                                     INNER JOIN supplier
                                                     ON supplier.idSupplier = barang.idSupplier
                                                     WHERE penjualan.idPenjualan = '$id'
-                                                    ORDER BY penjualan.idPenjualan");
+                                                    GROUP BY idBarang
+                                                    ORDER BY penjualan.idPenjualan
+                                                    ");
                                         $no=1;
                                         $totalKuantitas = 0;
-                                        $totalHarga = 0;
                                         $total = 0;
                                         while($row = mysqli_fetch_assoc($tampil)){
                                             $totalKuantitas += $row['kuantitas'];
-                                            $totalHarga += $row['hargaJual'];
                                             $total += $row['tot'];
                                         ?>
                                             <tr>
@@ -93,8 +94,8 @@ $row = mysqli_fetch_assoc($getID)
                                                 <td><?php echo $row['idBarang']; ?></td>
                                                 <td><?php echo $row['namaSupplier']; ?></td>
                                                 <td><?php echo $row['namaBarang']; ?></td>
-                                                <td><?php echo $row['kuantitas']; ?></td>
                                                 <td><?php echo 'Rp ' . number_format($row['hargaJual'],2,',','.'); ?></td>
+                                                <td><?php echo $row['kuantitas']; ?></td>
                                                 <td><?php echo 'Rp ' . number_format($row['tot'],2,',','.'); ?></td>
                                             </tr>
                                         <?php
@@ -104,15 +105,10 @@ $row = mysqli_fetch_assoc($getID)
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="4" class="text-center">Total</th>
+                                        <th colspan="5" class="text-center">Total</th>
                                         <th class="text-center">
                                             <?php 
                                                 echo $totalKuantitas; 
-                                            ?>
-                                        </th>
-                                        <th class="text-center">
-                                            <?php 
-                                                echo 'Rp ' . number_format($totalHarga,2,',','.');; 
                                             ?>
                                         </th>
                                         <th class="text-center">

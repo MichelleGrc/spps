@@ -77,7 +77,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                     echo 'Bagian Tidak Dikenali!';
                                 }
                                 ?>
-                                </div>
+                               </div>
                                 <div class="col-6">
                                     <h2 class="text-center">EDIT PENGGUNA</h2>
                                 </div>
@@ -107,10 +107,10 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                             <div class="mb-3">
                                                 <label for="input_bagian" class="form-label">Bagian</label>
                                                 <select class="form-control" name="bagian" required>
-                                                    <option value="">Pilih Bagian</option>
-                                                    <option value="Bos">Bos</option>
-                                                    <option value="Penjualan">Penjualan</option>
-                                                    <option value="Gudang">Gudang</option>
+                                                    <option value="" <?php if ($row['bagian'] == 'PCS') echo ' selected="selected"'?>>Pilih Bagian</option>
+                                                    <option value="Bos" <?php if ($row['bagian'] == 'Bos') echo ' selected="selected"'?>>Bos</option>
+                                                    <option value="Penjualan" <?php if ($row['bagian'] == 'Penjualan') echo ' selected="selected"'?>>Penjualan</option>
+                                                    <option value="Gudang" <?php if ($row['bagian'] == 'Gudang') echo ' selected="selected"'?>>Gudang</option>
                                                 </select> 
                                             </div>
                                             <div class="mb-3">

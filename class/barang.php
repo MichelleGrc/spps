@@ -18,14 +18,13 @@ class Barang
         $jenisBarang = $data['jenisBarang'];
         $merk = $data['merk'];
         $satuan = $data['satuan'];
-        $stok = $data['stok'];
         $hargaBeli = $data['hargaBeli'];
         $hargaJual = $data['hargaJual'];
         $idSupplier = $data['idSupplier'];
 
         $query = "INSERT INTO barang SET idBarang='$idBarang', namaBarang='$namaBarang', 
         jenisBarang='$jenisBarang', merk='$merk', satuan='$satuan', 
-        stok='$stok', hargaBeli='$hargaBeli', hargaJual='$hargaJual', idSupplier='$idSupplier'";
+        hargaBeli='$hargaBeli', hargaJual='$hargaJual', idSupplier='$idSupplier'";
 
         $hasil = $this->db->insert($query);
 
@@ -62,14 +61,13 @@ class Barang
         $jenisBarang = $data['jenisBarang'];
         $merk = $data['merk'];
         $satuan = $data['satuan'];
-        $stok = $data['stok'];
         $hargaBeli = $data['hargaBeli'];
         $hargaJual = $data['hargaJual'];
         $idSupplier = $data['idSupplier'];
 
         $query = "UPDATE barang SET idBarang='$idBarang', namaBarang='$namaBarang', 
         jenisBarang='$jenisBarang', merk='$merk', satuan='$satuan', 
-        stok='$stok', hargaBeli='$hargaBeli', hargaJual='$hargaJual', idSupplier='$idSupplier' 
+        hargaBeli='$hargaBeli', hargaJual='$hargaJual', idSupplier='$idSupplier' 
         WHERE idBarang='$id'";
 
         $hasil = $this->db->edit($query);
