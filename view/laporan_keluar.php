@@ -32,6 +32,13 @@ if($bagian == 'Bos'){
     <!-- Card -->
     <div id="layoutSidenav_content">
         <main>
+            <?php
+            if(isset($_POST['submit'])){
+                $tgl=$_POST['tgl'];
+                $tahun=$_POST['tahun'];?>
+            <?php
+            }
+            ?>
             <script>
             $(document).ready(function() {
                 $('#export').DataTable( {
@@ -41,8 +48,9 @@ if($bagian == 'Bos'){
                         {
                             extend: 'print',
                             customize: function(win){
-                                $(win.document.body).prepend('<h2>PD Libra Motor<h2>');
-                                $(win.document.body).prepend('<h4>Tanggal: <?php echo date('d-m-Y')?><h4>');
+                                $(win.document.body).prepend('<center><h3>Periode: <?php echo 'Bulan '.$tgl.' Tahun '.$tahun ?> <h3><center><br>');
+                                $(win.document.body).prepend('<center><h2>Laporan Stok Keluar PD Libra Motor<h2><center>');
+                                $(win.document.body).prepend('<h5>Tanggal: <?php echo date('d-m-Y')?><h5><br>');
                             }
                         },
                     ]
@@ -52,7 +60,14 @@ if($bagian == 'Bos'){
             <div class="container">
                 <br></br>
                 <h2>Laporan Stok Keluar</h2>
-                <h4>PD Libra Motor</h4>
+                
+                <?php
+                if(isset($_POST['submit'])){?>
+                    <h4><?php echo 'Periode: Bulan '.$tgl.' Tahun '.$tahun;?></h4>
+                <?php
+                }
+                ?>
+                
                 <div class="data-tables datatable-dark">
                     <Br>
                     <form action="" method="post">
@@ -91,7 +106,6 @@ if($bagian == 'Bos'){
                             <tr class="text-center">
                                 <th>No</th>
                                 <th>ID</th>
-                                <th>Tanggal Keluar</th>
                                 <th>Nama Barang</th>
                                 <th>Kuantitas</th>
                             </tr>
@@ -104,14 +118,15 @@ if($bagian == 'Bos'){
                             //$tampil = $lap->showBarangMasuk($tgl, $tahun);
 
                             // Query to fetch data from the database
-                            $query = "SELECT penjualan.idPenjualan, tanggalPenjualan, namaBarang, kuantitas, hargaJual
+                            $query = "SELECT barang.idBarang, namaBarang, sum(kuantitas) as 'kuantitas'
                             FROM barang
                             INNER JOIN detail_penjualan
                             ON barang.idBarang = detail_penjualan.idBarang
                             INNER JOIN penjualan
                             ON detail_penjualan.idPenjualan = penjualan.idPenjualan
                             WHERE tanggalPenjualan LIKE '___{$tgl}_{$tahun}'
-                            ORDER BY penjualan.idPenjualan
+                            GROUP BY barang.idBarang
+                            ORDER BY barang.idBarang
                             ";
                             $result = mysqli_query($db->konek(), $query);
 
@@ -124,8 +139,7 @@ if($bagian == 'Bos'){
                                     ?>
                                     <tr>
                                         <td><?php echo $no++; ?></td>
-                                        <td><?php echo $row['idPenjualan']; ?></td>
-                                        <td><?php echo $row['tanggalPenjualan']; ?></td>
+                                        <td><?php echo $row['idBarang']; ?></td>
                                         <td><?php echo $row['namaBarang']; ?></td>
                                         <td><?php echo $row['kuantitas']; ?></td>
                                     </tr>
@@ -138,7 +152,7 @@ if($bagian == 'Bos'){
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="4" class="text-right">Total Kuantitas</th>
+                                <th colspan="3" class="text-right">Total Kuantitas</th>
                                 <th class="text-center">
                                     <?php 
                                         echo $totalKuantitas; 

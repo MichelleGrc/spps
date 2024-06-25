@@ -32,6 +32,13 @@ if($bagian == 'Bos'){
     <!-- Card -->
     <div id="layoutSidenav_content">
         <main>
+            <?php
+            if(isset($_POST['submit'])){
+                $tgl=$_POST['tgl'];
+                $tahun=$_POST['tahun'];?>
+            <?php
+            }
+            ?>
             <script>
             $(document).ready(function() {
                 $('#export').DataTable( {
@@ -41,8 +48,9 @@ if($bagian == 'Bos'){
                         {
                             extend: 'print',
                             customize: function(win){
-                                $(win.document.body).prepend('<h2>PD Libra Motor<h2>');
-                                $(win.document.body).prepend('<h4>Tanggal: <?php echo date('d-m-Y')?><h4>');
+                                $(win.document.body).prepend('<center><h3>Periode: <?php echo 'Bulan '.$tgl.' Tahun '.$tahun ?> <h3><center><br>');
+                                $(win.document.body).prepend('<center><h2>Laporan Penjualan PD Libra Motor<h2><center>');
+                                $(win.document.body).prepend('<h5>Tanggal: <?php echo date('d-m-Y')?><h5><br>');
                             }
                         },
                     ]
@@ -52,7 +60,14 @@ if($bagian == 'Bos'){
             <div class="container">
                 <br></br>
                 <h2>Laporan Penjualan</h2>
-                <h4>PD Libra Motor</h4>
+                
+                <?php
+                if(isset($_POST['submit'])){?>
+                    <h4><?php echo 'Periode: Bulan '.$tgl.' Tahun '.$tahun;?></h4>
+                <?php
+                }
+                ?>
+
                 <div class="data-tables datatable-dark">
                     <Br>
                     <form action="" method="post">
@@ -90,7 +105,6 @@ if($bagian == 'Bos'){
                         <thead>
                             <tr class="text-center">
                                 <th>No</th>
-                                <th>Tanggal</th>
                                 <th>Nama Supplier</th>
                                 <th>Kuantitas</th>
                                 <th>Total Modal</th>
@@ -106,7 +120,7 @@ if($bagian == 'Bos'){
                                 //$tampil = $lap->showBarangMasuk($tgl, $tahun);
 
                                 // Query to fetch data from the database
-                                $query = "SELECT tanggalPenjualan, namaSupplier, sum(kuantitas) as 'Kuantitas', hargaBeli*sum(kuantitas) as 'Total Modal',
+                                $query = "SELECT namaSupplier, sum(kuantitas) as 'Kuantitas', hargaBeli*sum(kuantitas) as 'Total Modal',
                                         hargaJual*sum(kuantitas) as 'Total Pendapatan', (hargaJual*sum(kuantitas))-(hargaBeli*sum(kuantitas)) as 'Untung'
                                         FROM barang
                                         INNER JOIN supplier
@@ -135,7 +149,6 @@ if($bagian == 'Bos'){
                                         ?>
                                         <tr>
                                             <td><?php echo $no++; ?></td>
-                                            <td><?php echo $row['tanggalPenjualan']; ?></td>
                                             <td><?php echo $row['namaSupplier']; ?></td>
                                             <td><?php echo $row['Kuantitas']; ?></td>
                                             <td><?php echo 'Rp ' . number_format($row['Total Modal'],2,',','.'); ?></td>
@@ -152,7 +165,7 @@ if($bagian == 'Bos'){
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="3" class="text-right">Total</th>
+                                <th colspan="2" class="text-right">Total</th>
                                 <th class="text-center">
                                     <?php 
                                         echo $totalKuantitas; 
