@@ -204,10 +204,21 @@
             $jml = mysqli_num_rows($hasil);
             return $jml;
         }
+    }
 
-        public function connect($query)
+    class getStok extends Koneksi
+    {
+        //function untuk mengembalikan jumlah baris untuk query sql tertentu
+        public function getStok($query)
         {
-            $hasil = mysqli_query($this->koneksi, $query);
+            $hasil = mysqli_query($this->koneksi, $query); 
+            $totStok = 0;   
+            if(mysqli_num_rows($hasil) > 0){
+                while($row = mysqli_fetch_assoc($hasil)){
+                    $totStok += $row['stok'];
+                }
+            }
+            return $totStok;
         }
     }
 

@@ -16,6 +16,7 @@ class Barang
         $idBarang = $data['idBarang'];
         $namaBarang = $data['namaBarang'];
         $jenisBarang = $data['jenisBarang'];
+        $stok = $data['stok'];
         $merk = $data['merk'];
         $satuan = $data['satuan'];
         $hargaBeli = $data['hargaBeli'];
@@ -23,7 +24,7 @@ class Barang
         $idSupplier = $data['idSupplier'];
 
         $query = "INSERT INTO barang SET idBarang='$idBarang', namaBarang='$namaBarang', 
-        jenisBarang='$jenisBarang', merk='$merk', satuan='$satuan', 
+        stok='$stok', jenisBarang='$jenisBarang', merk='$merk', satuan='$satuan', 
         hargaBeli='$hargaBeli', hargaJual='$hargaJual', idSupplier='$idSupplier'";
 
         $hasil = $this->db->insert($query);

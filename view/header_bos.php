@@ -3,6 +3,7 @@
 include_once '../koneksi.php'; //menyertakan koneksi.php
 
 $db = new getNumRows();  //object untuk class getNumRow() dari koneksi.php
+$stok = new getStok(); 
 
 $select = new Select();
 if(isset($_SESSION["id"]))

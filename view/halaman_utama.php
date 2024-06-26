@@ -5,64 +5,233 @@ include('header_bos.php');
     <!-- Card -->
     <div id="layoutSidenav_content">
         <main>
-            <div class="container p-5">
+            <div class="container-fluid" style="padding: 60px;">
+                <?php
+                $ambildatastok = mysqli_query($db->konek(), "SELECT * FROM barang WHERE stok < 4");
+                while($fetch=mysqli_fetch_array($ambildatastok)){
+                $barang = $fetch['namaBarang'];
+                ?>
+                <div style="margin-left: 25px; margin-right: 25px; margin-bottom: 30px;">
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Perhatian!</strong> Stok <?=$barang;?> Hampir Habis!
+                    </div>
+                </div>
+                <?php
+                }
+                ?>
                 <div class="d-flex justify-content-around text-center">
-                    <div class="card text-bg-danger mb-3" style="width: 18rem;">
-                        <div class="card-header">Total Supplier</div>
-                        <?php
-                        $query = "SELECT * FROM supplier";
-                        $jml = $db->getNumRows($query);
-                        ?>
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="../assets/barang.jpg">
                         <div class="card-body">
-                            <h1 class="card-title display-1"><?php echo $jml?></h1>
-                            <a href="data_supplier.php" class="btn btn-danger">Lihat Data Supplier</a>
+                            <h5>Total Barang</h5>
+                            <?php
+                            $query = "SELECT * FROM barang";
+                            $jml = $db->getNumRows($query);
+                            ?>
+                            <h1><?php echo $jml?></h1>
                         </div>
                     </div>
-                    <div class="card text-bg-primary mb-3" style="width: 18rem;">
-                        <div class="card-header">Total Barang</div>
-                        <?php
-                        $query = "SELECT * FROM barang";
-                        $jml = $db->getNumRows($query);
-                        ?>
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="../assets/stok.jpg">
                         <div class="card-body">
-                            <h1 class="card-title display-1"><?php echo $jml ?></h1>
-                            <a href="data_barang.php" class="btn btn-primary">Lihat Data Barang</a>
+                            <h5>Total Stok</h5>
+                            <?php
+                            $query = "SELECT * FROM barang";
+                            $jml = $stok->getStok($query);
+                            ?>
+                            <h1><?php echo $jml?></h1>
                         </div>
                     </div>
-                    <!-- <div class="card text-bg-success mb-3" style="width: 18rem;">
-                        <div class="card-header">Stok</div>
-                        <?php
-                        $query = "SELECT stok FROM barang";
-                        $hasil = $db->connect($query);
-                        $jml = explode(" ",(int)$query);
-                        ?>
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="../assets/pembelian.jpg">
                         <div class="card-body">
-                            <h5 class="card-title"><?php echo array_sum($jml) ?></h5>
-                            <a href="data_barang.php" class="btn btn-success">Lihat Stok Barang</a>
-                        </div>
-                    </div> -->
-                    <div class="card text-bg-success mb-3" style="width: 18rem;">
-                        <div class="card-header">Total Pembelian</div>
-                        <?php
-                        $query = "SELECT * FROM pembelian";
-                        $jml = $db->getNumRows($query);
-                        ?>
-                        <div class="card-body">
-                            <h5 class="card-title display-1"><?php echo $jml ?></h5>
-                            <a href="data_pembelian.php" class="btn btn-success">Lihat Data Pembelian</a>
+                            <h5>Total Pembelian</h5>
+                            <?php
+                            $query = "SELECT * FROM pembelian";
+                            $jml = $db->getNumRows($query);
+                            ?>
+                            <h1><?php echo $jml?></h1>
                         </div>
                     </div>
-                    <div class="card text-bg-warning mb-3" style="width: 18rem;">
-                        <div class="card-header">Total Penjualan</div>
-                        <?php
-                        $query = "SELECT * FROM penjualan";
-                        $jml = $db->getNumRows($query);
-                        ?>
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="../assets/penjualan.jpg">
                         <div class="card-body">
-                            <h5 class="card-title display-1"><?php echo $jml ?></h5>
-                            <a href="data_penjualan.php" class="btn btn-warning">Lihat Data Penjualan</a>
+                            <h5>Total Penjualan</h5>
+                            <?php
+                            $query = "SELECT * FROM penjualan";
+                            $jml = $db->getNumRows($query);
+                            ?>
+                            <h1><?php echo $jml?></h1>
                         </div>
-                    </div>   
+                    </div>
+                </div>
+                <div class="d-flex justify-content-around text-center" >
+                    <div class="col" style="width: 50%; margin-left: 10px; margin-top: 60px;">
+                        <h4>Barang Terlaris</h4><br>
+                        <table class="table table-hover table-bordered table-responsive w-100 d-block d-md-table">
+                            <thead>
+                                <tr class="text-center" style="background-color: #F5F5F5;">
+                                    <th>No</th>
+                                    <th>ID</th>
+                                    <th>Nama Barang</th>
+                                    <th>Jumlah Terjual</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <?php
+                                    $no=1;
+                                        $ambil = mysqli_query($db->konek(), 
+                                        "SELECT barang.idBarang, namaBarang, sum(kuantitas) as totKuantitas
+                                        FROM barang
+                                        INNER JOIN detail_penjualan 
+                                        ON barang.idBarang = detail_penjualan.idBarang
+                                        GROUP BY idBarang
+                                        ORDER BY sum(kuantitas) DESC
+                                        LIMIT 5"
+                                        ); 
+                                        while($row = mysqli_fetch_assoc($ambil)){
+                                        ?>
+                                            <tr>
+                                                <td><?php echo $no++; ?></td>
+                                                <td><?php echo $row['idBarang']; ?></td>
+                                                <td><?php echo $row['namaBarang']; ?></td>
+                                                <td><?php echo $row['totKuantitas']; ?></td>
+                                            </tr>
+                                        <?php
+                                        }
+                                    ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col" style="width: 50%; margin-left: 10px; margin-top: 60px;">
+                        <h4>Stok Paling Sedikit</h4><br>
+                        <table class="table table-hover table-bordered table-responsive w-100 d-block d-md-table">
+                            <thead>
+                                <tr class="text-center" style="background-color: #F5F5F5;">
+                                    <th>No</th>
+                                    <th>ID</th>
+                                    <th>Nama Barang</th>
+                                    <th>Stok</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <?php
+                                    $no=1;
+                                        $ambil = mysqli_query($db->konek(), 
+                                        "SELECT barang.idBarang, namaBarang, stok
+                                        FROM barang
+                                        ORDER BY stok ASC
+                                        LIMIT 5"
+                                        ); 
+                                        while($row = mysqli_fetch_assoc($ambil)){
+                                        ?>
+                                            <tr>
+                                                <td><?php echo $no++; ?></td>
+                                                <td><?php echo $row['idBarang']; ?></td>
+                                                <td><?php echo $row['namaBarang']; ?></td>
+                                                <td><?php echo $row['stok']; ?></td>
+                                            </tr>
+                                        <?php
+                                        }
+                                    ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-around text-center" >
+                    <div class="col" style="width: 50%; margin-left: 10px; margin-top: 60px;">
+                        <h4>Pembelian Terbaru</h4><br>
+                        <table class="table table-hover table-bordered table-responsive w-100 d-block d-md-table">
+                            <thead>
+                                <tr class="text-center" style="background-color: #F5F5F5;">
+                                    <th>No</th>
+                                    <th>ID</th>
+                                    <th>Tanggal Pembelian</th>
+                                    <th>Pengguna</th>
+                                    <th>Kuantitas</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <?php
+                                    $no=1;
+                                        $ambil = mysqli_query($db->konek(), 
+                                        "SELECT pembelian.idPembelian, tanggalPembelian, namaPengguna, sum(kuantitas) as totKuantitas
+                                        FROM pembelian INNER JOIN detail_pembelian 
+                                        ON detail_pembelian.idPembelian = pembelian.idPembelian 
+                                        INNER JOIN barang
+                                        ON barang.idBarang = detail_pembelian.idBarang
+                                        INNER JOIN pengguna
+                                        ON pengguna.idPengguna = pembelian.idPengguna
+                                        GROUP BY idPembelian
+                                        ORDER BY pembelian.idPembelian DESC
+                                        LIMIT 5"
+                                        ); 
+                                        while($row = mysqli_fetch_assoc($ambil)){
+                                        ?>
+                                            <tr>
+                                                <td><?php echo $no++; ?></td>
+                                                <td><?php echo $row['idPembelian']; ?></td>
+                                                <td><?php echo $row['tanggalPembelian']; ?></td>
+                                                <td><?php echo $row['namaPengguna']; ?></td>
+                                                <td><?php echo $row['totKuantitas']; ?></td>
+                                                <td>
+                                                    <a class="btn btn-warning" href="detail_pembelian.php?idPembelian=<?php echo base64_encode($row['idPembelian'])?>">Detail</a>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                        }
+                                    ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col" style="width: 50%; margin-left: 10px; margin-top: 60px;">
+                        <h4>Penjualan Terbaru</h4><br>
+                        <table class="table table-hover table-bordered table-responsive w-100 d-block d-md-table">
+                            <thead>
+                                <tr class="text-center" style="background-color: #F5F5F5;">
+                                    <th>No</th>
+                                    <th>ID</th>
+                                    <th>Tanggal Penjualan</th>
+                                    <th>Pengguna</th>
+                                    <th>Kuantitas</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <?php
+                                    $no=1;
+                                        $ambil = mysqli_query($db->konek(), 
+                                        "SELECT penjualan.idPenjualan, tanggalPenjualan, namaPengguna, sum(kuantitas) as totKuantitas
+                                        FROM penjualan INNER JOIN detail_penjualan 
+                                        ON detail_penjualan.idPenjualan = penjualan.idPenjualan 
+                                        INNER JOIN barang
+                                        ON barang.idBarang = detail_penjualan.idBarang
+                                        INNER JOIN pengguna
+                                        ON pengguna.idPengguna = penjualan.idPengguna
+                                        GROUP BY idPenjualan
+                                        ORDER BY penjualan.idPenjualan DESC
+                                        LIMIT 5"
+                                        ); 
+                                        while($row = mysqli_fetch_assoc($ambil)){
+                                        ?>
+                                            <tr>
+                                                <td><?php echo $no++; ?></td>
+                                                <td><?php echo $row['idPenjualan']; ?></td>
+                                                <td><?php echo $row['tanggalPenjualan']; ?></td>
+                                                <td><?php echo $row['namaPengguna']; ?></td>
+                                                <td><?php echo $row['totKuantitas']; ?></td>
+                                                <td>
+                                                    <a class="btn btn-warning" href="detail_penjualan.php?idPenjualan=<?php echo base64_encode($row['idPenjualan'])?>">Detail</a>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                        }
+                                    ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div> 
         </div>
