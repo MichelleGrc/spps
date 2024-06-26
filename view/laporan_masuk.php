@@ -57,9 +57,8 @@ if($bagian == 'Bos'){
                 } );
             });
             </script>
-            <div class="container">
-                <br></br>
-                <h2>Laporan Stok Masuk</h2>
+            <div class="container-fluid" style="padding: 60px;">
+                <h2>LAPORAN STOK MASUK</h2>
 
                 <?php
                 if(isset($_POST['submit'])){?>
@@ -72,7 +71,7 @@ if($bagian == 'Bos'){
                     <Br>
                     <form action="" method="post">
                         <div class="row">
-                            <div class="col">
+                            <div class="col-5">
                                 <label for="input_tgl" class="form-label">Bulan</label>
                                 <select type="text" class="form-control" name="tgl" required>
                                     <option value="">Pilih Bulan</option>
@@ -90,12 +89,12 @@ if($bagian == 'Bos'){
                                     <option value="12">Desember</option>
                                 </select>
                             </div>
-                            <div class="col">
+                            <div class="col-5">
                                 <label for="input_tahun" class="form-label">Tahun</label>
-                                <input type="number" class="form-control" name="tahun" required>
+                                <input type="number" class="form-control" name="tahun" placeholder="Isi Tahun" required>
                             </div>
-                            <div class="col">
-                                <label> </label>
+                            <div class="col-2">
+                                <label>  </label>
                                 <input type="submit" name="submit" value="Proses" class="btn btn-success form-control">
                             </div>      
                         </div>
@@ -167,6 +166,7 @@ if($bagian == 'Bos'){
             </div>
 
             <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+            <script src="js/scripts.js"></script>
             <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
             <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
             <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>

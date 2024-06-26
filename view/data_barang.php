@@ -39,8 +39,7 @@ if($bagian == 'Bos'){
     <!-- Card -->
     <div id="layoutSidenav_content">
         <main>
-            <br><br>
-            <div class="container">
+            <div class="container-fluid" style="padding: 60px;">
                 <h2>DATA BARANG</h2>
                 <br><br>
             <!-- Alert barang habis -->
@@ -97,7 +96,7 @@ if($bagian == 'Bos'){
                                     <br>
                                 
                                 
-                                    <table class="table table-hover table-bordered">
+                                    <table class="table table-hover table-bordered table-responsive w-100 d-block d-md-table">
                                         <thead>
                                             <tr class="text-center" style="background-color: #F5F5F5;">
                                                 <th>No</th>
@@ -188,13 +187,12 @@ if($bagian == 'Bos'){
                                                 <li class="page-item"><a href="?halaman=<?php echo $halaman+1;?>" class="page-link">></a></li>
                                             <?php }?>
                                         </ul>
-                                    </nav>
+                                    </nav><br><br>
                                 
                         </div>
                     </div>
                 </div>
             </div>
-            <br><br>
         </div>
     </main>
     <!-- End Card -->

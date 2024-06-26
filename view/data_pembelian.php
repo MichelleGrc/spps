@@ -30,8 +30,7 @@ if($bagian == 'Bos'){
     <!-- Card -->
     <div id="layoutSidenav_content">
         <main>
-            <br><br>
-            <div class="container">
+            <div class="container-fluid" style="padding: 60px;">
             <h2>DATA PEMBELIAN</h2>
             <br><br>
                 <!-- <div class="row d-flex justify-content-center"> -->
@@ -52,7 +51,7 @@ if($bagian == 'Bos'){
                                         </form>
                                     </div>
                                     <br>
-                                    <table class="table table-hover table-bordered">
+                                    <table class="table table-hover table-bordered table-responsive w-100 d-block d-md-table">
                                         <thead>
                                             <tr class="text-center" style="background-color: #F5F5F5;">
                                                 <th>No</th>
@@ -160,7 +159,6 @@ if($bagian == 'Bos'){
                     </div>
                 </div>
             </div>
-            <br><br>
         </div>
     </main>
     <!-- End Card -->

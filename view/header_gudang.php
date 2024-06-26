@@ -35,7 +35,7 @@ $login = new Login(); //membuat object untuk class Login()
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark" style="background-color: #2f65d0;">
             <button class="btn btn-link btn-md order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
             <a class="navbar-brand" href="#">PD Libra Motor</a>
         </nav>

@@ -36,8 +36,7 @@ $row = mysqli_fetch_assoc($getID)
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 <body class="bg-dark">
-    <br><br>
-    <div class="container">
+    <div class="container-fluid" style="padding: 60px;">
         <div class="row d-flex justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -55,7 +54,7 @@ $row = mysqli_fetch_assoc($getID)
                             </div>
                         </div>
                         <div class="card-body">
-                            <table class="table table-hover table-bordered">
+                            <table class="table table-hover table-bordered table-responsive w-100 d-block d-md-table">
                                 <thead>
                                     <tr class="text-center" style="background-color: #F5F5F5;">
                                         <th>No</th>
@@ -124,6 +123,5 @@ $row = mysqli_fetch_assoc($getID)
             </div>
         </div>
     </div>
-    <br><br>
 </body>
 </html>
