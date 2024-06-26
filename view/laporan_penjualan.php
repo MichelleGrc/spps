@@ -8,7 +8,7 @@ if(isset($_SESSION["id"]))
     //jika user berhasil login, proses dilanjutkan
     $user = $select->selectUserById($_SESSION["id"]);
     $bagian = $user['bagian'];
-    if($bagian !== 'Bos' & $bagian !== 'Gudang'){
+    if($bagian !== 'Bos' & $bagian !== 'Penjualan'){
         header("Location: ../index.php");
     }
 }else{
