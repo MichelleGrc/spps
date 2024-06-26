@@ -44,20 +44,11 @@ if($bagian == 'Bos'){
         <main>
         <br><br>
             <div class="container">
-            <!-- Search -->
-            <form action="" method="post" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-                <div class="input-group">
-                    <input class="form-control" type="text" name="keyword" placeholder="Search..." autocomplete="off" autofocus/>
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit" name="cari"><i class="fas fa-search"></i></button>
-                    </div>
-                </div>
-            </form>
-            <br><br>
+                <h2>DATA PENGGUNA</h2>
+                <br><br>
                 <!-- <div class="row d-flex justify-content-center"> -->
                     <div class="row">
                         <div class="col">
-                            <div class="card">
                                 <?php
                                 //muncul alert dengan pesan berhasil atau tidaknya proses hapus
                                 if(isset($hapusPengguna))
@@ -69,17 +60,22 @@ if($bagian == 'Bos'){
                                     </div>
                                 <?php }
                                 ?>
-                                <div class="card-header">
                                     <div class="row">
-                                        <div class="col-3">
+                                        <div class="col-4">
                                             <a class="btn btn-primary float-end" href='../form/form_registrasi.php'>Tambah Pengguna</a>                                   
                                         </div>
-                                        <div class="col-6">
-                                            <h2 class="text-center">DATA PENGGUNA</h2>
-                                        </div>
+                                        <!-- Search -->
+                                        <form action="" method="post" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                                            <div class="input-group">
+                                                <input class="form-control" type="text" name="keyword" placeholder="Search..." autocomplete="off" autofocus/>
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary" type="submit" name="cari"><i class="fas fa-search"></i></button>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
-                                </div>
-                                <div class="card-body">
+                                    <br>
+                                
                                     <table class="table table-hover table-bordered">
                                         <thead>
                                             <tr class="text-center">
@@ -162,7 +158,7 @@ if($bagian == 'Bos'){
                                             <?php }?>
                                         </ul>
                                     </nav>
-                                </div>
+                                
                         </div>
                     </div>
                 </div>
