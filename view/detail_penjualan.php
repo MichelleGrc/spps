@@ -57,7 +57,7 @@ $row = mysqli_fetch_assoc($getID)
                         <div class="card-body">
                             <table class="table table-hover table-bordered">
                                 <thead>
-                                    <tr class="text-center">
+                                    <tr class="text-center" style="background-color: #F5F5F5;">
                                         <th>No</th>
                                         <th>ID Barang</th>
                                         <th>Supplier</th>

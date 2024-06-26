@@ -80,7 +80,7 @@ if($bagian == 'Bos'){
                                 
                                     <table class="table table-hover table-bordered">
                                         <thead>
-                                            <tr class="text-center">
+                                            <tr class="text-center" style="background-color: #F5F5F5;">
                                                 <th>No</th>
                                                 <th>ID</th>
                                                 <th>Nama</th>

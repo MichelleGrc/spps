@@ -103,7 +103,7 @@ if($bagian == 'Bos'){
                     <br><br>
                     <table class="table table-hover table-bordered" id="export">
                         <thead>
-                            <tr class="text-center">
+                            <tr class="text-center" style="background-color: #F5F5F5;">
                                 <th>No</th>
                                 <th>ID</th>
                                 <th>Nama Barang</th>
