@@ -100,7 +100,7 @@ if($bagian == 'Bos'){
                         </div>
                     </form>
                     <br><br>
-                    <table class="table table-hover table-bordered table-responsive w-100 d-block d-md-table" id="export">
+                    <table class="table table-hover table-bordered" id="export">
                         <thead>
                             <tr class="text-center" style="background-color: #F5F5F5;">
                                 <th>No</th>

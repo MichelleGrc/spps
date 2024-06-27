@@ -6,7 +6,7 @@
         private $host = "localhost";
         private $user = "root";
         private $pass = "";
-        private $database = "spps_plm";
+        private $database = "db_spps_plm";
         protected $koneksi;
 
         //class __contruct untuk menjalankan
@@ -20,7 +20,7 @@
 
         public function konek()
         {
-            $konek = mysqli_connect('localhost','root','','spps_plm');
+            $konek = mysqli_connect('localhost','root','','db_spps_plm');
             return $konek;
         }
 

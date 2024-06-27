@@ -1,7 +1,7 @@
 <?php
 include_once '../koneksi.php';
 $db = new Koneksi();
-$konek = mysqli_connect('localhost','root','','spps_plm');
+$konek = mysqli_connect('localhost','root','','db_spps_plm');
 
 if (isset($_POST["simpan"])) {
     //mengambil data dari form
