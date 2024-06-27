@@ -123,8 +123,8 @@ if($bagian == 'Bos'){
                                                             <td><?php echo $row['alamat']; ?></td>
                                                             <td><?php echo $row['noTelp']; ?></td>
                                                             <td>
-                                                                <a class="btn btn-warning" href="../form/form_edit_supplier.php?idSupplier=<?php echo base64_encode($row['idSupplier'])?>">Edit</a>
-                                                                <a class="btn btn-danger" href="?hapus_supplier=<?=base64_encode($row['idSupplier'])?>" 
+                                                                <a class="btn btn-warning" style="margin-bottom: 10px;" href="../form/form_edit_supplier.php?idSupplier=<?php echo base64_encode($row['idSupplier'])?>">Edit</a>
+                                                                <a class="btn btn-danger" style="margin-bottom: 10px;" shref="?hapus_supplier=<?=base64_encode($row['idSupplier'])?>" 
                                                                 onclick="return confirm('Anda Yakin Ingin Menghapus Data Ini?')">Hapus</a>
                                                             </td>
                                                         </tr>

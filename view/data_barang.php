@@ -156,8 +156,8 @@ if($bagian == 'Bos'){
                                                             <td><?php echo 'Rp ' . number_format($row['hargaJual'],2,',','.'); ?></td>
                                                             <td><?php echo $row['namaSupplier']; ?></td>
                                                             <td>
-                                                                <a class="btn btn-warning" href="../form/form_edit_barang.php?idBarang=<?php echo base64_encode($row['idBarang'])?>">Edit</a>
-                                                                <a class="btn btn-danger" href="?hapus_barang=<?=base64_encode($row['idBarang'])?>" 
+                                                                <a class="btn btn-warning" style="margin-bottom: 10px;" href="../form/form_edit_barang.php?idBarang=<?php echo base64_encode($row['idBarang'])?>">Edit</a>
+                                                                <a class="btn btn-danger" style="margin-bottom: 10px;" href="?hapus_barang=<?=base64_encode($row['idBarang'])?>" 
                                                                 onclick="return confirm('Anda Yakin Ingin Menghapus Data Ini?')"> Hapus </a>
                                                             </td>
                                                         </tr>
