@@ -121,7 +121,7 @@ if($bagian == 'Bos'){
                                                                 <a class="btn btn-warning"  style="margin-bottom: 10px;" href="../form/form_edit_pengguna.php?idPengguna=<?php echo base64_encode($row['idPengguna'])?>">Edit</a>
                                                                 <a class="btn btn-success"  style="margin-bottom: 10px;" href="../form/form_ubah_pass.php?idPengguna=<?php echo base64_encode($row['idPengguna'])?>">Ubah Pass</a>
                                                                 <a class="btn btn-danger" style="margin-bottom: 10px;" href="?hapus_pengguna=<?=base64_encode($row['idPengguna'])?>" 
-                                                                onclick="return confirm('Anda Yakin Ingin Menghapus Data Ini?')">Hapus</a>
+                                                                onclick="return confirm('Anda yakin ingin menghapus data ini?')">Hapus</a>
                                                             </td>
                                                         </tr>
                                                     <?php

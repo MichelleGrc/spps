@@ -120,7 +120,7 @@ if($bagian == 'Bos'){
                                                             <td>
                                                                 <a class="btn btn-warning" style="margin-bottom: 10px;" href="../form/form_edit_supplier.php?idSupplier=<?php echo base64_encode($row['idSupplier'])?>">Edit</a>
                                                                 <a class="btn btn-danger" style="margin-bottom: 10px;" href="?hapus_supplier=<?=base64_encode($row['idSupplier'])?>" 
-                                                                onclick="return confirm('Anda Yakin Ingin Menghapus Data Ini?')">Hapus</a>
+                                                                onclick="return confirm('Anda yakin ingin menghapus data ini?')">Hapus</a>
                                                             </td>
                                                         </tr>
                                                     <?php
