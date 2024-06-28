@@ -112,7 +112,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                 <div class="mb-3">
                                     <label for="input_satuan" class="form-label">Satuan</label>
                                     <select type="text" class="form-control" name="satuan" required>
-                                        <option value="">Pilih Satuan</option>
                                         <option value="PCS">PCS</option>
                                     </select>
                                 </div>

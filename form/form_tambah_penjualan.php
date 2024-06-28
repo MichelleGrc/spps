@@ -128,7 +128,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                         <div class="col">
                                             <div class="form-group mb-2">
                                                 <label class="form-label">Kuantitas</label>
-                                                <input type="text" class="form-control" name="kuantitas[]" required>
+                                                <input type="number" class="form-control" name="kuantitas[]" required>
                                             </div>
                                         </div>
                                     </div>
@@ -194,7 +194,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                 <div class="col-5">\
                                     <div class="form-group mb-2">\
                                         <label class="form-label">Kuantitas</label>\
-                                        <input type="text" class="form-control" name="kuantitas[]" required>\
+                                        <input type="number" class="form-control" name="kuantitas[]" required>\
                                     </div>\
                                 </div>\
                                 <div class="col-2">\

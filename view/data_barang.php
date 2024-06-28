@@ -64,13 +64,8 @@ if($bagian == 'Bos'){
                                 <?php
                                 //muncul alert dengan pesan berhasil atau tidaknya proses hapus
                                 if(isset($hapusBarang))
-                                { ?>
-                                    <div class="alert alert-warning" role="alert">
-                                        <strong>
-                                            <h6 class="text-center"><?=$hapusBarang?></h2>
-                                        </strong>
-                                    </div>
-                                <?php }
+                                    echo "<script>alert('$hapusBarang');
+                                    document.location='../view/data_barang.php'</script>";
                                 ?>
                                 
                                     <div class="row">

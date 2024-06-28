@@ -117,7 +117,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                             <div class="mb-3">
                                                 <label for="input_satuan" class="form-label">Satuan</label>
                                                 <select type="text" class="form-control" name="satuan" required>
-                                                    <option value="" <?php if ($row['satuan'] == '') echo ' selected="selected"'?>>Pilih Satuan</option>
                                                     <option value="PCS" <?php if ($row['satuan'] == 'PCS') echo ' selected="selected"'?>>PCS</option>
                                                 </select>
                                             </div>
@@ -139,13 +138,13 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                                         $query = "SELECT * FROM supplier";
                                                         $hasil = $db->fetchID($query);
 
-                                                        while($row = mysqli_fetch_array($hasil))
+                                                        while($r = mysqli_fetch_array($hasil))
                                                         { 
                                                             //data idSupplier ditampilkan dengan while dalam option select
-                                                            $idSupplier = $row['idSupplier'];  //untuk menampilkan idSupplier dalam option
-                                                            $namaSupplier = $row['namaSupplier'];     //untuk menampilkan namaSupplier dalam option
+                                                            $idSupplier = $r['idSupplier'];  //untuk menampilkan idSupplier dalam option
+                                                            $namaSupplier = $r['namaSupplier'];     //untuk menampilkan namaSupplier dalam option
                                                             ?>
-                                                            <option value="<?=$idSupplier?>"> <?= $namaSupplier ?> (ID: <?=$idSupplier?>) </option>;
+                                                            <option value="<?=$idSupplier?>" <?php if ($row['idSupplier'] == $idSupplier) echo ' selected="selected"'?>> <?= $namaSupplier ?> (ID: <?=$idSupplier?>) </option>;
                                                         <?php
                                                         }
                                                     ?>

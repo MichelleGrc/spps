@@ -51,13 +51,8 @@ if($bagian == 'Bos'){
                                 <?php
                                 //muncul alert dengan pesan berhasil atau tidaknya proses hapus
                                 if(isset($hapusPengguna))
-                                { ?>
-                                    <div class="alert alert-warning" role="alert">
-                                        <strong>
-                                            <h6 class="text-center"><?=$hapusPengguna?></h2>
-                                        </strong>
-                                    </div>
-                                <?php }
+                                    echo "<script>alert('$hapusPengguna');
+                                    document.location='../view/data_pengguna.php'</script>";
                                 ?>
                                     <div class="row">
                                         <div class="col-4">

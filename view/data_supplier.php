@@ -52,13 +52,8 @@ if($bagian == 'Bos'){
                                 <?php
                                 //muncul alert dengan pesan berhasil atau tidaknya proses hapus
                                 if(isset($hapusSupplier))
-                                { ?>
-                                    <div class="alert alert-warning" role="alert">
-                                        <strong>
-                                            <h6 class="text-center"><?=$hapusSupplier?></h2>
-                                        </strong>
-                                    </div>
-                                <?php }
+                                    echo "<script>alert('$hapusSupplier');
+                                    document.location='../view/data_supplier.php'</script>";
                                 ?>
                                 
                                     <div class="row">
@@ -124,7 +119,7 @@ if($bagian == 'Bos'){
                                                             <td><?php echo $row['noTelp']; ?></td>
                                                             <td>
                                                                 <a class="btn btn-warning" style="margin-bottom: 10px;" href="../form/form_edit_supplier.php?idSupplier=<?php echo base64_encode($row['idSupplier'])?>">Edit</a>
-                                                                <a class="btn btn-danger" style="margin-bottom: 10px;" shref="?hapus_supplier=<?=base64_encode($row['idSupplier'])?>" 
+                                                                <a class="btn btn-danger" style="margin-bottom: 10px;" href="?hapus_supplier=<?=base64_encode($row['idSupplier'])?>" 
                                                                 onclick="return confirm('Anda Yakin Ingin Menghapus Data Ini?')">Hapus</a>
                                                             </td>
                                                         </tr>
