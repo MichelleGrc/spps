@@ -63,7 +63,7 @@ $register = new Register();
                             document.location='form_registrasi.php'</script>";
                             ?>
                         <?php } elseif ($hasil == 100) {
-                            echo "<script>alert('Password Salah!');
+                            echo "<script>alert('Password tidak cocok!');
                             document.location='form_registrasi.php'</script>";
                             ?>
                         <?php }
