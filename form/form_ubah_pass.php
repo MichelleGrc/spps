@@ -58,29 +58,14 @@ $ubahPass = new UbahPass(); //object untuk class UbahPass() dari koneksi.php
                             echo "<script>alert('Password Berhasil Diubah!');
                             document.location='../view/data_pengguna.php'</script>";
                             ?>
-                            <!-- <div class="alert alert-warning" role="alert">
-                                <strong>
-                                    <h6 class="text-center">Ubah Password Berhasil</h6>
-                                </strong>
-                            </div> -->
-                        <?php } elseif ($hasil == 10) { ?>
-                            <div class="alert alert-warning" role="alert">
-                                <strong>
-                                    <h6 class="text-center">Password Baru Tidak Cocok</h6>
-                                </strong>
-                            </div>
-                        <?php } elseif ($hasil == 100) { ?>
-                            <div class="alert alert-warning" role="alert">
-                                <strong>
-                                    <h6 class="text-center">Password Lama Salah</h6>
-                                </strong>
-                            </div>
-                        <?php } elseif ($hasil == 1000) { ?>
-                            <div class="alert alert-warning" role="alert">
-                                <strong>
-                                    <h6 class="text-center">Username Tidak Ditemukan</h6>
-                                </strong>
-                            </div>
+                        <?php } elseif ($hasil == 10) {
+                            echo "<script>alert('Password baru tidak cocok!');
+                            document.location='form_ubah_pass.php'</script>";
+                            ?>
+                        <?php } elseif ($hasil == 100) {
+                            echo "<script>alert('Password lama salah!');
+                            document.location='form_ubah_pass.php'</script>";
+                            ?>
                         <?php }
                     }
                     ?>

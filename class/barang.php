@@ -31,10 +31,10 @@ class Barang
 
         if($hasil)
         {
-            $pesan = "Data Berhasil Ditambahkan!";
+            $pesan = "Data berhasil ditambahkan!";
             return $pesan;
         }else{
-            $pesan = "Data Gagal Ditambahkan!";
+            $pesan = "Data gagal ditambahkan!";
             return $pesan;
         }
     }
@@ -75,24 +75,36 @@ class Barang
 
         if($hasil)
         {
-            $pesan = "Data Berhasil Diubah!";
+            $pesan = "Data berhasil diubah!";
             return $pesan;
         }else{
-            $pesan = "Data Gagal Diubah!";
+            $pesan = "Data gagal diubah!";
             return $pesan;
         }
     }
 
     public function hapusBarang($id)
     {
+        $cek = mysqli_query(
+            $this->db->konek(),
+            "SELECT * FROM detail_pembelian, detail_penjualan 
+            WHERE detail_pembelian.idBarang = '$id' OR detail_penjualan.idBarang = '$id'"
+        );
+
+        if(mysqli_num_rows($cek) > 0){
+            echo "<script>alert('ID Barang $id tidak bisa dihapus karena telah digunakan di tabel lain!');
+            document.location='../view/data_barang.php'</script>";
+            exit;
+        }
+
         $query = "DELETE FROM barang WHERE idBarang='$id'";
         $hasil = $this->db->hapus($query);
         if($hasil)
         {
-            $pesan = "Data Berhasil Dihapus!";
+            $pesan = "Data berhasil dihapus!";
             return $pesan;
         }else{
-            $pesan = "Data Gagal Dihapus!";
+            $pesan = "Data gagal dihapus!";
             return $pesan;
         }
     }

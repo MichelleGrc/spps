@@ -50,24 +50,18 @@ $login = new Login(); //membuat object untuk class Login()
                             $_SESSION["id"] = $login->idUser();
                             header("Location: view/halaman_utama_gudang.php");
                             exit();
-                        } elseif ($hasil == 14) {?>
-                            <div class="alert alert-warning" role="alert">
-                                <strong>
-                                    <h6 class="text-center">Role Tidak Dikenali</h6>
-                                </strong>
-                            </div>
-                        <?php } elseif ($hasil == 10) { ?>
-                            <div class="alert alert-warning" role="alert">
-                                <strong>
-                                    <h6 class="text-center">Password Salah</h6>
-                                </strong>
-                            </div>
-                        <?php } elseif ($hasil == 100) { ?>
-                            <div class="alert alert-warning" role="alert">
-                                <strong>
-                                    <h6 class="text-center">Username Tidak Ditemukan</h6>
-                                </strong>
-                            </div>
+                        } elseif ($hasil == 14) {
+                            echo "<script>alert('Role tidak dikenali!');
+                            document.location='index.php'</script>";
+                            ?>
+                        <?php } elseif ($hasil == 10) {
+                            echo "<script>alert('Password salah!');
+                            document.location='index.php'</script>";
+                            ?>
+                        <?php } elseif ($hasil == 100) {
+                            echo "<script>alert('Username tidak ditemukan!');
+                            document.location='index.php'</script>";
+                            ?>
                         <?php }
                     }
                     ?>

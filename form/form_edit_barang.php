@@ -116,9 +116,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                             </div>
                                             <div class="mb-3">
                                                 <label for="input_satuan" class="form-label">Satuan</label>
-                                                <select type="text" class="form-control" name="satuan" required>
-                                                    <option value="PCS" <?php if ($row['satuan'] == 'PCS') echo ' selected="selected"'?>>PCS</option>
-                                                </select>
+                                                <input type="text" class="form-control" name="satuan2" value="PCS" disabled>
+                                                <input type="hidden" class="form-control" name="satuan" value="PCS">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="input_harga_beli" class="form-label">Harga Beli</label>

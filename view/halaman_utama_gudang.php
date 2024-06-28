@@ -6,20 +6,36 @@ include('header_gudang.php');
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid" style="padding: 60px;">
+                <!-- Alert barang habis -->
                 <?php
-                $ambildatastok = mysqli_query($db->konek(), "SELECT * FROM barang WHERE stok < 4");
+                $ambildatastok = mysqli_query($db->konek(), "SELECT * FROM barang WHERE stok < 4 AND stok >= 1");
+                $ambildatastok2 = mysqli_query($db->konek(), "SELECT * FROM barang WHERE stok = 0");
+
                 while($fetch=mysqli_fetch_array($ambildatastok)){
                 $barang = $fetch['namaBarang'];
                 ?>
                 <div style="margin-left: 50px; margin-right: 50px; margin-bottom: 30px;">
                     <div class="alert alert-danger alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <strong>Perhatian!</strong> Stok <?=$barang;?> Hampir Habis!
+                        <strong>Perhatian!</strong> Stok <?=$barang;?> hampir habis!
                     </div>
                 </div>
                 <?php
                 }
+
+                while($fetch=mysqli_fetch_array($ambildatastok2)){
+                    $barang = $fetch['namaBarang'];
+                    ?>
+                    <div style="margin-left: 50px; margin-right: 50px; margin-bottom: 30px;">
+                        <div class="alert alert-danger alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong>Perhatian!</strong> Stok <?=$barang;?> telah habis!
+                        </div>
+                    <div>
+                    <?php
+                    }
                 ?>
+
                 <div class="d-flex justify-content-around text-center">
                     <div class="card" style="width: 22rem;">
                         <img class="card-img-top" src="../assets/barang.jpg">

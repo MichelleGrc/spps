@@ -55,26 +55,17 @@ $register = new Register();
                         //pemeriksaan register pengguna, data dari form dimasukkan ke class Register() --> buka koneksi.php
 
                         if ($hasil == 1) { 
-                            echo "<script>alert('Registrasi Berhasil!');
+                            echo "<script>alert('Registrasi berhasil!');
                             document.location='../view/data_pengguna.php'</script>";
                             ?>
-                            <!-- <div class="alert alert-warning" role="alert">
-                                <strong>
-                                    <h6 class="text-center">Registrasi Berhasil</h6>
-                                </strong>
-                            </div> -->
-                        <?php } elseif ($hasil == 10) { ?>
-                            <div class="alert alert-warning" role="alert">
-                                <strong>
-                                    <h6 class="text-center">Username Telah Ada</h6>
-                                </strong>
-                            </div>
-                        <?php } elseif ($hasil == 100) { ?>
-                            <div class="alert alert-warning" role="alert">
-                                <strong>
-                                    <h6 class="text-center">Password Tidak Cocok</h6>
-                                </strong>
-                            </div>
+                        <?php } elseif ($hasil == 10) {
+                            echo "<script>alert('Username telah ada!');
+                            document.location='form_registrasi.php'</script>";
+                            ?>
+                        <?php } elseif ($hasil == 100) {
+                            echo "<script>alert('Password Salah!');
+                            document.location='form_registrasi.php'</script>";
+                            ?>
                         <?php }
                     }
                     ?>

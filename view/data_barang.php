@@ -44,17 +44,28 @@ if($bagian == 'Bos'){
                 <br><br>
             <!-- Alert barang habis -->
             <?php
-            $ambildatastok = mysqli_query($db->konek(), "SELECT * FROM barang WHERE stok < 4");
+            $ambildatastok = mysqli_query($db->konek(), "SELECT * FROM barang WHERE stok < 4 AND stok >= 1");
+            $ambildatastok2 = mysqli_query($db->konek(), "SELECT * FROM barang WHERE stok = 0");
 
             while($fetch=mysqli_fetch_array($ambildatastok)){
             $barang = $fetch['namaBarang'];
             ?>
             <div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Perhatian!</strong> Stok <?=$barang;?> Hampir Habis!
+                <strong>Perhatian!</strong> Stok <?=$barang;?> hampir habis!
             </div>
             <?php
             }
+
+            while($fetch=mysqli_fetch_array($ambildatastok2)){
+                $barang = $fetch['namaBarang'];
+                ?>
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Perhatian!</strong> Stok <?=$barang;?> telah habis!
+                </div>
+                <?php
+                }
             ?>
 
                 <!-- <div class="row d-flex justify-content-center"> -->

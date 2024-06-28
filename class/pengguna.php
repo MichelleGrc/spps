@@ -40,24 +40,35 @@ class Pengguna
 
         if($hasil)
         {
-            $pesan = "Data Berhasil Diubah!";
+            $pesan = "Data berhasil diubah!";
             return $pesan;
         }else{
-            $pesan = "Data Gagal Diubah!";
+            $pesan = "Data gagal diubah!";
             return $pesan;
         }
     }
 
     public function hapusPengguna($id)
     {
+        $cek = mysqli_query(
+            $this->db->konek(),
+            "SELECT * FROM pembelian, penjualan WHERE pembelian.idPengguna = '$id' OR penjualan.idPengguna = '$id'"
+        );
+
+        if(mysqli_num_rows($cek) > 0){
+            echo "<script>alert('ID Pengguna $id tidak bisa dihapus karena telah digunakan di tabel lain!');
+            document.location='../view/data_pengguna.php'</script>";
+            exit;
+        }
+        
         $query = "DELETE FROM pengguna WHERE idPengguna='$id'";
         $hasil = $this->db->hapus($query);
         if($hasil)
         {
-            $pesan = "Data Berhasil Dihapus!";
+            $pesan = "Data gerhasil dihapus!";
             return $pesan;
         }else{
-            $pesan = "Data Gagal Dihapus!";
+            $pesan = "Data gagal dihapus!";
             return $pesan;
         }
     }

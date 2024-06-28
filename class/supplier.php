@@ -1,5 +1,6 @@
 <?php
 include_once '../koneksi.php';
+$db = new Koneksi();
 
 class Supplier
 {
@@ -25,10 +26,10 @@ class Supplier
 
         if($hasil)
         {
-            $pesan = "Data Berhasil Ditambahkan!";
+            $pesan = "Data berhasil ditambahkan!";
             return $pesan;
         }else{
-            $pesan = "Data Gagal Ditambahkan!";
+            $pesan = "Data gagal ditambahkan!";
             return $pesan;
         }
     }
@@ -63,24 +64,31 @@ class Supplier
 
         if($hasil)
         {
-            $pesan = "Data Berhasil Diubah!";
+            $pesan = "Data berhasil diubah!";
             return $pesan;
         }else{
-            $pesan = "Data Gagal Diubah!";
+            $pesan = "Data gagal diubah!";
             return $pesan;
         }
     }
 
     public function hapusSupplier($id)
     {
+        $cek = mysqli_query($this->db->konek(), "SELECT * FROM barang WHERE idSupplier = '$id'");
+        if(mysqli_num_rows($cek) > 0){
+            echo "<script>alert('ID Supplier $id tidak bisa dihapus karena telah digunakan di tabel lain!');
+            document.location='../view/data_supplier.php'</script>";
+            exit;
+        }
+
         $query = "DELETE FROM supplier WHERE idSupplier='$id'";
         $hasil = $this->db->hapus($query);
         if($hasil)
         {
-            $pesan = "Data Berhasil Dihapus!";
+            $pesan = "Data berhasil dihapus!";
             return $pesan;
         }else{
-            $pesan = "Data Gagal Dihapus!";
+            $pesan = "Data gagal dihapus!";
             return $pesan;
         }
     }

@@ -110,7 +110,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                             </div>
                                             <div class="mb-3">
                                                 <label for="input_no_telp" class="form-label">No. Telp</label>
-                                                <input type="number" class="form-control" name="noTelp" value="<?=$row['noTelp']?>" required>
+                                                <input type="text" class="form-control" name="noTelp" value="<?=$row['noTelp']?>" required>
                                             </div>
                                             <div class="row">
                                                 <div class="col">
