@@ -1,6 +1,7 @@
 <?php
 include_once '../koneksi.php';
 $db = new Koneksi();
+$konek = mysqli_connect('localhost','root','','db_spps_plm');
 
 if (isset($_POST["simpan"])) {
     //mengambil data dari form
@@ -12,7 +13,7 @@ if (isset($_POST["simpan"])) {
     $kuantitas = $_POST['kuantitas'];
 
     for($i = 0; $i < count($idBarang); $i++){
-        $cek = mysqli_query($this->db->konek(), "SELECT * FROM barang WHERE idBarang = '$idBarang[$i]'");
+        $cek = mysqli_query($konek, "SELECT * FROM barang WHERE idBarang = '$idBarang[$i]'");
         if(mysqli_num_rows($cek) == 0){
             echo "<script>alert('ID Barang $idBarang[$i] Tidak Ditemukan!');
             document.location='../form/form_tambah_penjualan.php'</script>";

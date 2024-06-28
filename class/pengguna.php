@@ -65,7 +65,7 @@ class Pengguna
         $hasil = $this->db->hapus($query);
         if($hasil)
         {
-            $pesan = "Data gerhasil dihapus!";
+            $pesan = "Data berhasil dihapus!";
             return $pesan;
         }else{
             $pesan = "Data gagal dihapus!";
