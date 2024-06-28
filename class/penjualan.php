@@ -12,6 +12,15 @@ if (isset($_POST["simpan"])) {
     $idBarang = $_POST['idBarang'];
     $kuantitas = $_POST['kuantitas'];
 
+    for($i = 0; $i < count($idBarang); $i++){
+        $cek = mysqli_query($konek, "SELECT * FROM barang WHERE idBarang = '$idBarang[$i]'");
+        if(mysqli_num_rows($cek) == 0){
+            echo "<script>alert('ID Barang $idBarang[$i] Tidak Ditemukan!');
+            document.location='../form/form_tambah_penjualan.php'</script>";
+            exit;
+        }
+    }
+
     $query = "INSERT INTO penjualan
     SET idPenjualan='$idPenjualan', idPengguna ='$idPengguna', tanggalPenjualan='$tanggalPenjualan'";
     $hasil = $db->insert($query);

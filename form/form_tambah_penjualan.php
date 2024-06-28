@@ -102,7 +102,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                             <input type="hidden" class="form-control" name="idPenjualans[]" value="<?php echo $kodeauto ?>">
                                             <div class="form-group mb-2">
                                                 <label class="form-label">ID Barang</label>
-                                                <select class="form-control" name="idBarang[]" required>
+                                                <input class="form-control" type="text" name="idBarang[]" list="barang" required>
+                                                <datalist id="barang">
                                                     <option value="">Pilih Barang</option>
                                                     <?php
                                                     //karena data idBarang di form transaksi ini diambil dari tb supplier
@@ -121,7 +122,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                                         <?php
                                                         }
                                                     ?>
-                                                </select>
+                                                </datalist>
                                             </div>
                                         </div>
                                         <div class="col">
@@ -167,7 +168,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                     <input type="hidden" class="form-control" name="idPenjualans[]" value="<?php echo $kodeauto ?>">\
                                     <div class="form-group mb-2">\
                                         <label class="form-label">ID Barang</label>\
-                                        <select class="form-control" name="idBarang[]" required>\
+                                        <input class="form-control" type="text" name="idBarang[]" list="barang" required>\
+                                        <datalist id="barang">\
                                             <option value="">Pilih Barang</option>\
                                             <?php
                                             //karena data idBarang di form transaksi ini diambil dari tb supplier
@@ -181,12 +183,12 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                                     $idBarang = $row['idBarang'];  //untuk menampilkan idBarang dalam option
                                                     $stok = $row['stok'];  //untuk menampilkan stok dalam option
                                                     $namaBarang = $row['namaBarang'];     //untuk menampilkan namaBarang dalam option    
-                                                    ?>\
+                                                    ?>
                                                     <option value="<?=$idBarang?>"> <?= $namaBarang ?> (Stok: <?=$stok?>) </option>;\
                                                 <?php
                                                 }
                                             ?>
-                                        </select>\
+                                        </datalist>\
                                     </div>\
                                 </div>\
                                 <div class="col-5">\

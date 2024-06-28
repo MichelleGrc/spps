@@ -9,9 +9,18 @@ if (isset($_POST["simpan"])) {
     $tanggalPembelian = $_POST['tanggalPembelian'];
     $idPengguna = $_POST['idPengguna'];
     $idPembelians = $_POST['idPembelians'];
-    $idBarang = $_POST['idBarang'];
     $kuantitas = $_POST['kuantitas'];
+    $idBarang = $_POST['idBarang'];
 
+    for($i = 0; $i < count($idBarang); $i++){
+        $cek = mysqli_query($konek, "SELECT * FROM barang WHERE idBarang = '$idBarang[$i]'");
+        if(mysqli_num_rows($cek) == 0){
+            echo "<script>alert('ID Barang $idBarang[$i] Tidak Ditemukan!');
+            document.location='../form/form_tambah_pembelian.php'</script>";
+            exit;
+        }
+    }
+        
     $query = "INSERT INTO pembelian
     SET idPembelian='$idPembelian', idPengguna ='$idPengguna', tanggalPembelian='$tanggalPembelian'";
     $hasil = $db->insert($query);
@@ -42,9 +51,8 @@ if (isset($_POST["simpan"])) {
         }else{
             echo "<script>alert('Data Gagal Ditambahkan!');
             document.location='../view/data_pembelian.php'</script>";
-        }
+        }  
     }
-
 }
 
 class Pembelian
