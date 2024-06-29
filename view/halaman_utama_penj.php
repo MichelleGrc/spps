@@ -189,7 +189,7 @@ include('header_penj.php');
                                     <tr>
                                         <td><?php echo $no++; ?></td>
                                         <td><?php echo $row['idPembelian']; ?></td>
-                                        <td><?php echo $row['tanggalPembelian']; ?></td>
+                                        <td><?php echo date('d-m-Y h:m:s a', strtotime($row['tanggalPembelian'])); ?></td>
                                         <td><?php echo $row['namaPengguna']; ?></td>
                                         <td><?php echo $row['totKuantitas']; ?></td>
                                         <td>
@@ -235,7 +235,7 @@ include('header_penj.php');
                                     <tr>
                                         <td><?php echo $no++; ?></td>
                                         <td><?php echo $row['idPenjualan']; ?></td>
-                                        <td><?php echo $row['tanggalPenjualan']; ?></td>
+                                        <td><?php echo date('d-m-Y h:m:s a', strtotime($row['tanggalPenjualan'])); ?></td>
                                         <td><?php echo $row['namaPengguna']; ?></td>
                                         <td><?php echo $row['totKuantitas']; ?></td>
                                         <td>
