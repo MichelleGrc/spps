@@ -76,7 +76,7 @@ class Supplier
     {
         $cek = mysqli_query($this->db->konek(), "SELECT * FROM barang WHERE idSupplier = '$id'");
         if(mysqli_num_rows($cek) > 0){
-            echo "<script>alert('ID Supplier $id tidak bisa dihapus karena telah digunakan di tabel lain!');
+            echo "<script>alert('ID supplier $id tidak bisa dihapus karena telah digunakan di tabel lain!');
             document.location='../view/data_supplier.php'</script>";
             exit;
         }

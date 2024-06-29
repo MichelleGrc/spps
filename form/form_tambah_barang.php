@@ -115,7 +115,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                     <input type="hidden" class="form-control" name="satuan" value="PCS">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="input_stok" class="form-label">Stok</label>
+                                    <label for="input_stok" class="form-label">Stok Awal</label>
                                     <input type="number" class="form-control" name="stok" required>
                                 </div>
                                 <div class="mb-3">

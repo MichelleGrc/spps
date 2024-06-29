@@ -6,7 +6,6 @@ $konek = mysqli_connect('localhost','root','','db_spps_plm');
 if (isset($_POST["simpan"])) {
     //mengambil data dari form
     $idPembelian = $_POST['idPembelian'];
-    $tanggalPembelian = $_POST['tanggalPembelian'];
     $idPengguna = $_POST['idPengguna'];
     $idPembelians = $_POST['idPembelians'];
     $kuantitas = $_POST['kuantitas'];
@@ -15,14 +14,14 @@ if (isset($_POST["simpan"])) {
     for($i = 0; $i < count($idBarang); $i++){
         $cek = mysqli_query($konek, "SELECT * FROM barang WHERE idBarang = '$idBarang[$i]'");
         if(mysqli_num_rows($cek) == 0){
-            echo "<script>alert('ID Barang $idBarang[$i] Tidak Ditemukan!');
+            echo "<script>alert('ID barang $idBarang[$i] tidak ditemukan!');
             document.location='../form/form_tambah_pembelian.php'</script>";
             exit;
         }
     }
         
     $query = "INSERT INTO pembelian
-    SET idPembelian='$idPembelian', idPengguna ='$idPengguna', tanggalPembelian='$tanggalPembelian'";
+    SET idPembelian='$idPembelian', idPengguna ='$idPengguna'";
     $hasil = $db->insert($query);
 
     foreach($idPembelians as $index => $idP){

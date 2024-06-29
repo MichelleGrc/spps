@@ -123,7 +123,7 @@ if($bagian == 'Bos'){
                                 ON barang.idBarang = detail_pembelian.idBarang
                                 INNER JOIN pembelian
                                 ON detail_pembelian.idPembelian = pembelian.idPembelian
-                                WHERE tanggalPembelian LIKE '___{$tgl}_{$tahun}'
+                                WHERE tanggalPembelian LIKE '{$tahun}_{$tgl}%'
                                 GROUP BY barang.idBarang
                                 ORDER BY barang.idBarang";
                                 $result = mysqli_query($db->konek(), $query);

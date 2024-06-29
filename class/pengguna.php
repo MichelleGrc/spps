@@ -56,7 +56,7 @@ class Pengguna
         );
 
         if(mysqli_num_rows($cek) > 0){
-            echo "<script>alert('ID Pengguna $id tidak bisa dihapus karena telah digunakan di tabel lain!');
+            echo "<script>alert('ID pengguna $id tidak bisa dihapus karena telah digunakan di tabel lain!');
             document.location='../view/data_pengguna.php'</script>";
             exit;
         }

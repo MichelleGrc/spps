@@ -90,11 +90,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                     <input type="text" class="form-control" name="idPengguna2" value="<?php echo $user["idPengguna"]; ?>" disabled>
                                     <input type="hidden" class="form-control" name="idPengguna" value="<?php echo $user["idPengguna"]; ?>">
                                 </div>
-                                <div class="mb-3">
-                                    <label for="">Tanggal Penjualan</label>
-                                    <input type="text" class="form-control" name="tanggalPenjualan2" value="<?php echo date('d-m-Y') ?>" disabled>
-                                    <input type="hidden" class="form-control" name="tanggalPenjualan" value="<?php echo date('d-m-Y') ?>">
-                                </div>
 
                                 <div class="main-form mt-3 border-bottom">
                                     <div class="row">

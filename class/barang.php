@@ -23,6 +23,12 @@ class Barang
         $hargaJual = $data['hargaJual'];
         $idSupplier = $data['idSupplier'];
 
+        if($stok < 0){
+            echo "<script>alert('Stok barang tidak boleh kurang dari 0!');
+            document.location='../form/form_tambah_barang.php'</script>";
+            exit;
+        }
+
         $query = "INSERT INTO barang SET idBarang='$idBarang', namaBarang='$namaBarang', 
         stok='$stok', jenisBarang='$jenisBarang', merk='$merk', satuan='$satuan', 
         hargaBeli='$hargaBeli', hargaJual='$hargaJual', idSupplier='$idSupplier'";
@@ -92,7 +98,7 @@ class Barang
         );
 
         if(mysqli_num_rows($cek) > 0){
-            echo "<script>alert('ID Barang $id tidak bisa dihapus karena telah digunakan di tabel lain!');
+            echo "<script>alert('ID barang $id tidak bisa dihapus karena telah digunakan di tabel lain!');
             document.location='../view/data_barang.php'</script>";
             exit;
         }

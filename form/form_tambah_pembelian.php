@@ -77,21 +77,6 @@ if(isset($_SESSION["id"]))
                             </div>
                         </div>
                         <div class="card-body">
-                            <!-- <form action="../form/form_tambah_pembelian.php" method="post">
-                                <div class="mb-3">
-                                    <label for="input_tahun" class="form-label">Mau Input Berapa Data?</label>
-                                    
-                                </div>
-                                <div class="row">
-                                    <div class="col-9">
-                                        <input type="number" class="form-control" name="jum" required>
-                                    </div>
-                                    <div class="col-3">
-                                        <input type="submit" name="proses" value="Proses" class="btn btn-success form-control">
-                                    </div>                    
-                                </div>
-                            </form> <br> -->
-
                             <form action="../class/pembelian.php" method="POST">
                                 <div class="mb-3">
                                     <label for="">ID</label>
@@ -103,12 +88,6 @@ if(isset($_SESSION["id"]))
                                     <input type="text" class="form-control" name="idPengguna2" value="<?php echo $user["idPengguna"]; ?>" disabled>
                                     <input type="hidden" class="form-control" name="idPengguna" value="<?php echo $user["idPengguna"]; ?>">
                                 </div>
-                                <div class="mb-3">
-                                    <label for="">Tanggal Pembelian</label>
-                                    <input type="text" class="form-control" name="tanggalPembelian2" value="<?php echo date('d-m-Y') ?>" disabled>
-                                    <input type="hidden" class="form-control" name="tanggalPembelian" value="<?php echo date('d-m-Y') ?>">
-                                </div>
-
                                 <div class="main-form mt-3 border-bottom">
                                     <div class="row">
                                         <div class="col">

@@ -6,7 +6,6 @@ $konek = mysqli_connect('localhost','root','','db_spps_plm');
 if (isset($_POST["simpan"])) {
     //mengambil data dari form
     $idPenjualan = $_POST['idPenjualan'];
-    $tanggalPenjualan = $_POST['tanggalPenjualan'];
     $idPengguna = $_POST['idPengguna'];
     $idPenjualans = $_POST['idPenjualans'];
     $idBarang = $_POST['idBarang'];
@@ -15,14 +14,23 @@ if (isset($_POST["simpan"])) {
     for($i = 0; $i < count($idBarang); $i++){
         $cek = mysqli_query($konek, "SELECT * FROM barang WHERE idBarang = '$idBarang[$i]'");
         if(mysqli_num_rows($cek) == 0){
-            echo "<script>alert('ID Barang $idBarang[$i] Tidak Ditemukan!');
+            echo "<script>alert('ID barang $idBarang[$i] tidak ditemukan!');
+            document.location='../form/form_tambah_penjualan.php'</script>";
+            exit;
+        }
+
+        $hasil = mysqli_fetch_assoc($cek);
+        $stoksekarang = $hasil['stok'];
+        $sisaStok = $stoksekarang - $kuantitas[$i]; 
+        if($sisaStok < 0){
+            echo "<script>alert('Stok barang $idBarang[$i] tidak cukup!');
             document.location='../form/form_tambah_penjualan.php'</script>";
             exit;
         }
     }
 
     $query = "INSERT INTO penjualan
-    SET idPenjualan='$idPenjualan', idPengguna ='$idPengguna', tanggalPenjualan='$tanggalPenjualan'";
+    SET idPenjualan='$idPenjualan', idPengguna ='$idPengguna'";
     $hasil = $db->insert($query);
 
     foreach($idPenjualans as $index => $idP){

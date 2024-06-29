@@ -123,7 +123,7 @@ if($bagian == 'Bos'){
                             ON barang.idBarang = detail_penjualan.idBarang
                             INNER JOIN penjualan
                             ON detail_penjualan.idPenjualan = penjualan.idPenjualan
-                            WHERE tanggalPenjualan LIKE '___{$tgl}_{$tahun}'
+                            WHERE tanggalPenjualan LIKE '{$tahun}_{$tgl}%'
                             GROUP BY barang.idBarang
                             ORDER BY barang.idBarang
                             ";
