@@ -23,18 +23,21 @@ class Barang
         $hargaJual = $data['hargaJual'];
         $idSupplier = $data['idSupplier'];
 
+        //memeriksa apakah stok barang kurang dari 0 
         if($stok < 0){
             echo "<script>alert('Stok barang tidak boleh kurang dari 0!');
             document.location='../form/form_tambah_barang.php'</script>";
             exit;
         }
 
+        //setelah cek stok, bisa langsung insert
         $query = "INSERT INTO barang SET idBarang='$idBarang', namaBarang='$namaBarang', 
         stok='$stok', jenisBarang='$jenisBarang', merk='$merk', satuan='$satuan', 
         hargaBeli='$hargaBeli', hargaJual='$hargaJual', idSupplier='$idSupplier'";
 
         $hasil = $this->db->insert($query);
 
+        //return pesan untuk alert
         if($hasil)
         {
             $pesan = "Data berhasil ditambahkan!";
@@ -54,7 +57,7 @@ class Barang
 
     public function getIDBarang($id)
     {
-        //mengambil id_barang pada row tertentu
+        //mengambil idBarang pada row tertentu
         $query = "SELECT * FROM barang WHERE idBarang = '$id'";
         $hasil = $this->db->show($query);
         return $hasil;
@@ -72,6 +75,7 @@ class Barang
         $hargaJual = $data['hargaJual'];
         $idSupplier = $data['idSupplier'];
 
+        //update ke db
         $query = "UPDATE barang SET idBarang='$idBarang', namaBarang='$namaBarang', 
         jenisBarang='$jenisBarang', merk='$merk', satuan='$satuan', 
         hargaBeli='$hargaBeli', hargaJual='$hargaJual', idSupplier='$idSupplier' 
@@ -79,6 +83,7 @@ class Barang
 
         $hasil = $this->db->edit($query);
 
+        //return pesan untuk alert
         if($hasil)
         {
             $pesan = "Data berhasil diubah!";
@@ -91,6 +96,7 @@ class Barang
 
     public function hapusBarang($id)
     {
+        //cek terlebih dahulu apakah ada tabrakan dengan FK tabel lain
         $cek = mysqli_query(
             $this->db->konek(),
             "SELECT * FROM detail_pembelian, detail_penjualan 
@@ -103,8 +109,11 @@ class Barang
             exit;
         }
 
+        //kalau tidak ada bisa langsung hapus
         $query = "DELETE FROM barang WHERE idBarang='$id'";
         $hasil = $this->db->hapus($query);
+
+        //return pesan untuk alert
         if($hasil)
         {
             $pesan = "Data berhasil dihapus!";

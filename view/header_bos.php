@@ -1,16 +1,18 @@
 <?php
-// session_start();
 include_once '../koneksi.php'; //menyertakan koneksi.php
 
 $db = new getNumRows();  //object untuk class getNumRow() dari koneksi.php
-$stok = new getStok(); 
+$stok = new getStok();  //object untuk class getStok() dari koneksi.php
 
 $select = new Select();
 if(isset($_SESSION["id"]))
 {
     //jika user berhasil login, proses dilanjutkan
     $user = $select->selectUserById($_SESSION["id"]);
+    $nama = $user['namaPengguna'];
     $bagian = $user['bagian'];
+
+    //cek hak akses
     if($bagian !== 'Bos'){
         header("Location: ../index.php");
     }

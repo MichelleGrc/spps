@@ -8,6 +8,8 @@ if(isset($_SESSION["id"]))
     //jika user berhasil login, proses dilanjutkan
     $user = $select->selectUserById($_SESSION["id"]);
     $bagian = $user['bagian'];
+
+    //cek hak akses
     if($bagian !== 'Bos' & $bagian !== 'Penjualan'){
         header("Location: ../index.php");
     }
@@ -18,6 +20,7 @@ if(isset($_SESSION["id"]))
 ?>
 
 <?php
+//navbar sesuai hak akses
 if($bagian == 'Bos'){
     include('header_bos.php');
 }else if($bagian == 'Penjualan'){
@@ -116,9 +119,8 @@ if($bagian == 'Bos'){
                             if (isset($_POST["submit"])) {    
                                 $tgl=$_POST['tgl'];
                                 $tahun=$_POST['tahun'];
-                                //$tampil = $lap->showBarangMasuk($tgl, $tahun);
 
-                                // Query to fetch data from the database
+                                //fetch data dari db
                                 $query = "SELECT namaSupplier, sum(kuantitas) as 'Kuantitas', hargaBeli*sum(kuantitas) as 'Total Modal',
                                         hargaJual*sum(kuantitas) as 'Total Pendapatan', (hargaJual*sum(kuantitas))-(hargaBeli*sum(kuantitas)) as 'Untung'
                                         FROM barang
@@ -133,11 +135,13 @@ if($bagian == 'Bos'){
                                         ORDER BY penjualan.idPenjualan;";
                                 $result = mysqli_query($db->konek(), $query);
 
+                                //inisialisasi
                                 $totalKuantitas = 0;
                                 $totalModal = 0;
                                 $totalPend = 0;
                                 $totalUnt = 0;
 
+                                //kalau ada hasil (>0)
                                 if(mysqli_num_rows($result) > 0){
                                     $no = 1;
                                     while($row = mysqli_fetch_assoc($result)){
@@ -157,6 +161,7 @@ if($bagian == 'Bos'){
                                         <?php
                                     }
                                 } else {
+                                    //kalau tidak ada hasil
                                     echo "<tr><td colspan='7'>Tidak Ada Data</td></tr>";
                                 }
                             

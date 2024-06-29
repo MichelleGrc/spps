@@ -1,12 +1,15 @@
 <?php
 include('header_gudang.php');
+//halaman utama untuk bagian gudang
 ?>
 
     <!-- Card -->
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid" style="padding: 60px;">
-                <!-- Alert barang habis -->
+                <h1 style="text-align: center;"> Halo, <?php echo $nama ?>!</h1>
+                <h5 style="text-align: center; margin-bottom: 40px;"> Anda masuk sebagai <?php echo $bagian ?></h5>
+                <!-- Alert barang habis/hampir habis -->
                 <?php
                 $ambildatastok = mysqli_query($db->konek(), "SELECT * FROM barang WHERE stok < 4 AND stok >= 1");
                 $ambildatastok2 = mysqli_query($db->konek(), "SELECT * FROM barang WHERE stok = 0");

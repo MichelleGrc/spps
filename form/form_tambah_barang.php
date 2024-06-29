@@ -5,7 +5,7 @@ $barang = new Barang();              //membuat objek dari class Barang()
 //membuat kode custom
 //menghubungkan ke tabel database
 $db = new Koneksi();
-//mengambil nilai tertinggi pada tabel pembelian
+//mengambil nilai tertinggi pada tabel barang
 $sql = mysqli_query($db->konek(), 'select max(idBarang) as maxID from barang');
 $data = mysqli_fetch_array($sql);
 $kode = $data['maxID'];
@@ -26,7 +26,7 @@ if(isset($_SESSION["id"]))
 }
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
-    $tambahBarang = $barang->tambahBarang($_POST);   //menggunakan method tambahSupplier()
+    $tambahBarang = $barang->tambahBarang($_POST);   //menggunakan method tambahBarang()
 }
 ?>
 
@@ -53,13 +53,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                             if(isset($tambahBarang)){
                                 echo "<script>alert('$tambahBarang');
                                 document.location='../view/data_barang.php'</script>";
-                            ?>
-                                <!-- <div class="alert alert-warning" role="alert">
-                                    <strong>
-                                        <h6 class="text-center"><?=$tambahBarang?></h2>
-                                    </strong>
-                                </div> -->
-                            <?php
                             }
                         ?>
                         

@@ -18,6 +18,7 @@
             return $this->koneksi;
         }
 
+        //return koneksi ke db
         public function konek()
         {
             $konek = mysqli_connect('localhost','root','','db_spps_plm');
@@ -95,7 +96,7 @@
             if (mysqli_num_rows($hasil) > 0) {
                 return 10; //artinya username sudah ada
             } else {
-                //jika hasil ditemukan (>0) maka login bisa dilanjutkan
+                //jika hasil tidak ditemukan, maka login bisa dilanjutkan
                 if ($password == $cpassword) {
                     //jika password yang dimasukkan sama dengan konfirmasinya, registrasi berhasil
                     $query = "INSERT INTO pengguna VALUES('', '$namaPengguna', '$bagian', '$username', MD5('$password'))";
@@ -127,9 +128,9 @@
                     if ($row['bagian'] == 'Bos'){
                         return 11; //login sebagai bos
                     }else if($row['bagian'] == 'Penjualan'){
-                        return 12; //login sebagai karyawan penjualan
+                        return 12; //login sebagai bagian penjualan
                     }else if($row['bagian'] == 'Gudang'){
-                        return 13; //login sebagai karyawan gudang
+                        return 13; //login sebagai bagian gudang
                     }else{
                         return 14; //role tidak dikenali
                     }
@@ -177,7 +178,7 @@
                 $passCocok = mysqli_query($this->koneksi, $queryPass);
 
                 if (mysqli_num_rows($passCocok) > 0){
-                    // jika hasil yang ditemukan lebih besar dari 0, artinya pass cocok
+                    // jika ada hasil yang ditemukan, artinya pass cocok
                     
                     if ($pass_baru == $cpass_baru) {
                         $query = "UPDATE pengguna set password = MD5('$pass_baru') WHERE idPengguna='$id'";
@@ -208,36 +209,17 @@
 
     class getStok extends Koneksi
     {
-        //function untuk mengembalikan jumlah baris untuk query sql tertentu
+        //function untuk mengembalikan total stok barang tertentu di tabel barang
         public function getStok($query)
         {
             $hasil = mysqli_query($this->koneksi, $query); 
-            $totStok = 0;   
+            $totStok = 0;
             if(mysqli_num_rows($hasil) > 0){
                 while($row = mysqli_fetch_assoc($hasil)){
                     $totStok += $row['stok'];
                 }
             }
             return $totStok;
-        }
-    }
-
-    class cek extends Koneksi
-    {
-        //function untuk mengecek stok sekarang untuk sebuah barang
-        public function cekStok($query)
-        {
-            $hitung = mysqli_query($this->koneksi, $query);
-            $hasil = mysqli_fetch_assoc($hitung);
-            $stoksekarang = $hasil['stok'];
-            return $stoksekarang;
-        }
-
-        //function untuk menyambungkan query sql dengan koneksi db
-        public function sisaStok($query)
-        {
-            $hasil = mysqli_query($this->koneksi, $query);
-            return $hasil;
         }
     }
 ?>

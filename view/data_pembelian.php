@@ -1,7 +1,7 @@
 <?php
-include_once '../class/pembelian.php';  //menyertakan file pembelian.php
+include_once '../class/pembelian.php';      //menyertakan file pembelian.php
 $pembelian = new Pembelian();              //membuat objek dari class Pembelian()
-$db = new Koneksi(); //menghubungkan ke tabel database
+$db = new Koneksi();                        //menghubungkan ke tabel database
 
 $select = new Select();
 if(isset($_SESSION["id"]))
@@ -16,6 +16,7 @@ if(isset($_SESSION["id"]))
 ?>
 
 <?php
+//navbar sesuai hak akses
 if($bagian == 'Bos'){
     include('header_bos.php');
 }else if($bagian == 'Penjualan'){

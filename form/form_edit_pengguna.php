@@ -26,7 +26,7 @@ if(isset($_GET['idPengguna']))
 }
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
-    $editPengguna = $pengguna->editPengguna($_POST, $id);  //menggunakan method editSupplier()
+    $editPengguna = $pengguna->editPengguna($_POST, $id);  //menggunakan method editPengguna()
 }
 ?>
 
@@ -53,13 +53,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                             if(isset($editPengguna)){
                                 echo "<script>alert('$editPengguna');
                                 document.location='../view/data_pengguna.php'</script>";
-                            ?>
-                                <!-- <div class="alert alert-warning" role="alert">
-                                    <strong>
-                                        <h6 class="text-center"><?=$editPengguna?></h2>
-                                    </strong>
-                                </div>
-                            <?php
                             }
                         ?>
                         
