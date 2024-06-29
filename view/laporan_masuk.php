@@ -7,6 +7,8 @@ if(isset($_SESSION["id"]))
 {
     //jika user berhasil login, proses dilanjutkan
     $user = $select->selectUserById($_SESSION["id"]);
+
+    //cek hak akses
     $bagian = $user['bagian'];
     if($bagian !== 'Bos' & $bagian !== 'Gudang'){
         header("Location: ../index.php");
@@ -18,6 +20,7 @@ if(isset($_SESSION["id"]))
 ?>
 
 <?php
+//navbar sesuai hak akses
 if($bagian == 'Bos'){
     include('header_bos.php');
 }else if($bagian == 'Penjualan'){
@@ -57,6 +60,7 @@ if($bagian == 'Bos'){
                 } );
             });
             </script>
+            
             <div class="container-fluid" style="padding: 60px;">
                 <h2>LAPORAN STOK MASUK</h2>
 
@@ -114,9 +118,8 @@ if($bagian == 'Bos'){
                             if (isset($_POST["submit"])) {    
                                 $tgl=$_POST['tgl'];
                                 $tahun=$_POST['tahun'];
-                                //$tampil = $lap->showBarangMasuk($tgl, $tahun);
 
-                                // Query to fetch data from the database
+                                //fetch data dari db
                                 $query = "SELECT barang.idBarang, namaBarang, sum(kuantitas) as 'kuantitas'
                                 FROM barang 
                                 INNER JOIN detail_pembelian
@@ -130,6 +133,7 @@ if($bagian == 'Bos'){
 
                                 $totalKuantitas = 0;
 
+                                //kalau ada hasil
                                 if(mysqli_num_rows($result) > 0){
                                     $no = 1;
                                     while($row = mysqli_fetch_assoc($result)){
@@ -144,6 +148,7 @@ if($bagian == 'Bos'){
                                         <?php
                                     }
                                 } else {
+                                    //kalau tidak ada hasil
                                     echo "<tr><td colspan='7'>Tidak Ada Data</td></tr>";
                                 }
                             ?>

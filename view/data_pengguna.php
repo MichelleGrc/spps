@@ -9,6 +9,8 @@ if(isset($_SESSION["id"]))
     //jika user berhasil login, proses dilanjutkan
     $user = $select->selectUserById($_SESSION["id"]);
     $bagian = $user['bagian'];
+
+    //cek hak akses
     if($bagian !== 'Bos'){
         header("Location: ../index.php");
     }
@@ -28,6 +30,7 @@ if(isset($_GET['hapus_pengguna']))
 ?>
 
 <?php
+//navbar sesuai hak akses
 if($bagian == 'Bos'){
     include('header_bos.php');
 }else if($bagian == 'Penjualan'){

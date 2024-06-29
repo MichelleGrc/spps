@@ -11,6 +11,7 @@ if (isset($_POST["simpan"])) {
     $kuantitas = $_POST['kuantitas'];
     $idBarang = $_POST['idBarang'];
 
+    //cek apakah idBarang ada di tabel barang
     for($i = 0; $i < count($idBarang); $i++){
         $cek = mysqli_query($konek, "SELECT * FROM barang WHERE idBarang = '$idBarang[$i]'");
         if(mysqli_num_rows($cek) == 0){
@@ -19,19 +20,22 @@ if (isset($_POST["simpan"])) {
             exit;
         }
     }
-        
+    
+    //kalau ada bisa langsung insert
     $query = "INSERT INTO pembelian
     SET idPembelian='$idPembelian', idPengguna ='$idPengguna'";
     $hasil = $db->insert($query);
 
+    //proses cek stok dan insert untuk baris berulang di form
     foreach($idPembelians as $index => $idP){
-        //cek jumlah stok
+        //cek jumlah stok tiap barang
         $query = "SELECT * FROM barang WHERE idBarang = '$idBarang[$index]'";
         $hitung = mysqli_query($konek, $query);
         $hasil = mysqli_fetch_assoc($hitung);
         $stoksekarang = $hasil['stok'];
-
         $sisaStok = $stoksekarang + $kuantitas[$index];  //sisa stok adalah stok pada db ditambah jumlah pembelian
+
+        //update stok di tabel barang
         $query3 = "UPDATE barang SET stok='$sisaStok' WHERE idBarang='$idBarang[$index]'";
         $sisaStok = mysqli_query($konek, $query3);
 
@@ -39,10 +43,12 @@ if (isset($_POST["simpan"])) {
         $v_idBarang = $idBarang[$index];
         $v_kuantitas = $kuantitas[$index];
 
+        //setelah berhasil update stok, bisa langsung insert ke detail_pembelian
         $query = "INSERT INTO detail_pembelian
         SET idPembelian='$v_idPembelian', idBarang ='$v_idBarang', kuantitas='$v_kuantitas'";
         $hasil = $db->insert($query);
 
+        //return pesan untuk alert
         if($hasil)
         {
             echo "<script>alert('Data berhasil ditambahkan!');
@@ -57,7 +63,6 @@ if (isset($_POST["simpan"])) {
 class Pembelian
 {
     private $db; //atribut untuk object dari kelas koneksi()
-    private $stok;      //atribut untuk object dari kelas cekStok()
 
     public function __construct()
     {
@@ -75,14 +80,13 @@ class Pembelian
         INNER JOIN pengguna
         ON pengguna.idPengguna = pembelian.idPengguna
         ORDER BY pembelian.idPembelian";
-        //$query = "SELECT * FROM pembelian ORDER BY idPembelian";
         $hasil = $this->db->show($query);
         return $hasil;
     }
 
     public function getIDPembelian($id)
     {
-        //mengambil id_pembelian pada row tertentu
+        //mengambil idPembelian pada row tertentu
         $query = "SELECT * FROM pembelian WHERE idPembelian = '$id'";
         $hasil = $this->db->show($query);
         return $hasil;

@@ -24,10 +24,6 @@ if(isset($_SESSION["id"]))
     //jika user belum login, pengguna langsung diarahkan lagi ke form login di index.php
     header("Location: ../index.php");
 }
-
-// if($_SERVER['REQUEST_METHOD']=='POST'){
-//     $tambahPembelian = $pembelian->tambahPembelian($_POST);   //menggunakan method tambahPembelian()
-// }
 ?>
 
 <!DOCTYPE html>
@@ -53,13 +49,6 @@ if(isset($_SESSION["id"]))
                             if(isset($tambahPembelian)){
                                 echo "<script>alert('$tambahPembelian');
                                 document.location='../view/data_pembelian.php'</script>";
-                            ?>
-                                <!-- <div class="alert alert-warning" role="alert">
-                                    <strong>
-                                        <h6 class="text-center"><?=$tambahPembelian?></h2>
-                                    </strong>
-                                </div> -->
-                            <?php
                             }
                         ?>
                         

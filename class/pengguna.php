@@ -33,11 +33,13 @@ class Pengguna
         $bagian = $data['bagian'];
         $username = $data['username'];
 
+        //update ke db
         $query = "UPDATE pengguna SET idPengguna='$idPengguna', namaPengguna='$namaPengguna',
         bagian='$bagian', username='$username' WHERE idPengguna='$id'";
 
         $hasil = $this->db->edit($query);
 
+        //return pesan untuk alert
         if($hasil)
         {
             $pesan = "Data berhasil diubah!";
@@ -50,6 +52,7 @@ class Pengguna
 
     public function hapusPengguna($id)
     {
+        //cek terlebih dahulu apakah ada tabrakan dengan FK tabel lain
         $cek = mysqli_query(
             $this->db->konek(),
             "SELECT * FROM pembelian, penjualan WHERE pembelian.idPengguna = '$id' OR penjualan.idPengguna = '$id'"
@@ -61,8 +64,11 @@ class Pengguna
             exit;
         }
         
+        //kalau tidak ada bisa langsung hapus
         $query = "DELETE FROM pengguna WHERE idPengguna='$id'";
         $hasil = $this->db->hapus($query);
+
+        //return pesan untuk alert
         if($hasil)
         {
             $pesan = "Data berhasil dihapus!";

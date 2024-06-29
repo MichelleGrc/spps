@@ -1,11 +1,5 @@
 <?php
 require 'koneksi.php'; //menyertakan koneksi.php
-// if(isset($_SESSION["id"]))
-// {
-//     //jika login berhasil, pengguna akan dipindahkan ke halaman utama
-//     header("Location: view/halaman_utama.php");  
-// }
-
 $login = new Login(); //membuat object untuk class Login()
 ?>
 

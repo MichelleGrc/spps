@@ -5,7 +5,7 @@ $supplier = new Supplier();              //membuat objek dari class Supplier()
 //membuat kode custom
 //menghubungkan ke tabel database
 $db = new Koneksi();
-//mengambil nilai tertinggi pada tabel penjualan
+//mengambil nilai tertinggi pada tabel supplier
 $sql = mysqli_query($db->konek(), 'select max(idSupplier) as maxID from supplier');
 $data = mysqli_fetch_array($sql);
 $kode = $data['maxID'];
@@ -54,13 +54,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                         <?php
                             //muncul alert dengan pesan berhasil atau tidaknya proses tambah
                             if(isset($tambahSupplier)){
-                            ?>
-                                <!-- <div class="alert alert-warning" role="alert">
-                                    <strong>
-                                        <h6 class="text-center"><?=$tambahSupplier?></h2>
-                                    </strong>
-                                </div> -->
-                            <?php
                                 echo "<script>alert('$tambahSupplier');
                                 document.location='../view/data_supplier.php'</script>";
                             }

@@ -1,7 +1,7 @@
 <?php
 include_once '../class/barang.php';  //menyertakan file barang.php
 $barang = new Barang();              //membuat objek dari class Barang()
-$db = new Koneksi(); //menghubungkan ke tabel database
+$db = new Koneksi();                //menghubungkan ke tabel database
 
 $select = new Select();
 if(isset($_SESSION["id"]))
@@ -16,15 +16,16 @@ if(isset($_SESSION["id"]))
 
 if(isset($_GET['hapus_barang']))
 {
-    //mendekode id_barang yang ingin dihapus untuk pemrosesan 
+    //mendekode idBarang yang ingin dihapus untuk pemrosesan 
     //setelah id tersebut dikode saat menekan tombol hapus
-    //tujuan dekode agar id_barang yang tampil di link hanya berbentuk kode saja
+    //tujuan dekode agar idBarang yang tampil di link hanya berbentuk kode saja
     $id = base64_decode($_GET['hapus_barang']);
     $hapusBarang = $barang->hapusBarang($id);
 }
 ?>
 
 <?php
+//navbar sesuai hak akses
 if($bagian == 'Bos'){
     include('header_bos.php');
 }else if($bagian == 'Penjualan'){
@@ -42,7 +43,7 @@ if($bagian == 'Bos'){
             <div class="container-fluid" style="padding: 60px;">
                 <h2>DATA BARANG</h2>
                 <br><br>
-            <!-- Alert barang habis -->
+            <!-- Alert barang habis/hampir habis -->
             <?php
             $ambildatastok = mysqli_query($db->konek(), "SELECT * FROM barang WHERE stok < 4 AND stok >= 1");
             $ambildatastok2 = mysqli_query($db->konek(), "SELECT * FROM barang WHERE stok = 0");
@@ -80,9 +81,6 @@ if($bagian == 'Bos'){
                                 ?>
                                 
                                     <div class="row">
-                                        <!-- <div class="col-3">
-                                            <a class="btn btn-dark float-start" href='../view/halaman_utama.php'>Halaman Utama</a>
-                                        </div> -->
                                         <div class="col-3">
                                             <a class="btn btn-primary float-end" href='../form/form_tambah_barang.php'>Tambah Barang</a>                                   
                                         </div>
@@ -95,9 +93,6 @@ if($bagian == 'Bos'){
                                                 </div>
                                             </div>
                                         </form>
-                                        <!-- <div class="col-3">
-                                            <a class="btn btn-primary float-end" href='../form/form_tambah_barang.php'>Tambah Barang</a>                                   
-                                        </div> -->
                                     </div>
                                     <br>
                                 

@@ -27,10 +27,6 @@ if(isset($_SESSION["id"]))
     //jika user belum login, pengguna langsung diarahkan lagi ke form login di index.php
     header("Location: ../index.php");
 }
-
-if($_SERVER['REQUEST_METHOD']=='POST'){
-    $tambahPenjualan = $penjualan->tambahPenjualan($_POST);   //menggunakan method tambahPenjualan()
-}
 ?>
 
 <!DOCTYPE html>
@@ -55,13 +51,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                             //muncul alert dengan pesan berhasil atau tidaknya proses tambah
                             if(isset($tambahPenjualan)){
                                 echo "<script>alert('$tambahPenjualan');</script>";
-                            ?>
-                                <!-- <div class="alert alert-warning" role="alert">
-                                    <strong>
-                                        <h6 class="text-center"><?=$tambahPenjualan?></h2>
-                                    </strong>
-                                </div> -->
-                            <?php
                             }
                         ?>
                         

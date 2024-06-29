@@ -19,11 +19,13 @@ class Supplier
         $alamat = $data['alamat'];
         $noTelp = $data['noTelp'];
 
+        //insert ke db
         $query = "INSERT INTO supplier SET idSupplier='$idSupplier', namaSupplier='$namaSupplier',
         alamat='$alamat', noTelp='$noTelp'";
 
         $hasil = $this->db->insert($query);
-
+        
+        //return pesan untuk alert
         if($hasil)
         {
             $pesan = "Data berhasil ditambahkan!";
@@ -57,11 +59,13 @@ class Supplier
         $alamat = $data['alamat'];
         $noTelp = $data['noTelp'];
 
+        //update ke db
         $query = "UPDATE supplier SET idSupplier='$idSupplier', namaSupplier='$namaSupplier',
         alamat='$alamat', noTelp='$noTelp' WHERE idSupplier='$id'";
 
         $hasil = $this->db->edit($query);
 
+        //return pesan untuk alert
         if($hasil)
         {
             $pesan = "Data berhasil diubah!";
@@ -74,6 +78,7 @@ class Supplier
 
     public function hapusSupplier($id)
     {
+        //cek terlebih dahulu apakah ada tabrakan dengan FK tabel lain
         $cek = mysqli_query($this->db->konek(), "SELECT * FROM barang WHERE idSupplier = '$id'");
         if(mysqli_num_rows($cek) > 0){
             echo "<script>alert('ID supplier $id tidak bisa dihapus karena telah digunakan di tabel lain!');
@@ -81,8 +86,11 @@ class Supplier
             exit;
         }
 
+        //kalau tidak ada bisa langsung hapus
         $query = "DELETE FROM supplier WHERE idSupplier='$id'";
         $hasil = $this->db->hapus($query);
+
+        //return pesan untuk alert
         if($hasil)
         {
             $pesan = "Data berhasil dihapus!";

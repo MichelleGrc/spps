@@ -50,14 +50,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                             if(isset($editBarang)){
                                 echo "<script>alert('$editBarang');
                                 document.location='../view/data_barang.php'</script>";
-                            ?>
-                                <!-- <div class="alert alert-warning" role="alert">
-                                    <strong>
-                                        <h6 class="text-center"><?=$editBarang?></h2>
-                                    </strong>
-                                </div> -->
-                            <?php
-                            
                             }
                         ?>
                         

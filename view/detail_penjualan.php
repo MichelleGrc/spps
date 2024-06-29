@@ -7,6 +7,7 @@ if(isset($_SESSION["id"]))
 {
     //jika user berhasil login, proses dilanjutkan
     $user = $select->selectUserById($_SESSION["id"]);
+    $bagian = $user['bagian'];
 }else{
     //jika user belum login, pengguna langsung diarahkan lagi ke form login di index.php
     header("Location: ../index.php");
@@ -15,10 +16,11 @@ if(isset($_SESSION["id"]))
 if(isset($_GET['idPenjualan']))
 {
     //mendekode idPenjualan
-    //tujuan dekode agar idBarang yang tampil di link hanya berbentuk kode saja
+    //tujuan dekode agar idPenjualan yang tampil di link hanya berbentuk kode saja
     $id = base64_decode($_GET['idPenjualan']);
 }
 
+//fetch idPenjualan row tertentu
 $getID = $penjualan->getIDPenjualan($id);
 $row = mysqli_fetch_assoc($getID)
 ?>
@@ -43,7 +45,17 @@ $row = mysqli_fetch_assoc($getID)
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-3">
-                                    <a class="btn btn-dark float-start" href='halaman_utama.php'>Halaman Utama</a>
+                                    <?php
+                                    if($bagian == 'Bos'){ ?>
+                                        <a class="btn btn-dark float-start" href='../view/halaman_utama.php'>Halaman Utama</a>
+                                    <?php }else if($bagian == 'Penjualan'){ ?>
+                                        <a class="btn btn-dark float-start" href='../view/halaman_utama_penj.php'>Halaman Utama</a>
+                                    <?php }else if($bagian == 'Gudang'){ ?>
+                                        <a class="btn btn-dark float-start" href='../view/halaman_utama_gudang.php'>Halaman Utama</a>
+                                    <?php }else{
+                                        echo 'Bagian Tidak Dikenali!';
+                                    }
+                                    ?>
                                 </div>
                                 <div class="col-6">
                                     <h2 class="text-center"><?=$row['idPenjualan']?></h2>

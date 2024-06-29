@@ -1,14 +1,16 @@
 <?php
 include_once '../class/penjualan.php';      //menyertakan file penjualan.php
 $penjualan = new Penjualan();              //membuat objek dari class Penjualan()
-$db = new Koneksi(); //menghubungkan ke tabel database
+$db = new Koneksi();                        //menghubungkan ke tabel database
 
-$select = new Select();
+$select = new Select();         //membuat objek dari class Select()
 if(isset($_SESSION["id"]))
 {
     //jika user berhasil login, proses dilanjutkan
     $user = $select->selectUserById($_SESSION["id"]);
     $bagian = $user['bagian'];
+
+    //cek hak akses
     if($bagian !== 'Bos' & $bagian !== 'Penjualan'){
         header("Location: ../index.php");
     }
@@ -19,6 +21,7 @@ if(isset($_SESSION["id"]))
 ?>
 
 <?php
+//navbar sesuai hak akses
 if($bagian == 'Bos'){
     include('header_bos.php');
 }else if($bagian == 'Penjualan'){

@@ -51,13 +51,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                         <?php
                             //muncul alert dengan pesan berhasil atau tidaknya proses edit
                             if(isset($editSupplier)){
-                            ?>
-                                <!-- <div class="alert alert-warning" role="alert">
-                                    <strong>
-                                        <h6 class="text-center"><?=$editSupplier?></h2>
-                                    </strong>
-                                </div> -->
-                            <?php
                                 echo "<script>alert('$editSupplier');
                                 document.location='../view/data_supplier.php'</script>";
                             }
